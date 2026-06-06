@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Folgen — Die Mediathek der WG St. Pauli</title>
+  <meta name="description" content="Alle Folgen der KI-Serie WG St. Pauli: Pilotfilm, Staffel 1 und Staffel 2. Schau direkt hier, merk dir deinen Fortschritt und mach beim nächsten Samstag weiter.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body data-page="folgen">
+  <div data-nav></div>
+
+  <header class="section section--tight" style="padding-top:72px">
+    <div class="container">
+      <span class="kicker">Die Mediathek</span>
+      <h1 class="h-xl" style="margin:16px 0 18px">Alle Folgen</h1>
+      <p class="lead">Eine fortlaufende Serie – die Folgen bauen aufeinander auf. Neu hier? Fang oben beim Pilotfilm an. Schon dabei? Mach genau da weiter, wo du aufgehört hast.</p>
+      <div class="btn-row" style="margin-top:24px">
+        <button class="btn btn--primary" data-resume>Weiterschauen</button>
+        <a class="btn btn--ghost" href="kosmos.html">Erst verstehen, worum’s geht ↗</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="section section--tight">
+    <div class="container">
+      <!-- progress -->
+      <div class="progress" data-progress>
+        <div class="progress__meta">
+          <span data-progress-count>0 / 0 Folgen gesehen</span>
+          <span><span data-progress-pct>0%</span> · <button data-reset-progress style="background:none;border:0;color:var(--faint);font-family:var(--font-mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;text-decoration:underline">Fortschritt zurücksetzen</button></span>
+        </div>
+        <div class="progress__bar"><div class="progress__fill" data-progress-fill></div></div>
+      </div>
+
+      <!-- season tabs + grid -->
+      <div class="tabs" data-season-tabs></div>
+      <div class="grid grid--3" data-folgen></div>
+
+      <p class="nl-note" style="margin-top:26px">Dein Fortschritt wird nur lokal in deinem Browser gespeichert. Kein Login, kein Tracking.</p>
+    </div>
+  </section>
+
+  <section class="section section--ink2">
+    <div class="container center">
+      <span class="kicker" style="justify-content:center">Jeden Samstag</span>
+      <p class="bigquote" style="margin:16px auto 22px">Nächste Folge in</p>
+      <div class="countdown" data-countdown style="justify-content:center"></div>
+      <div class="btn-row" style="justify-content:center;margin-top:30px">
+        <a class="btn btn--lime" href="mitmachen.html#newsletter">Auf die Gästeliste, nichts verpassen ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <div data-footer></div>
+  <script src="data/series.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
