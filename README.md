@@ -8,7 +8,7 @@ auf St. Pauli (Hamburg) leben – *„Alt, aber nicht artig.“*
 > stammen aus der bestehenden Seite [wg-st-pauli.de](https://wg-st-pauli.de) und
 > wurden im Ton beibehalten, aber sprachlich aufpoliert.
 
-**Live-Vorschau:** _siehe GitHub-Pages-Link in den Repo-Einstellungen / unten ergänzt._
+**Live-Vorschau:** https://0xdenyo.github.io/wg-st-pauli/
 
 ---
 
