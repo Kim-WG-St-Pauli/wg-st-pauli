@@ -101,7 +101,14 @@ einen sauberen Hinweis + einen Button „Folge auf wg-st-pauli.de ansehen“.
 
 ## Neue Folge eintragen
 
-In [`data/series.js`](data/series.js) im passenden Staffel-Array einen Eintrag ergänzen:
+**Ohne Code-Kenntnisse (für den/die Betreiber:in):** Es gibt ein eingebautes
+**Folgen-Werkzeug** unter `werkzeug.html`
+([Live](https://0xdenyo.github.io/wg-st-pauli/werkzeug.html)): Formular ausfüllen →
+fertigen Code kopieren → per GitHub-Web-Editor einfügen → automatisch live.
+Schritt-für-Schritt-Anleitung: [`PFLEGE.md`](PFLEGE.md).
+
+**Manuell (technisch):** In [`data/series.js`](data/series.js) im passenden
+Staffel-Array einen Eintrag ergänzen:
 
 ```js
 {
