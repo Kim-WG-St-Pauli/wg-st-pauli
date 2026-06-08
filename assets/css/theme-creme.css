@@ -1,0 +1,72 @@
+/* =====================================================================
+   WG ST. PAULI — Theme „Creme“
+   Helles Creme + rostiges Grünlich. Wärmer, ruhiger, für ein Publikum 50+.
+   Wird über <body class="theme-creme"> aktiviert und überschreibt die Tokens.
+   ===================================================================== */
+
+body.theme-creme {
+  --ink:    #f4ecdd;   /* warmes Creme als Basis */
+  --ink-1:  #efe6d4;   /* alternierende Sektionen */
+  --ink-2:  #ece2cf;   /* Karten */
+  --ink-3:  #e3d8c1;   /* tiefer */
+  --paper:  #e7decb;
+  --bone:   #4a4435;
+
+  --text:   #322d24;   /* dunkles, warmes Braun */
+  --muted:  #6c6454;
+  --faint:  #9a9079;
+  --line:   rgba(60, 48, 28, 0.18);
+  --line-2: rgba(60, 48, 28, 0.10);
+
+  --pink:   #7c8a55;   /* rostiges Grünlich = Primärfarbe (Buttons, Linien, Akzente) */
+  --pink-2: #8d9b63;
+  --lime:   #ab6038;   /* warmer Rost als Sekundärakzent */
+  --cyan:   #7c8a55;
+  --amber:  #b07a3f;
+
+  --glow-pink: none;   /* kein Neon-Glühen */
+  --glow-lime: none;
+}
+
+/* Grain dezenter und multiplizierend (statt overlay) auf Hell */
+body.theme-creme::after { opacity: 0.04; mix-blend-mode: multiply; }
+
+/* Kontrast auf den farbigen Flächen: helle Schrift auf Oliv/Rost */
+body.theme-creme .btn--primary,
+body.theme-creme .btn--lime,
+body.theme-creme .brand__mark,
+body.theme-creme .marquee { color: #fbf7ee; }
+
+/* „Paper“-Sektionen: lesbares dunkles Schriftbild beibehalten */
+body.theme-creme .section--paper { background: #e7decb; color: var(--text); }
+body.theme-creme .section--paper .muted { color: var(--muted); }
+body.theme-creme .section--paper .lead { color: var(--bone); }
+body.theme-creme .section--paper .kicker { color: var(--pink); }
+body.theme-creme .section--paper .kicker::before { background: var(--pink); box-shadow: none; }
+body.theme-creme .section--paper .step { background: #efe7d6; }
+
+/* Hero: kräftigere Überblendung nach Creme + ruhigeres Foto */
+body.theme-creme .hero__photo img { opacity: 0.3; filter: sepia(0.25) contrast(0.95); }
+body.theme-creme .hero__photo::after {
+  background:
+    radial-gradient(120% 90% at 70% 10%, rgba(124, 138, 85, 0.18), transparent 55%),
+    linear-gradient(180deg, rgba(244, 236, 221, 0.5) 0%, rgba(244, 236, 221, 0.82) 55%, var(--ink) 100%);
+}
+body.theme-creme .hero__stamp { color: var(--lime); border-color: rgba(171, 96, 56, 0.4); }
+
+/* Karten / Akzentflächen, die im Neon-Theme hartkodierte Pink-Schatten hatten */
+body.theme-creme .tier--feature {
+  box-shadow: 0 0 0 1px var(--pink), 0 24px 50px rgba(124, 138, 85, 0.18);
+}
+body.theme-creme .newsletter {
+  background:
+    radial-gradient(120% 140% at 100% 0%, rgba(171, 96, 56, 0.12), transparent 60%),
+    var(--ink-1);
+}
+
+/* Porträts wärmer statt kühl */
+body.theme-creme .char img { filter: grayscale(0.1) contrast(1.02) sepia(0.15); }
+body.theme-creme .char:hover img { filter: grayscale(0) contrast(1.05) sepia(0.05); }
+
+/* Werkzeug-Seite: heller Code-Block statt fast-schwarz */
+body.theme-creme pre { background: #efe7d6; color: #3d4a28; }

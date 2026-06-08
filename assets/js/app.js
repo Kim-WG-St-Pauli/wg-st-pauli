@@ -51,6 +51,7 @@
               `<li><a href="${href}" ${key === PAGE ? 'aria-current="page"' : ""}>${label}</a></li>`).join("")}
           </ul>
           <div class="nav__cta">
+            <button class="theme-toggle" data-theme-toggle aria-label="Farbschema wechseln" title="Farbschema wechseln">${THEME === "creme" ? "◑ Neon" : "◐ Creme"}</button>
             <a class="btn btn--ghost btn--sm" href="${WG.links.steady}" target="_blank" rel="noopener">Unterstützen</a>
             <a class="btn btn--primary btn--sm" href="folgen.html">Folgen ${I.arrow}</a>
             <button class="nav__burger" aria-label="Menü" aria-expanded="false">
@@ -64,6 +65,8 @@
       const open = nav.classList.toggle("open");
       burger.setAttribute("aria-expanded", String(open));
     });
+    const tt = $("[data-theme-toggle]", nav);
+    if (tt) tt.addEventListener("click", toggleTheme);
   }
 
   function renderFooter() {
@@ -109,17 +112,47 @@
   }
 
   /* --------------------------------------------------- Episode posters */
-  const POSTER_THEMES = [
-    ["#ff2e88", "#7a0b3d"], ["#c6ff3a", "#324d00"], ["#2fe3d2", "#04403a"],
-    ["#ffb454", "#5e3500"], ["#9b6bff", "#2a1268"], ["#ff5a5a", "#4d0d0d"],
-  ];
+  const PALETTES = {
+    neon: [
+      ["#ff2e88", "#7a0b3d"], ["#c6ff3a", "#324d00"], ["#2fe3d2", "#04403a"],
+      ["#ffb454", "#5e3500"], ["#9b6bff", "#2a1268"], ["#ff5a5a", "#4d0d0d"],
+    ],
+    creme: [
+      ["#7c8a55", "#e4dac3"], ["#ab6038", "#ecdcc6"], ["#6f8060", "#e0d8c0"],
+      ["#9c7a3e", "#ece0c6"], ["#5f6f4a", "#dcd2b9"], ["#9a6048", "#e8d6c3"],
+    ],
+  };
+  let POSTER_THEMES = PALETTES.neon;
+
+  /* --------------------------------------------------- Theme (Neon | Creme) */
+  let THEME = "neon";
+  function applyTheme() {
+    let saved = null; try { saved = localStorage.getItem("wg:theme"); } catch {}
+    const param = new URLSearchParams(location.search).get("theme");
+    THEME = (param === "creme" || param === "neon") ? param : (saved || "neon");
+    if (param) { try { localStorage.setItem("wg:theme", THEME); } catch {} }
+    POSTER_THEMES = PALETTES[THEME] || PALETTES.neon;
+    if (THEME === "creme") {
+      document.body.classList.add("theme-creme");
+      if (!document.getElementById("theme-creme-css")) {
+        const l = document.createElement("link");
+        l.id = "theme-creme-css"; l.rel = "stylesheet"; l.href = "assets/css/theme-creme.css";
+        document.head.appendChild(l);
+      }
+    }
+  }
+  function toggleTheme() {
+    const next = THEME === "creme" ? "neon" : "creme";
+    try { localStorage.setItem("wg:theme", next); } catch {}
+    location.href = location.pathname + (next === "creme" ? "?theme=creme" : "");
+  }
   function posterFor(ep, idx) {
     const [a, b] = POSTER_THEMES[idx % POSTER_THEMES.length];
     const label = ep.type === "finale" ? "FINALE" : ep.id === "pilot" ? "PILOT" : "FOLGE " + ep.no;
     return `
       <div class="ep__poster" style="background:
         radial-gradient(130% 100% at 15% 0%, ${a}33, transparent 60%),
-        linear-gradient(150deg, ${b}, #0c0c12 75%);">
+        linear-gradient(150deg, ${b}, var(--ink) 75%);">
         <div style="position:absolute;inset:0;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;">
           <div style="font-family:var(--font-mono);font-size:.66rem;letter-spacing:.2em;color:${a};text-transform:uppercase;">${label}</div>
           <div style="font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.3rem);line-height:.95;text-transform:uppercase;">${ep.title}</div>
@@ -200,7 +233,7 @@
     const [a, b] = POSTER_THEMES[0];
     return `
       <div style="position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;background:
-        radial-gradient(130% 100% at 30% 0%, ${a}33, transparent 60%), linear-gradient(150deg, ${b}, #0b0b0f 80%);">
+        radial-gradient(130% 100% at 30% 0%, ${a}33, transparent 60%), linear-gradient(150deg, ${b}, var(--ink) 80%);">
         <div>
           <div class="kicker" style="justify-content:center;color:${a}">Vorschau-Modus</div>
           <p style="font-family:var(--font-body);color:var(--bone);max-width:42ch;margin:14px auto 22px">
@@ -289,9 +322,9 @@
         <button data-watch="${ep.id}" aria-label="Neueste Folge abspielen"
           style="position:absolute;inset:0;border:0;cursor:pointer;background:
           radial-gradient(130% 100% at 20% 0%, ${a}33, transparent 60%),
-          linear-gradient(150deg, ${b}, #0b0b0f 80%);">
+          linear-gradient(150deg, ${b}, var(--ink) 80%);">
           <span style="position:absolute;top:18px;left:18px;font-family:var(--font-mono);font-size:.66rem;letter-spacing:.2em;color:${a};text-transform:uppercase">${ep.seasonTitle} · ${ep.id === "pilot" ? "Pilot" : "Folge " + ep.no}</span>
-          <span style="position:absolute;left:18px;bottom:18px;right:18px;text-align:left;font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);line-height:.95;text-transform:uppercase;color:#fff">${ep.title}</span>
+          <span style="position:absolute;left:18px;bottom:18px;right:18px;text-align:left;font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);line-height:.95;text-transform:uppercase;color:var(--text)">${ep.title}</span>
           <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:72px;border-radius:50%;background:var(--pink);color:#15030c;display:grid;place-items:center;box-shadow:var(--glow-pink)">${I.play}</span>
         </button>`;
       const meta = $("[data-latest-meta]");
@@ -436,6 +469,7 @@
   }
 
   function init() {
+    applyTheme();
     setFavicon();
     renderNav();
     renderFooter();
