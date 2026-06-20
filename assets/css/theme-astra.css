@@ -1,0 +1,110 @@
+/* =====================================================================
+   WG ST. PAULI — Theme „Astra“ (Etiketten-Look)
+   Nah am Astra-Knollen-Etikett: kräftiges Astra-Rot, schwarzer Herz-Anker,
+   gealtertes Kraftpapier/Sand, Tinten-Schwarz, etwas Messing.
+   Wird über <body class="theme-astra"> aktiviert und überschreibt die Tokens.
+   ===================================================================== */
+
+body.theme-astra {
+  --ink:    #e5d5b0;   /* sandiges, gealtertes Etiketten-Papier */
+  --ink-1:  #dfcca0;   /* alternierende Sektionen */
+  --ink-2:  #d8c290;   /* Karten */
+  --ink-3:  #cfb57e;   /* tiefer gebräunt */
+  --paper:  #ede1c6;   /* helleres Pergament */
+  --bone:   #463a22;   /* warmes Braun für Lead-Text */
+
+  --text:   #1c1610;   /* tiefes Tinten-Schwarz */
+  --muted:  #5a4d33;   /* gedämpfte Sepia */
+  --faint:  #897a57;   /* zarte, gealterte Schrift */
+  --line:   rgba(28, 18, 8, 0.22);
+  --line-2: rgba(28, 18, 8, 0.12);
+
+  --pink:   #e2001a;   /* ASTRA-ROT = Primärakzent (Buttons, Banner, Linien) */
+  --pink-2: #b80016;   /* tieferes Rot für Hover */
+  --lime:   #b08628;   /* Messing/Gold = Sekundärakzent */
+  --cyan:   #c39a3f;
+  --amber:  #c4902f;
+
+  --glow-pink: none;
+  --glow-lime: none;
+}
+
+/* Grain dezenter & multiplizierend auf hellem Papier */
+body.theme-astra::after { opacity: 0.07; mix-blend-mode: multiply; }
+
+/* Helle Schrift auf Rot/Messing */
+body.theme-astra .btn--primary,
+body.theme-astra .btn--lime,
+body.theme-astra .marquee { color: #fff7ec; }
+
+/* „Paper“-Sektionen: tiefdunkles Schriftbild auf hellem Papier */
+body.theme-astra .section--paper { background: #ede1c6; color: var(--text); }
+body.theme-astra .section--paper .muted { color: var(--muted); }
+body.theme-astra .section--paper .lead { color: var(--bone); }
+body.theme-astra .section--paper .kicker { color: var(--pink); }
+body.theme-astra .section--paper .kicker::before { background: var(--pink); box-shadow: none; }
+body.theme-astra .section--paper .step { background: #e6d8b9; }
+
+/* Hero: Überblendung nach Sandpapier, ruhiges sepia-warmes Foto */
+body.theme-astra .hero__photo img { opacity: 0.34; filter: sepia(0.45) contrast(0.98) saturate(1.08); }
+body.theme-astra .hero__photo::after {
+  background:
+    radial-gradient(120% 90% at 70% 10%, rgba(226, 0, 26, 0.18), transparent 55%),
+    linear-gradient(180deg, rgba(229, 213, 176, 0.5) 0%, rgba(229, 213, 176, 0.82) 55%, var(--ink) 100%);
+}
+body.theme-astra .hero__stamp { color: #111; border-color: rgba(28, 18, 8, 0.45); }
+/* "St. Pauli" im Hero als rotes Banner-Wort */
+body.theme-astra .hero h1 .neon { color: var(--pink); text-shadow: none; }
+
+/* Karten / Akzentflächen mit hartkodierten Pink-Schatten neutralisieren */
+body.theme-astra .tier--feature {
+  box-shadow: 0 0 0 1px var(--pink), 0 24px 50px rgba(226, 0, 26, 0.20);
+}
+body.theme-astra .newsletter {
+  background:
+    radial-gradient(120% 140% at 100% 0%, rgba(176, 134, 40, 0.16), transparent 60%),
+    var(--ink-1);
+}
+
+/* Porträts warm & gealtert */
+body.theme-astra .char img { filter: grayscale(0.12) contrast(1.03) sepia(0.24); }
+body.theme-astra .char:hover img { filter: grayscale(0) contrast(1.06) sepia(0.08); }
+
+/* Werkzeug-Seite: warmer Papier-Code-Block */
+body.theme-astra pre { background: #e6d8b9; color: #2a2012; }
+
+/* =====================================================================
+   Astra-Signaturen: roter Banner-Look + schwarzer Herz-Anker als Marke
+   ===================================================================== */
+
+/* Lauftext-Band wie das rote Astra-Banner */
+body.theme-astra .marquee { background: var(--pink); border-color: rgba(28,18,8,0.25); }
+
+/* Brand-Plakettchen wird zum roten Herz-Anker (statt „WG“-Kästchen) */
+body.theme-astra .brand__mark {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transform: none;
+  border-radius: 0;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path d='M32 57 C12 43 4 32 4 22 C4 13 11 7 19 7 C25 7 29 11 32 16 C35 11 39 7 45 7 C53 7 60 13 60 22 C60 32 52 43 32 57 Z' fill='%23e2001a'/><g fill='none' stroke='%23141414' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='32' cy='17' r='3.6'/><line x1='32' y1='20' x2='32' y2='47'/><line x1='23' y1='26' x2='41' y2='26'/><path d='M19 39 C20 49 26 51 32 51 C38 51 44 49 45 39'/></g></svg>");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+body.theme-astra .brand__mark span { opacity: 0; }
+
+/* =====================================================================
+   Lesbarkeit auf hellem Papier (wie im Kiez-Theme)
+   ===================================================================== */
+body.theme-astra .nav { background: rgba(229, 213, 176, 0.88); border-bottom-color: var(--line); }
+body.theme-astra .char__name { color: #fff7ec; }
+body.theme-astra .char__role { color: #ffd27a; }
+body.theme-astra .ep__no { background: rgba(28, 18, 8, 0.68); color: #fff7ec; }
+body.theme-astra .ep:hover { border-color: rgba(226, 0, 26, 0.55); }
+body.theme-astra .ep__poster::after { background: linear-gradient(180deg, transparent 45%, rgba(28, 18, 8, 0.14)); }
+
+/* „Neu“-Badge im Astra-Rot, „Pilot“/„Finale“ lesbar */
+body.theme-astra .ep__tag--new { background: var(--pink); color: #fff7ec; }
+body.theme-astra .ep__tag--pilot { background: #1c1610; color: #fff7ec; }
+body.theme-astra .ep__tag--finale { background: #6b4f1a; color: #fff7ec; }

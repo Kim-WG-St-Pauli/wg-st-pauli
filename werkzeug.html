@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <link id="theme-astra-css" rel="stylesheet" href="assets/css/theme-astra.css">
   <style>
     .tool { display:grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items:start; }
     .field { margin-bottom:16px; }
@@ -27,24 +28,47 @@
     .stepnum { counter-reset:s; }
     .stepnum li { counter-increment:s; display:flex; gap:14px; padding:12px 0; border-bottom:1px solid var(--line-2); }
     .stepnum li::before { content:counter(s); font-family:var(--font-display); color:var(--pink); font-size:1.4rem; line-height:1; min-width:28px; }
-    @media (max-width:900px){ .tool{grid-template-columns:1fr;} .out-card{position:static;} }
+    .modes { display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 4px; }
+    .mode-btn {
+      font-family:var(--font-mono); font-size:.78rem; letter-spacing:.08em; text-transform:uppercase;
+      padding:11px 18px; border-radius:999px; border:1px solid var(--line); color:var(--muted);
+      background:transparent; transition:all .2s;
+    }
+    .mode-btn[aria-selected="true"] { background:var(--text); color:var(--ink); border-color:var(--text); }
+    .mode-btn:hover { color:var(--text); }
+    .panel[hidden] { display:none; }
+    .callout { background:var(--ink-2); border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin:14px 0; }
+    .callout code { background:rgba(0,0,0,.18); padding:2px 6px; border-radius:6px; font-family:var(--font-mono); font-size:.86em; }
+    .guide-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    @media (max-width:900px){ .tool{grid-template-columns:1fr;} .out-card{position:static;} .guide-grid{grid-template-columns:1fr;} }
   </style>
 </head>
-<body data-page="werkzeug">
+<body data-page="werkzeug" class="theme-astra">
   <div data-nav></div>
 
   <header class="section section--tight" style="padding-top:64px">
     <div class="container">
       <span class="kicker">Internes Werkzeug · nicht im Menü</span>
-      <h1 class="h-lg" style="margin:14px 0 12px">Neue Folge anlegen</h1>
-      <p class="lead">Felder ausfüllen → rechts erscheint fertiger Code → kopieren → in <code>data/series.js</code> einfügen. Ganz unten steht, wie das ohne Programme direkt auf GitHub geht.</p>
+      <h1 class="h-lg" style="margin:14px 0 12px">Seite pflegen</h1>
+      <p class="lead">Alles ohne Programme, direkt im Browser. Wähle unten, was du tun willst: eine <strong>neue Folge</strong> anlegen, eine <strong>bestehende Folge bearbeiten</strong>, oder <strong>Texte &amp; Bilder</strong> ändern.</p>
+      <div class="modes" role="tablist" aria-label="Was möchtest du tun?">
+        <button class="mode-btn" data-mode="new"  role="tab" aria-selected="true">＋ Neue Folge</button>
+        <button class="mode-btn" data-mode="edit" role="tab" aria-selected="false">✎ Folge bearbeiten</button>
+        <button class="mode-btn" data-mode="text" role="tab" aria-selected="false">✦ Texte &amp; Bilder</button>
+      </div>
     </div>
   </header>
 
-  <section class="section section--tight">
+  <!-- ====================== MODE: NEUE / BEARBEITEN ====================== -->
+  <section class="section section--tight" id="panel-form">
     <div class="container tool">
       <!-- FORM -->
       <form id="f">
+        <div class="field" id="pickWrap" hidden>
+          <label>Welche Folge bearbeiten?</label>
+          <select id="pick"></select>
+          <div class="hint">Aussuchen → Felder füllen sich automatisch. Ändern → rechts erscheint der neue Code.</div>
+        </div>
         <div class="row2">
           <div class="field">
             <label>Staffel</label>
@@ -97,33 +121,96 @@
       <!-- OUTPUT -->
       <div class="out-card">
         <span class="kicker" style="color:var(--lime)">Fertiger Code</span>
-        <h3 class="h-sm" style="margin:10px 0 8px">1 · In <code>data/series.js</code> ins Staffel-Array einfügen</h3>
-        <pre id="outEp">…</pre>
-        <button class="btn btn--lime btn--sm" id="copyEp" type="button">Code kopieren</button>
 
-        <h3 class="h-sm" style="margin:24px 0 8px">2 · In dieselbe Datei in <code>urlMap</code> einfügen</h3>
-        <pre id="outUrl">…</pre>
-        <button class="btn btn--ghost btn--sm" id="copyUrl" type="button">Zeile kopieren</button>
+        <!-- NEW mode output -->
+        <div id="outNew">
+          <h3 class="h-sm" style="margin:10px 0 8px">1 · In <code>data/series.js</code> ins Staffel-Array einfügen</h3>
+          <pre id="outEp">…</pre>
+          <button class="btn btn--lime btn--sm" id="copyEp" type="button">Code kopieren</button>
+          <h3 class="h-sm" style="margin:24px 0 8px">2 · In dieselbe Datei in <code>urlMap</code> einfügen</h3>
+          <pre id="outUrl">…</pre>
+          <button class="btn btn--ghost btn--sm" id="copyUrl" type="button">Zeile kopieren</button>
+        </div>
+
+        <!-- EDIT mode output -->
+        <div id="outEdit" hidden>
+          <h3 class="h-sm" style="margin:10px 0 8px">So bearbeitest du diese Folge</h3>
+          <p class="hint" style="margin-bottom:10px">In <code>data/series.js</code> den vorhandenen Block dieser Folge <strong>suchen und ersetzen</strong>. Erkennbar an dieser Zeile:</p>
+          <pre id="findLine">…</pre>
+          <h3 class="h-sm" style="margin:20px 0 8px">Diesen Block dort einsetzen (alt → neu)</h3>
+          <pre id="outEpEdit">…</pre>
+          <button class="btn btn--lime btn--sm" id="copyEpEdit" type="button">Neuen Block kopieren</button>
+          <div class="callout" style="margin-top:18px">
+            <strong>Faustregel:</strong> Du tauschst nur den einen Block aus, der mit der gesuchten Zeile beginnt – von der öffnenden <code>{</code> bis zur passenden <code>},</code>. Die Folgen drüber und drunter bleiben unangetastet.
+          </div>
+        </div>
+
         <p class="hint" id="copyMsg"></p>
       </div>
     </div>
   </section>
 
-  <!-- GUIDE -->
-  <section class="section section--ink2">
+  <!-- ====================== MODE: TEXTE & BILDER ====================== -->
+  <section class="section section--tight panel" id="panel-text" hidden>
+    <div class="container" style="max-width:900px">
+      <span class="kicker">Alles Inhaltliche steht an einem Ort</span>
+      <h2 class="h-md" style="margin:12px 0 8px">Texte ändern &amp; Bilder einfügen</h2>
+      <p class="lead">Fast alle Texte der Seite liegen in <strong>einer</strong> Datei: <code>data/series.js</code>. Du öffnest sie auf GitHub, klickst das Stift-Symbol (Edit), änderst den Text zwischen den Anführungszeichen und klickst „Commit changes“. Nach 1–2 Minuten ist es live.</p>
+
+      <div class="guide-grid" style="margin-top:26px">
+        <div class="callout">
+          <h3 class="h-sm" style="margin-bottom:8px">Bewohner-Texte</h3>
+          <p class="muted">Name, Spruch, Beschreibung, Schlagworte: im Block <code>characters</code>. Jede Person hat <code>name</code>, <code>role</code>, <code>quote</code>, <code>bio</code> und <code>tags</code>. Nur den Text zwischen den <code>"…"</code> ändern.</p>
+        </div>
+        <div class="callout">
+          <h3 class="h-sm" style="margin-bottom:8px">Folgen-Texte</h3>
+          <p class="muted">Titel, Logline, Beschreibung: im Block <code>seasons</code> bei der jeweiligen Folge – oder ganz bequem oben über <strong>„Folge bearbeiten“</strong>.</p>
+        </div>
+        <div class="callout">
+          <h3 class="h-sm" style="margin-bottom:8px">Links</h3>
+          <p class="muted">Steady, Instagram, Facebook, Newsletter: im Block <code>links</code>.</p>
+        </div>
+        <div class="callout">
+          <h3 class="h-sm" style="margin-bottom:8px">Staffel-Texte</h3>
+          <p class="muted">Überschrift/Untertitel einer Staffel: im Block <code>seasons</code> bei <code>title</code> und <code>tagline</code>.</p>
+        </div>
+      </div>
+
+      <h3 class="h-sm" style="margin:30px 0 10px">Der Abschnitt „Der Look ist kein Versehen“</h3>
+      <p class="muted" style="max-width:70ch">Dieser Text steht auf der Startseite in <code>index.html</code> (Abschnitt <code>WHY WEIRD</code>) und auf <code>kosmos.html</code>. Du darfst ihn frei umschreiben. Beispiel, das den Figuren-„Drift“ als Stilmittel erklärt (gern so übernehmen oder anpassen):</p>
+      <div class="callout">
+        <em>„Die Gesichter sehen in jeder Folge etwas anders aus. Deshalb versuchen wir, möglichst immer dasselbe anzuziehen – damit ihr uns im Zweifel an den Klamotten wiedererkennt.“</em>
+      </div>
+      <p class="hint">Tipp: In <code>index.html</code> nach dem Wort <code>flackern</code> suchen – da steht der Absatz. Nur den Text zwischen den <code>&lt;p&gt;…&lt;/p&gt;</code> ändern, die spitzen Klammern stehen lassen.</p>
+
+      <h3 class="h-sm" style="margin:30px 0 10px">Ein Bild einfügen (z. B. neues Bewohner-Foto)</h3>
+      <ul class="stepnum">
+        <li>Im GitHub-Repo in den Ordner <code>assets/img/</code> gehen → Button <strong>„Add file“ → „Upload files“</strong> → dein Bild hochladen (gib ihm einen einfachen Namen ohne Leerzeichen, z. B. <code>cast-silke.jpg</code>). Unten „Commit changes“.</li>
+        <li>Soll das Bild ein bestehendes Foto ersetzen, lade es einfach mit <strong>genau demselben Dateinamen</strong> hoch – fertig, die Seite zeigt sofort das neue Bild.</li>
+        <li>Für ein <em>neues</em> Bild eines Bewohners: in <code>data/series.js</code> beim jeweiligen <code>img:</code> den Pfad eintragen, z. B. <code>img: "assets/img/cast-silke.jpg"</code>.</li>
+        <li>„Commit changes“ → nach 1–2 Minuten live.</li>
+      </ul>
+
+      <div class="step" style="border-color:var(--amber);margin-top:8px">
+        <p class="muted"><strong class="accent">Nichts ist endgültig kaputtbar.</strong> Geht doch mal was schief, in GitHub die Datei-Historie öffnen und die letzte Änderung per <em>„Revert“</em> rückgängig machen – die Seite ist sofort wieder im alten Stand.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUIDE (gilt für Neue Folge & Bearbeiten) -->
+  <section class="section section--ink2 panel" id="panel-guide">
     <div class="container" style="max-width:820px">
       <span class="kicker">Ohne Programme · direkt im Browser</span>
-      <h2 class="h-md" style="margin:12px 0 18px">So kommt die Folge live (kein Terminal nötig)</h2>
+      <h2 class="h-md" style="margin:12px 0 18px">So kommt die Änderung live (kein Terminal nötig)</h2>
       <ul class="stepnum">
-        <li>Oben alle Felder ausfüllen und beide Code-Blöcke kopieren.</li>
+        <li>Oben die Felder ausfüllen bzw. die Folge auswählen und den Code-Block rechts kopieren.</li>
         <li>Im GitHub-Repo die Datei <code>data/series.js</code> öffnen und oben rechts auf das <strong>Stift-Symbol</strong> („Edit“) klicken.</li>
-        <li><strong>Block 1</strong> in das passende Staffel-Array einfügen – als erste Folge ganz oben im <code>episodes:</code>-Block der richtigen Staffel.</li>
-        <li><strong>Block 2</strong> oben in den <code>urlMap</code>-Block einfügen.</li>
+        <li><strong>Neue Folge:</strong> Block 1 als erste Folge oben in den <code>episodes:</code>-Block der richtigen Staffel, Block 2 oben in den <code>urlMap</code>-Block. <br><strong>Folge bearbeiten:</strong> den alten Block der Folge suchen und durch den neuen ersetzen.</li>
         <li>Unten auf <strong>„Commit changes“</strong> klicken. Fertig – GitHub veröffentlicht die Seite in ein, zwei Minuten automatisch neu.</li>
       </ul>
-      <p class="muted" style="margin-top:22px">Tipp: Vor dem Speichern kurz schauen, dass die geschweiften Klammern <code>{ }</code> und die Kommas stehen wie in den anderen Folgen drüber/drunter. Mehr kann eigentlich nicht schiefgehen.</p>
+      <p class="muted" style="margin-top:22px">Tipp: Vor dem Speichern kurz schauen, dass die geschweiften Klammern <code>{ }</code> und die Kommas stehen wie bei den anderen Folgen drüber/drunter. Mehr kann eigentlich nicht schiefgehen.</p>
       <div class="step" style="border-color:var(--amber);margin-top:24px">
-        <p class="muted"><strong class="accent">Damit Videos überall laufen:</strong> Die Vimeo-Videos sind auf <code>wg-st-pauli.de</code> beschränkt. In den Vimeo-Einstellungen jedes Videos unter <em>Privatsphäre → Wo darf eingebettet werden</em> die Domain der Seite ergänzen – dann spielt der Player direkt, ohne Vorschau-Hinweis.</p>
+        <p class="muted"><strong class="accent">Damit Videos überall laufen:</strong> Die Vimeo-Videos sind auf <code>wg-st-pauli.de</code> beschränkt. In den Vimeo-Einstellungen jedes Videos unter <em>Privatsphäre → Wo darf eingebettet werden</em> die Domain der Seite ergänzen (auch die Subdomain <code>v2.wg-st-pauli.de</code>) – dann spielt der Player direkt, ohne Vorschau-Hinweis.</p>
       </div>
     </div>
   </section>
@@ -135,7 +222,28 @@
   (function(){
     const $ = (id) => document.getElementById(id);
     const esc = (s) => String(s||"").replace(/\\/g,"\\\\").replace(/"/g,'\\"');
+    const WG = window.WG;
+    let mode = "new";
 
+    /* ---------------- Mode switching ---------------- */
+    const panelForm = $("panel-form"), panelText = $("panel-text"), panelGuide = $("panel-guide");
+    function setMode(m){
+      mode = m;
+      document.querySelectorAll(".mode-btn").forEach(b => b.setAttribute("aria-selected", String(b.dataset.mode === m)));
+      const isText = m === "text";
+      panelForm.hidden = isText;
+      panelGuide.hidden = isText;
+      panelText.hidden = !isText;
+      $("pickWrap").hidden = (m !== "edit");
+      $("outNew").hidden = (m !== "new");
+      $("outEdit").hidden = (m !== "edit");
+      if (m === "edit") populatePicker();
+      build();
+    }
+    document.querySelectorAll(".mode-btn").forEach(b =>
+      b.addEventListener("click", () => setMode(b.dataset.mode)));
+
+    /* ---------------- Vimeo + id helpers ---------------- */
     function parseVimeo(url){
       if(!url) return null;
       const id = (url.match(/(?:video\/|vimeo\.com\/)(\d+)/)||[])[1];
@@ -144,6 +252,7 @@
       if(!h){ const m = url.match(/vimeo\.com\/\d+\/([a-z0-9]+)/i); if(m) h=m[1]; }
       return { id, h: h||"" };
     }
+    function vimeoUrl(v){ return v && v.id ? `https://player.vimeo.com/video/${v.id}${v.h?`?h=${v.h}`:""}` : ""; }
     function genId(season, no){
       const n = String(no||"").trim().toLowerCase();
       if(n==="pilot") return "pilot";
@@ -151,18 +260,36 @@
       if(n.includes("finale")) return season+"fin";
       return season+"f"+(digits||"x");
     }
-    function build(){
-      const season=$("season").value, no=$("no").value, title=$("title").value;
-      const date=$("date").value, type=$("type").value;
-      const logline=$("logline").value, summary=$("summary").value;
-      const vid=parseVimeo($("vidUrl").value), talk=parseVimeo($("talkUrl").value);
-      const id=genId(season,no);
-      const pageUrl=$("pageUrl").value;
 
-      const vh = $("vidHint");
-      if($("vidUrl").value){ vh.textContent = vid? ("Erkannt → ID "+vid.id+(vid.h?(", Hash "+vid.h):"")) : "⚠ Link nicht erkannt – bitte den player.vimeo.com- oder vimeo.com-Link verwenden."; vh.className = vid?"hint ok":"hint err"; }
-      else { vh.textContent="Den Link aus dem Vimeo-Teilen/Einbetten-Fenster reinkopieren."; vh.className="hint"; }
+    /* ---------------- Edit: populate picker + prefill ---------------- */
+    function populatePicker(){
+      const sel = $("pick");
+      if (sel.dataset.ready) return;
+      const eps = WG.allEpisodes.slice().sort((a,b)=>b.date.localeCompare(a.date));
+      sel.innerHTML = eps.map(e =>
+        `<option value="${e.id}">${e.seasonTitle} · ${e.id==="pilot"?"Pilot":e.type==="finale"?"Finale":"Folge "+e.no} — ${e.title}</option>`).join("");
+      sel.dataset.ready = "1";
+      sel.addEventListener("change", () => prefill(sel.value));
+      prefill(sel.value);
+    }
+    function prefill(id){
+      const e = WG.findEpisode(id);
+      if(!e) return;
+      $("season").value = e.season || "s1";
+      $("no").value = e.no || "";
+      $("title").value = e.title || "";
+      $("date").value = e.date || "";
+      $("type").value = e.type || "";
+      $("logline").value = e.logline || "";
+      $("summary").value = e.summary || "";
+      $("vidUrl").value = vimeoUrl(e.video);
+      $("talkUrl").value = vimeoUrl(e.talk);
+      $("pageUrl").value = e.url || "";
+      build();
+    }
 
+    /* ---------------- Build code output ---------------- */
+    function epBlock(id, no, title, date, type, logline, summary, vid, talk){
       const lines = [];
       lines.push("        {");
       lines.push(`          id: "${id}", no: "${esc(no)}", title: "${esc(title)}", date: "${esc(date)}",${type?` type: "${esc(type)}",`:""}`);
@@ -171,10 +298,30 @@
       lines.push(`          video: ${vid?`{ id: "${vid.id}", h: "${vid.h}" }`:"null"},`);
       lines.push(`          talk: ${talk?`{ id: "${talk.id}", h: "${talk.h}" }`:"null"},`);
       lines.push("        },");
-      $("outEp").textContent = lines.join("\n");
-      $("outUrl").textContent = `    ${id}: "${esc(pageUrl)}",`;
+      return lines.join("\n");
     }
-    function copy(elId, btn){
+    function build(){
+      const season=$("season").value, no=$("no").value, title=$("title").value;
+      const date=$("date").value, type=$("type").value;
+      const logline=$("logline").value, summary=$("summary").value;
+      const vid=parseVimeo($("vidUrl").value), talk=parseVimeo($("talkUrl").value);
+      const pageUrl=$("pageUrl").value;
+      const id = (mode === "edit" && $("pick").value) ? $("pick").value : genId(season,no);
+
+      const vh = $("vidHint");
+      if($("vidUrl").value){ vh.textContent = vid? ("Erkannt → ID "+vid.id+(vid.h?(", Hash "+vid.h):"")) : "⚠ Link nicht erkannt – bitte den player.vimeo.com- oder vimeo.com-Link verwenden."; vh.className = vid?"hint ok":"hint err"; }
+      else { vh.textContent="Den Link aus dem Vimeo-Teilen/Einbetten-Fenster reinkopieren."; vh.className="hint"; }
+
+      const block = epBlock(id, no, title, date, type, logline, summary, vid, talk);
+      if (mode === "edit"){
+        $("findLine").textContent = `id: "${id}",`;
+        $("outEpEdit").textContent = block;
+      } else {
+        $("outEp").textContent = block;
+        $("outUrl").textContent = `    ${id}: "${esc(pageUrl)}",`;
+      }
+    }
+    function copy(elId){
       navigator.clipboard.writeText($(elId).textContent).then(()=>{
         $("copyMsg").textContent="✓ Kopiert!"; $("copyMsg").className="hint ok";
         setTimeout(()=>{$("copyMsg").textContent="";},2000);
@@ -185,7 +332,9 @@
     });
     $("copyEp").addEventListener("click",()=>copy("outEp"));
     $("copyUrl").addEventListener("click",()=>copy("outUrl"));
-    build();
+    $("copyEpEdit").addEventListener("click",()=>copy("outEpEdit"));
+
+    setMode("new");
   })();
   </script>
 </body>

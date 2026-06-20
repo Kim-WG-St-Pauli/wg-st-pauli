@@ -51,7 +51,7 @@
               `<li><a href="${href}" ${key === PAGE ? 'aria-current="page"' : ""}>${label}</a></li>`).join("")}
           </ul>
           <div class="nav__cta">
-            <button class="theme-toggle" data-theme-toggle aria-label="Farbschema wechseln" title="Farbschema wechseln">${THEME === "creme" ? "◑ Neon" : "◐ Creme"}</button>
+            <button class="theme-toggle" data-theme-toggle aria-label="Farbschema wechseln" title="Farbschema wechseln (Kiez · Creme · Neon)">◐ ${THEME_LABEL[nextTheme()]}</button>
             <a class="btn btn--ghost btn--sm" href="${WG.links.steady}" target="_blank" rel="noopener">Unterstützen</a>
             <a class="btn btn--primary btn--sm" href="folgen.html">Folgen ${I.arrow}</a>
             <button class="nav__burger" aria-label="Menü" aria-expanded="false">
@@ -113,6 +113,14 @@
 
   /* --------------------------------------------------- Episode posters */
   const PALETTES = {
+    kiez: [
+      ["#c5302a", "#e7d6b8"], ["#a9802f", "#ecdfbf"], ["#9c3f1d", "#e6d4b0"],
+      ["#7e5e1f", "#e9ddbd"], ["#b04527", "#ecdcbb"], ["#8a6a24", "#e3d2ac"],
+    ],
+    astra: [
+      ["#e2001a", "#e7d2a4"], ["#b08628", "#ecdcae"], ["#1c1610", "#e3cf9f"],
+      ["#c4902f", "#e9d8a8"], ["#b80016", "#ecd6a2"], ["#6b4f1a", "#e0cb95"],
+    ],
     neon: [
       ["#ff2e88", "#7a0b3d"], ["#c6ff3a", "#324d00"], ["#2fe3d2", "#04403a"],
       ["#ffb454", "#5e3500"], ["#9b6bff", "#2a1268"], ["#ff5a5a", "#4d0d0d"],
@@ -122,29 +130,36 @@
       ["#9c7a3e", "#ece0c6"], ["#5f6f4a", "#dcd2b9"], ["#9a6048", "#e8d6c3"],
     ],
   };
-  let POSTER_THEMES = PALETTES.neon;
+  let POSTER_THEMES = PALETTES.astra;
 
-  /* --------------------------------------------------- Theme (Neon | Creme) */
-  let THEME = "neon";
+  /* --------------------------------------------------- Theme (Astra | Kiez | Creme | Neon) */
+  // "astra" = Standard (Etiketten-Look). "neon" = Basis aus styles.css (kein Extra-CSS).
+  const THEMES = ["astra", "kiez", "creme", "neon"];
+  const THEME_LABEL = { astra: "Astra", kiez: "Kiez", creme: "Creme", neon: "Neon" };
+  let THEME = "astra";
+  function loadThemeCss(name) {
+    if (name === "neon") return;               // Basis steckt schon in styles.css
+    const id = "theme-" + name + "-css";
+    if (!document.getElementById(id)) {
+      const l = document.createElement("link");
+      l.id = id; l.rel = "stylesheet"; l.href = "assets/css/theme-" + name + ".css";
+      document.head.appendChild(l);
+    }
+  }
   function applyTheme() {
     let saved = null; try { saved = localStorage.getItem("wg:theme"); } catch {}
     const param = new URLSearchParams(location.search).get("theme");
-    THEME = (param === "creme" || param === "neon") ? param : (saved || "neon");
+    THEME = THEMES.includes(param) ? param : (THEMES.includes(saved) ? saved : "astra");
     if (param) { try { localStorage.setItem("wg:theme", THEME); } catch {} }
-    POSTER_THEMES = PALETTES[THEME] || PALETTES.neon;
-    if (THEME === "creme") {
-      document.body.classList.add("theme-creme");
-      if (!document.getElementById("theme-creme-css")) {
-        const l = document.createElement("link");
-        l.id = "theme-creme-css"; l.rel = "stylesheet"; l.href = "assets/css/theme-creme.css";
-        document.head.appendChild(l);
-      }
-    }
+    POSTER_THEMES = PALETTES[THEME] || PALETTES.astra;
+    THEMES.forEach((t) => { if (t !== "neon") document.body.classList.toggle("theme-" + t, t === THEME); });
+    loadThemeCss(THEME);
   }
+  function nextTheme() { return THEMES[(THEMES.indexOf(THEME) + 1) % THEMES.length]; }
   function toggleTheme() {
-    const next = THEME === "creme" ? "neon" : "creme";
+    const next = nextTheme();
     try { localStorage.setItem("wg:theme", next); } catch {}
-    location.href = location.pathname + (next === "creme" ? "?theme=creme" : "");
+    location.href = location.pathname + (next === "astra" ? "" : "?theme=" + next);
   }
   function posterFor(ep, idx) {
     const [a, b] = POSTER_THEMES[idx % POSTER_THEMES.length];
@@ -461,7 +476,12 @@
 
   /* --------------------------------------------------- Boot */
   function setFavicon() {
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%23ff2e88"/><text x="16" y="22" font-family="Arial Black,Arial" font-size="15" font-weight="900" text-anchor="middle" fill="%2315030c">WG</text></svg>`;
+    // Kiez/Creme: Messing-Türschild „WG“ (kein Herz-Anker, keine Marke). Neon: das alte Pink-Plakettchen.
+    const brass = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="%23e8dcc2"/><stop offset="1" stop-color="%23d3c099"/></linearGradient><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%23c79a47"/><stop offset="0.5" stop-color="%23a9802f"/><stop offset="1" stop-color="%237e5e1f"/></linearGradient></defs><rect width="64" height="64" rx="10" fill="url(%23b)"/><rect x="7" y="7" width="50" height="50" rx="8" fill="url(%23g)" stroke="%237e5e1f" stroke-width="1.5"/><rect x="7" y="7" width="50" height="50" rx="8" fill="none" stroke="%23fff4d6" stroke-opacity="0.35" stroke-width="1"/><text x="32" y="42" font-family="Georgia,serif" font-size="24" font-weight="700" text-anchor="middle" fill="%232a1d07">WG</text><circle cx="32" cy="13.5" r="2.4" fill="%23c5302a"/></svg>`;
+    const neon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="%23ff2e88"/><text x="16" y="22" font-family="Arial Black,Arial" font-size="15" font-weight="900" text-anchor="middle" fill="%2315030c">WG</text></svg>`;
+    // Astra: roter Herz-Anker auf Sand-Kachel
+    const astra = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="10" fill="%23e5d5b0"/><g transform="translate(8 7) scale(0.78)"><path d="M32 57 C12 43 4 32 4 22 C4 13 11 7 19 7 C25 7 29 11 32 16 C35 11 39 7 45 7 C53 7 60 13 60 22 C60 32 52 43 32 57 Z" fill="%23e2001a"/><g fill="none" stroke="%23141414" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="32" cy="17" r="3.6"/><line x1="32" y1="20" x2="32" y2="47"/><line x1="23" y1="26" x2="41" y2="26"/><path d="M19 39 C20 49 26 51 32 51 C38 51 44 49 45 39"/></g></g></svg>`;
+    const svg = THEME === "neon" ? neon : THEME === "astra" ? astra : brass;
     const l = document.createElement("link");
     l.rel = "icon"; l.type = "image/svg+xml";
     l.href = "data:image/svg+xml," + svg;

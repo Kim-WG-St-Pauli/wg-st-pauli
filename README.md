@@ -18,8 +18,12 @@ Die bestehende Seite ist eine nackte WordPress-Standardseite (weißer Hintergrun
 gestapelte Buttons, Textwüste). Dieser Entwurf macht daraus eine eigenständige,
 professionelle Marke:
 
-- **Eigene Designsprache** – „Neon-Noir vom Kiez“: Ink-Schwarz, Reeperbahn-Pink,
-  Punk-Acid, Plakat-Typografie, Film-Grain. Passt zu St. Pauli *und* zur KI-Ästhetik.
+- **Eigene Designsprache** mit drei umschaltbaren Themes (Knopf oben rechts):
+  - **„Kiez“ (Standard)** – gealtertes Kraftpapier, eigenes Vintage-Rot, Tintenschwarz,
+    Messing. Inspiriert von alten Kiez-Etiketten & dem Messing-Türschild, bewusst eine
+    *eigene* Gestaltung (kein Marken-Logo/-Schriftzug, kein Herz-Anker → keine Markenrechts-Probleme).
+  - **„Creme“** – heller, ruhiger; **„Neon“** – das ursprüngliche Neon-Noir.
+  - Plakat-Typografie, Film-Grain. Passt zu St. Pauli *und* zur KI-Ästhetik.
 - **Klare Navigation** statt Button-Liste: Start · Der Kosmos · Folgen · Bewohner · Mitmachen.
 - **Mediathek** mit Staffel-Filter, „Ticket“-Folgenkarten und Klick-zum-Abspielen.
 - **Fortschritt merken** – „Weiterschauen“ + Fortschrittsbalken (lokal im Browser,
@@ -102,10 +106,16 @@ einen sauberen Hinweis + einen Button „Folge auf wg-st-pauli.de ansehen“.
 ## Neue Folge eintragen
 
 **Ohne Code-Kenntnisse (für den/die Betreiber:in):** Es gibt ein eingebautes
-**Folgen-Werkzeug** unter `werkzeug.html`
-([Live](https://0xdenyo.github.io/wg-st-pauli/werkzeug.html)): Formular ausfüllen →
-fertigen Code kopieren → per GitHub-Web-Editor einfügen → automatisch live.
-Schritt-für-Schritt-Anleitung: [`PFLEGE.md`](PFLEGE.md).
+**Werkzeug** unter `werkzeug.html` mit drei Modi:
+**＋ Neue Folge**, **✎ Folge bearbeiten** (bestehende Texte korrigieren – Folge wählen,
+Felder füllen sich, ändern, Block ersetzen) und **✦ Texte & Bilder** (Bewohner-Texte,
+der „Look ist kein Versehen“-Abschnitt, Bilder hochladen). Ausfüllen → Code kopieren →
+per GitHub-Web-Editor einfügen → automatisch live.
+
+Anleitungen für Betreiber:in:
+- [`PFLEGE.md`](PFLEGE.md) – der Pflege-Alltag (neue Folge, Texte, Bilder)
+- [`UEBERGABE.md`](UEBERGABE.md) – eigenes GitHub-Konto + Projekt übernehmen
+- [`HOSTING.md`](HOSTING.md) – eigene Domain bei all-inkl/KAS anbinden (mit DNS-Werten)
 
 **Manuell (technisch):** In [`data/series.js`](data/series.js) im passenden
 Staffel-Array einen Eintrag ergänzen:
