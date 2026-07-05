@@ -44,7 +44,7 @@ window.WG = (function () {
     {
       id: "beate",
       name: "Beate",
-      role: "Die Friseuse a. D.",
+      role: "Die Gothic Friseuse",
       age: "50+",
       img: "assets/img/cast-beate.jpg",
       quote: "Der einzige Ort, an dem niemand etwas von mir will.",
@@ -78,7 +78,7 @@ window.WG = (function () {
   const reporter = {
     id: "milo",
     name: "Milo Relotio",
-    role: "Journalist (fiktiv)",
+    role: "Journalist",
     bio: "Der Reporter, der in den Kiez-Talks die großen Fragen stellt – über Plus-WGs, Alter und Zusammenleben. Ob jedes Wort davon stimmt? Der Name ist ein kleiner Wink.",
   };
 
@@ -94,7 +94,7 @@ window.WG = (function () {
         {
           id: "pilot", no: "Pilot", title: "Silkes Einzug", date: "2026-04-11",
           logline: "Silke zieht ein. Fünf Leben, eine Küche, kein Zurück.",
-          summary: "Der Anfang von allem: Silke steht mit hundert Kartons und null Plan vor der Tür. Aber wozu hat man denn alte Freunde?",
+          summary: "Der Anfang von allem: Silke steht mit hundert Kartons und null Plan vor der Tür. Doch wozu hat man alte Freunde?",
           video: { id: "1169523564", h: "f44501658c" },
           talk: { id: "1172434235", h: "" },
         },
@@ -128,14 +128,14 @@ window.WG = (function () {
         },
         {
           id: "s1f5", no: "5", title: "Der Tag danach", date: "2026-05-16",
-          logline: "Der Morgen nach der Nacht.",
+          logline: "Der Tag danach.",
           summary: "Wenn die WG feiert – dann aber richtig. Mit den entsprechenden Konsequenzen…",
           video: { id: "1169546241", h: "82215e0f19" },
           talk: { id: "1169547978", h: "0619f2bbf6" },
         },
         {
           id: "s1f6", no: "6", title: "Nacktputzdienst", date: "2026-05-23",
-          logline: "Party aftermath und interessantr Dresscode.",
+          logline: "Party aftermath und interessanter Dresscode.",
           summary: "Der Vorteil am älter werden: Die Fähigkeit zu kreativer Problemlösung!",
           video: { id: "1169550047", h: "91760a785b" },
           talk: { id: "1169566948", h: "3663b18960" },
@@ -168,7 +168,21 @@ window.WG = (function () {
           video: { id: "1198079030", h: "e32ee6ca16" },
           talk: null,
         },
-
+        {
+          id: "s2f3", no: "3", title: "Das Bett", date: "2026-06-20",
+          logline: "Bettgeschichten Teil1",
+          summary: "Im Schlafzimmer von Kai&Petra wird’s jetzt heiss…  – Folge drei von Staffel zwei.",
+          video: { id: "1200983664", h: "c1cd724219" },
+          talk: null,
+        },
+                {
+          id: "s2f4", no: "4", title: "Das Wasserbett", date: "2026-07-04",
+          logline: "Bettgeschichten Teil2",
+          summary: "Kai schweisst ein Wasserbett. Logisch, oder?
+– Folge vier von Staffel zwei.",
+          video: { id: "1201567968", h: "d259e888c5" },
+          talk: null,
+        },
       ],
     },
   ];
@@ -199,6 +213,8 @@ window.WG = (function () {
     s1fin: "https://wg-st-pauli.de/2026/03/04/staffelfinale-der-ersten-staffel/",
     s2f1:  "https://wg-st-pauli.de/2026/06/05/staffel-2-folge-1-montag/",
     s2f2: "https://wg-st-pauli.de/2026/06/13/s2f2kochen/",
+    s2f3: "https://wg-st-pauli.de/2026/06/20/s2f3-das-bett/",
+    s2f4: "https://wg-st-pauli.de/2026/07/04/s2f4-wasserbett/",
   };
 
   const allEpisodes = seasons.flatMap((s) =>
