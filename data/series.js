@@ -161,6 +161,14 @@ window.WG = (function () {
           video: { id: "1198079034", h: "3f8237204f" },
           talk: null,
         },
+         {
+          id: "s2f2", no: "2", title: "Kochen", date: "2026-06-13",
+          logline: "Kann kochen töten?",
+          summary: "Weltenbummlerin Silke überrascht die WG mit „gesundem Essen“…",
+          video: { id: "1198079030", h: "e32ee6ca16" },
+          talk: null,
+        },
+
       ],
     },
   ];
@@ -190,6 +198,7 @@ window.WG = (function () {
     s1f6:  "https://wg-st-pauli.de/2026/03/04/folge-6-nacktputzdienst/",
     s1fin: "https://wg-st-pauli.de/2026/03/04/staffelfinale-der-ersten-staffel/",
     s2f1:  "https://wg-st-pauli.de/2026/06/05/staffel-2-folge-1-montag/",
+    s2f2: "https://wg-st-pauli.de/2026/06/13/s2f2kochen/",
   };
 
   const allEpisodes = seasons.flatMap((s) =>
