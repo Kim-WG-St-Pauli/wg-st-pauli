@@ -24,13 +24,14 @@ Falls der Zugang irgendwann nicht mehr funktioniert (z. B. weil der Code abgelau
 
 ## 2. Der Ablauf — für alles gleich
 
-Im Werkzeug gibt es oben **fünf Reiter** — du wählst, was du gerade tun willst:
+Im Werkzeug gibt es oben **sechs Reiter** — du wählst, was du gerade tun willst:
 
 - **＋ Neue Folge** — eine neue Folge anlegen (das machst du jeden Samstag)
 - **✎ Folge bearbeiten** — eine Folge, die es schon gibt, korrigieren
 - **◐ Bewohner** — Name, Rolle, Zitat, Bio, Schlagworte einer Figur ändern
 - **↗ Links** — Steady, Instagram, Facebook, Original-Website
 - **✦ Staffel-Texte** — Überschrift und Untertitel einer Staffel
+- **♥ Unterstützer-Stufen** — Name, Tagline und Vorteile der Steady-Stufen auf `mitmachen.html` ändern
 
 Egal welcher Reiter: du füllst die Felder aus, siehst rechts sofort eine **Vorschau**, und klickst auf **„Veröffentlichen“**. Nach 1–2 Minuten ist die Änderung live. Das war's — kein Kopieren, kein Einfügen bei GitHub, keine Klammern oder Kommas, um die du dich kümmern musst.
 
@@ -84,7 +85,22 @@ Bei **Links** siehst du bewusst nicht die technischen Newsletter-Felder (Mailchi
 
 ---
 
-## 6. Wenn doch mal was klemmt
+## 6. Die Steady-Unterstützer-Stufen ändern
+
+Auf `mitmachen.html` stehen die drei Stufen, mit denen man die WG auf Steady unterstützen kann (aktuell „Hausgemeinschaft“, „WG-Mitglied“, „Wohnungsretter:in“). Die kannst du im Werkzeug unter dem Reiter **♥ Unterstützer-Stufen** pflegen.
+
+1. **Werkzeug öffnen** und oben auf **♥ Unterstützer-Stufen** klicken.
+2. In der Auswahl die **Stufe aussuchen**, die du ändern willst.
+3. **Name**, **Tagline** und die **eigenen Vorteile** dieser Stufe anpassen. Bei den Vorteilen kommt **eine Zeile pro Vorteil** ins Textfeld.
+4. Willst du, dass diese Stufe das „Beliebt“-Abzeichen bekommt, häkchen bei **„Beliebteste Option“** setzen. Es kann immer nur eine Stufe gleichzeitig die beliebteste sein — setzt du das Häkchen bei einer, wird es bei der anderen automatisch entfernt, du musst dich um nichts weiter kümmern.
+5. In der Vorschau rechts prüfen, ob alles passt.
+6. Auf **„Veröffentlichen“** klicken.
+
+**Wichtig, weil es früher mal schiefging:** Jede Stufe (außer der ersten) zeigt automatisch eine Zeile „Alles aus „…“ “, die auf die vorherige Stufe verweist. Diese Zeile trägst du **nirgendwo selbst ein** — sie wird beim Anzeigen automatisch aus dem aktuellen Namen der vorherigen Stufe gebaut. Änderst du also den Namen einer Stufe, aktualisiert sich der Verweis in der nächsten Stufe von ganz allein, überall auf der Seite. Es kann also nicht mehr passieren, dass irgendwo noch der alte Name auftaucht, weil man ihn beim Umbenennen vergessen hat anzupassen.
+
+---
+
+## 7. Wenn doch mal was klemmt
 
 **Keine Sorge — du kannst nichts endgültig kaputtmachen.** Zwei Sicherheitsnetze fangen dich auf:
 
@@ -95,7 +111,7 @@ Trau dich also ruhig.
 
 ---
 
-## 7. Was du *nicht* anfassen musst
+## 8. Was du *nicht* anfassen musst
 
 Für die ganz normale Pflege — neue Folgen, Texte, Bilder — brauchst du **nur** das Werkzeug aus dieser Anleitung.
 

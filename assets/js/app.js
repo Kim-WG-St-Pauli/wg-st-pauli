@@ -451,6 +451,31 @@
     observeReveal();
   }
 
+  /* --------------------------------------------------- Unterstützer-Stufen (Steady) */
+  const TIER_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>';
+  function tierCard(tier, idx, all) {
+    const prevName = idx > 0 ? all[idx - 1].name : null;
+    const inheritedPerk = prevName ? [`Alles aus „${prevName}“`] : [];
+    const perks = inheritedPerk.concat(tier.perks || []);
+    const ctaLabel = tier.featured ? `${tier.name} werden ↗` : "Auf Steady wählen ↗";
+    const ctaClass = tier.featured ? "btn btn--primary btn--block" : "btn btn--ghost btn--block";
+    return `
+      <article class="tier${tier.featured ? " tier--feature" : ""} reveal">
+        ${tier.featured ? '<div class="tier__badge">Beliebt</div>' : ""}
+        <div class="tier__name">${tier.name}</div>
+        <p class="tier__tagline">${tier.tagline}</p>
+        <ul class="tier__perks">${perks.map((p) => `<li>${TIER_CHECK}${p}</li>`).join("")}</ul>
+        <a class="${ctaClass}" href="${WG.links.steady}" target="_blank" rel="noopener">${ctaLabel}</a>
+      </article>`;
+  }
+
+  function renderTiers() {
+    const mount = $("[data-tiers]");
+    if (!mount) return;
+    mount.innerHTML = WG.tiers.map((t, i) => tierCard(t, i, WG.tiers)).join("");
+    observeReveal();
+  }
+
   /* --------------------------------------------------- Newsletter */
   function initNewsletter() {
     const form = $("[data-newsletter]");
@@ -499,6 +524,7 @@
     renderCastStrip();
     renderFolgen();
     renderDossiers();
+    renderTiers();
     initCountdown();
     initResume();
     initReset();

@@ -99,6 +99,7 @@
         <button class="mode-btn" data-mode="characters" role="tab" aria-selected="false">◐ Bewohner</button>
         <button class="mode-btn" data-mode="links" role="tab" aria-selected="false">↗ Links</button>
         <button class="mode-btn" data-mode="seasons" role="tab" aria-selected="false">✦ Staffel-Texte</button>
+        <button class="mode-btn" data-mode="tiers" role="tab" aria-selected="false">♥ Unterstützer-Stufen</button>
       </div>
     </div>
   </header>
@@ -248,6 +249,43 @@
         <p class="hint" id="snMsg"></p>
       </div>
     </section>
+
+    <!-- ====================== MODE: UNTERSTÜTZER-STUFEN ====================== -->
+    <section class="section section--tight panel" id="panel-tiers" hidden>
+      <div class="container tool">
+        <form id="fTier" onsubmit="return false">
+          <div class="field">
+            <label>Welche Stufe?</label>
+            <select id="tiPick"></select>
+          </div>
+          <div class="field"><label>Name</label><input id="tiName"></div>
+          <div class="field"><label>Tagline (ein Satz)</label><input id="tiTagline"></div>
+          <div class="field">
+            <label>Eigene Vorteile dieser Stufe (ein Vorteil pro Zeile)</label>
+            <textarea id="tiPerks" rows="5" placeholder="z. B.&#10;Exklusive Goodies &amp; Blicke hinter die Kulissen&#10;Näher dran am WG-Geschehen"></textarea>
+            <div class="hint">Der Verweis „Alles aus „…““ auf die vorherige Stufe wird automatisch ergänzt — den brauchst du hier nicht einzutragen.</div>
+          </div>
+          <div class="field">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
+              <input type="checkbox" id="tiFeatured" style="width:auto">
+              Beliebteste Option (zeigt „Beliebt“-Abzeichen)
+            </label>
+            <div class="hint">Nur eine Stufe kann gleichzeitig die beliebteste sein — wählst du sie hier aus, wird sie bei den anderen automatisch entfernt.</div>
+          </div>
+        </form>
+        <div class="out-card">
+          <span class="kicker" style="color:var(--lime)">Vorschau</span>
+          <article class="tier preview-card" id="pvTierCard" style="margin-top:10px">
+            <div class="tier__badge" id="pvTiBadge" hidden>Beliebt</div>
+            <div class="tier__name" id="pvTiName"></div>
+            <p class="tier__tagline" id="pvTiTagline"></p>
+            <ul class="tier__perks" id="pvTiPerks"></ul>
+          </article>
+          <button class="btn btn--lime" id="btnPublishTier" type="button" style="margin-top:18px;width:100%">Veröffentlichen</button>
+          <p class="hint" id="tiMsg"></p>
+        </div>
+      </div>
+    </section>
   </div>
 
   <!-- ====================== BILDER & SICHERHEITSNETZ ====================== -->
@@ -394,6 +432,7 @@
     const panels = {
       new: $("panel-episode"), edit: $("panel-episode"),
       characters: $("panel-characters"), links: $("panel-links"), seasons: $("panel-seasons"),
+      tiers: $("panel-tiers"),
     };
     function setMode(m) {
       mode = m;
@@ -406,6 +445,7 @@
       if (m === "characters") populateCharacterPicker();
       if (m === "links") fillLinksForm();
       if (m === "seasons") populateSeasonPicker();
+      if (m === "tiers") populateTierPicker();
     }
     document.querySelectorAll(".mode-btn").forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
 
@@ -627,6 +667,57 @@
       await runPublish(next, `Staffel-Text aktualisiert: ${s.title} (via Werkzeug)`, "snMsg", () => {});
     }
     $("btnPublishSeason").addEventListener("click", publishSeason);
+
+    /* ---------------- UNTERSTÜTZER-STUFEN: form <-> preview ---------------- */
+    const TIER_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>';
+    function populateTierPicker() {
+      const sel = $("tiPick");
+      sel.innerHTML = (state.data.tiers || []).map((t) => `<option value="${t.id}">${t.name}</option>`).join("");
+      if (!sel.dataset.bound) { sel.addEventListener("change", () => prefillTier(sel.value)); sel.dataset.bound = "1"; }
+      prefillTier(sel.value);
+    }
+    function prefillTier(id) {
+      const t = (state.data.tiers || []).find((x) => x.id === id);
+      if (!t) return;
+      $("tiName").value = t.name || "";
+      $("tiTagline").value = t.tagline || "";
+      $("tiPerks").value = (t.perks || []).join("\n");
+      $("tiFeatured").checked = !!t.featured;
+      updateTierPreview();
+    }
+    function updateTierPreview() {
+      const tiers = state.data.tiers || [];
+      const id = $("tiPick").value;
+      const idx = tiers.findIndex((x) => x.id === id);
+      const prevName = idx > 0 ? tiers[idx - 1].name : null;
+      const inheritedPerk = prevName ? [`Alles aus „${prevName}“`] : [];
+      const ownPerks = $("tiPerks").value.split("\n").map((p) => p.trim()).filter(Boolean);
+      const perks = inheritedPerk.concat(ownPerks);
+      $("pvTiBadge").hidden = !$("tiFeatured").checked;
+      $("pvTiName").textContent = $("tiName").value || "(Name)";
+      $("pvTiTagline").textContent = $("tiTagline").value;
+      $("pvTiPerks").innerHTML = perks.map((p) => `<li>${TIER_CHECK}${p}</li>`).join("");
+      $("pvTierCard").classList.toggle("tier--feature", $("tiFeatured").checked);
+      $("btnPublishTier").disabled = !($("tiName").value.trim() && $("tiTagline").value.trim() && ownPerks.length);
+    }
+    ["tiName", "tiTagline", "tiPerks"].forEach((id) => $(id).addEventListener("input", updateTierPreview));
+    $("tiFeatured").addEventListener("change", updateTierPreview);
+
+    async function publishTier() {
+      const id = $("tiPick").value;
+      const next = JSON.parse(JSON.stringify(state.data));
+      const t = (next.tiers || []).find((x) => x.id === id);
+      t.name = $("tiName").value.trim();
+      t.tagline = $("tiTagline").value.trim();
+      t.perks = $("tiPerks").value.split("\n").map((p) => p.trim()).filter(Boolean);
+      t.featured = $("tiFeatured").checked;
+      if (t.featured) {
+        // nur eine Stufe darf gleichzeitig "featured" sein
+        (next.tiers || []).forEach((other) => { if (other.id !== id) other.featured = false; });
+      }
+      await runPublish(next, `Unterstützer-Stufe aktualisiert: ${t.name} (via Werkzeug)`, "tiMsg", () => {});
+    }
+    $("btnPublishTier").addEventListener("click", publishTier);
 
     /* ---------------- shared publish flow ---------------- */
     async function runPublish(next, message, msgElId, onSuccess) {

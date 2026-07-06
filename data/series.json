@@ -286,6 +286,39 @@
       ]
     }
   ],
+  "tiers": [
+    {
+      "id": "tier1",
+      "name": "Hausgemeinschaft",
+      "tagline": "Du magst die WG und wirfst was in den Hut.",
+      "perks": [
+        "Warmes Dankeschön von der ganzen WG",
+        "Platz auf der Gästeliste (Newsletter)",
+        "Das gute Gefühl, unabhängiges Erzählen zu ermöglichen"
+      ],
+      "featured": false
+    },
+    {
+      "id": "tier2",
+      "name": "WG-Mitglied",
+      "tagline": "Du bist regelmäßig dabei – die WG dankt’s dir.",
+      "perks": [
+        "Exklusive Goodies & Blicke hinter die Kulissen",
+        "Näher dran am WG-Geschehen"
+      ],
+      "featured": true
+    },
+    {
+      "id": "tier3",
+      "name": "Wohnungsretter:in",
+      "tagline": "Du trägst die WG richtig mit.",
+      "perks": [
+        "Größtmögliche Unterstützung fürs Projekt",
+        "Ein echter Platz im Maschinenraum der WG"
+      ],
+      "featured": false
+    }
+  ],
   "links": {
     "steady": "https://steady.page/de/wg-st-pauli",
     "steadyAbout": "https://steady.page/de/wg-st-pauli/about",

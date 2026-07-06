@@ -10,7 +10,7 @@
 window.WG = (function () {
   "use strict";
 
-  const FALLBACK = { characters: [], creator: {}, reporter: {}, seasons: [], links: {}, urlMap: {} };
+  const FALLBACK = { characters: [], creator: {}, reporter: {}, seasons: [], tiers: [], links: {}, urlMap: {} };
 
   function loadData() {
     try {
@@ -27,6 +27,7 @@ window.WG = (function () {
 
   const data = loadData();
   const { characters, creator, reporter, seasons, links, urlMap } = data;
+  const tiers = data.tiers || [];
 
   const allEpisodes = seasons.flatMap((s) =>
     s.episodes.map((e) => ({ ...e, season: s.id, seasonTitle: s.title, url: urlMap[e.id] || links.original }))
@@ -45,6 +46,7 @@ window.WG = (function () {
     creator,
     reporter,
     seasons,
+    tiers,
     links,
     allEpisodes,
     latest,
