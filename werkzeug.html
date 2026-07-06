@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>Folgen-Werkzeug — WG St. Pauli pflegen</title>
+  <title>Werkzeug — WG St. Pauli pflegen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -20,7 +20,6 @@
     }
     .field input:focus, .field textarea:focus, .field select:focus { outline:none; border-color:var(--pink); box-shadow:var(--glow-pink); }
     .row2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-    pre { background:#07070b; border:1px solid var(--line); border-radius:12px; padding:18px; overflow:auto; font-family:var(--font-mono); font-size:.82rem; color:#d7f7c0; white-space:pre-wrap; word-break:break-word; }
     .out-card { position:sticky; top:90px; }
     .hint { font-size:.84rem; color:var(--faint); margin-top:6px; }
     .ok { color:var(--lime); }
@@ -29,10 +28,11 @@
     .stepnum li { counter-increment:s; display:flex; gap:14px; padding:12px 0; border-bottom:1px solid var(--line-2); }
     .stepnum li::before { content:counter(s); font-family:var(--font-display); color:var(--pink); font-size:1.4rem; line-height:1; min-width:28px; }
     .modes { display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 4px; }
+    .modes[hidden] { display:none; }
     .mode-btn {
       font-family:var(--font-mono); font-size:.78rem; letter-spacing:.08em; text-transform:uppercase;
       padding:11px 18px; border-radius:999px; border:1px solid var(--line); color:var(--muted);
-      background:transparent; transition:all .2s;
+      background:transparent; transition:all .2s; cursor:pointer;
     }
     .mode-btn[aria-selected="true"] { background:var(--text); color:var(--ink); border-color:var(--text); }
     .mode-btn:hover { color:var(--text); }
@@ -40,6 +40,16 @@
     .callout { background:var(--ink-2); border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin:14px 0; }
     .callout code { background:rgba(0,0,0,.18); padding:2px 6px; border-radius:6px; font-family:var(--font-mono); font-size:.86em; }
     .guide-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    .status-bar { display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:14px 18px; border-radius:12px; border:1px solid var(--line); background:var(--ink-2); margin-bottom:22px; }
+    .status-bar[hidden] { display:none; }
+    .status-dot { width:10px; height:10px; border-radius:50%; background:var(--faint); flex:none; }
+    .status-dot.ok { background:var(--lime); box-shadow:0 0 8px var(--lime); }
+    .status-dot.err { background:#ff6b6b; box-shadow:0 0 8px #ff6b6b; }
+    .status-dot.pending { background:var(--amber); box-shadow:0 0 8px var(--amber); }
+    .btn[disabled] { opacity:.45; cursor:not-allowed; }
+    .preview-card { border:1px dashed var(--line); border-radius:14px; padding:20px; }
+    .preview-card .ep__title, .preview-card .dossier__name { margin-top:6px; }
+    details.setup summary { cursor:pointer; font-family:var(--font-mono); font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; color:var(--pink); }
     @media (max-width:900px){ .tool{grid-template-columns:1fr;} .out-card{position:static;} .guide-grid{grid-template-columns:1fr;} }
   </style>
 </head>
@@ -50,167 +60,207 @@
     <div class="container">
       <span class="kicker">Internes Werkzeug · nicht im Menü</span>
       <h1 class="h-lg" style="margin:14px 0 12px">Seite pflegen</h1>
-      <p class="lead">Alles ohne Programme, direkt im Browser. Wähle unten, was du tun willst: eine <strong>neue Folge</strong> anlegen, eine <strong>bestehende Folge bearbeiten</strong>, oder <strong>Texte &amp; Bilder</strong> ändern.</p>
-      <div class="modes" role="tablist" aria-label="Was möchtest du tun?">
-        <button class="mode-btn" data-mode="new"  role="tab" aria-selected="true">＋ Neue Folge</button>
+      <p class="lead">Alles ohne Programme, direkt im Browser. Felder ausfüllen, unten auf <strong>„Veröffentlichen“</strong> klicken – fertig. Du musst nie Code anfassen oder irgendwo Text einfügen.</p>
+
+      <!-- ====================== ZUGANG ====================== -->
+      <div id="statusBar" class="status-bar" hidden>
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText" class="hint" style="margin:0"></span>
+        <button class="btn btn--ghost btn--sm" id="btnDisconnect" type="button" style="margin-left:auto">Zugang trennen</button>
+      </div>
+
+      <div id="authPanel" class="callout">
+        <h3 class="h-sm" style="margin-bottom:8px">Einmalig: Zugang einrichten</h3>
+        <p class="muted" style="margin-bottom:14px">Damit dieses Werkzeug Änderungen direkt speichern kann, braucht es einmalig einen persönlichen Zugangs-Schlüssel von GitHub. Das machst du einmal, danach nie wieder.</p>
+        <div class="field">
+          <label>Zugangs-Schlüssel (Personal Access Token)</label>
+          <input id="tokenInput" type="password" placeholder="github_pat_…" autocomplete="off">
+        </div>
+        <button class="btn btn--lime btn--sm" id="btnConnect" type="button">Verbinden</button>
+        <p class="hint" id="authMsg"></p>
+        <details class="setup" style="margin-top:16px">
+          <summary>Wie bekomme ich einen Zugangs-Schlüssel?</summary>
+          <ul class="stepnum" style="margin-top:10px">
+            <li>Diesen Link öffnen (am besten in einem neuen Tab): <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a>. Falls GitHub nach dem Passwort fragt, einloggen.</li>
+            <li>Bei <strong>„Repository access“</strong> die Option <strong>„Only select repositories“</strong> wählen und <code>wg-st-pauli</code> auswählen.</li>
+            <li>Weiter unten bei <strong>„Permissions“</strong> auf <strong>„Repository permissions“</strong> klicken, bei <strong>„Contents“</strong> auf <strong>„Read and write“</strong> stellen. Mehr muss nicht angehakt werden.</li>
+            <li>Ganz unten auf <strong>„Generate token“</strong> klicken. GitHub zeigt dir jetzt einmalig einen langen Code, der mit <code>github_pat_</code> beginnt.</li>
+            <li>Diesen Code kopieren und oben ins Feld einfügen, dann auf <strong>„Verbinden“</strong> klicken. Der Code wird nur in deinem eigenen Browser gespeichert.</li>
+          </ul>
+          <p class="hint" style="margin-top:10px">Falls der Code mal nicht mehr funktioniert (z. B. weil er abgelaufen ist), einfach einen neuen nach derselben Anleitung erstellen.</p>
+        </details>
+      </div>
+
+      <div class="modes" role="tablist" aria-label="Was möchtest du tun?" id="modeTabs" hidden>
+        <button class="mode-btn" data-mode="new" role="tab" aria-selected="true">＋ Neue Folge</button>
         <button class="mode-btn" data-mode="edit" role="tab" aria-selected="false">✎ Folge bearbeiten</button>
-        <button class="mode-btn" data-mode="text" role="tab" aria-selected="false">✦ Texte &amp; Bilder</button>
+        <button class="mode-btn" data-mode="characters" role="tab" aria-selected="false">◐ Bewohner</button>
+        <button class="mode-btn" data-mode="links" role="tab" aria-selected="false">↗ Links</button>
+        <button class="mode-btn" data-mode="seasons" role="tab" aria-selected="false">✦ Staffel-Texte</button>
       </div>
     </div>
   </header>
 
-  <!-- ====================== MODE: NEUE / BEARBEITEN ====================== -->
-  <section class="section section--tight" id="panel-form">
-    <div class="container tool">
-      <!-- FORM -->
-      <form id="f">
-        <div class="field" id="pickWrap" hidden>
-          <label>Welche Folge bearbeiten?</label>
-          <select id="pick"></select>
-          <div class="hint">Aussuchen → Felder füllen sich automatisch. Ändern → rechts erscheint der neue Code.</div>
-        </div>
-        <div class="row2">
-          <div class="field">
-            <label>Staffel</label>
-            <select id="season"><option value="s2">Staffel 2</option><option value="s1">Staffel 1</option></select>
+  <div id="app" hidden>
+    <!-- ====================== MODE: NEUE / BEARBEITEN ====================== -->
+    <section class="section section--tight panel" id="panel-episode">
+      <div class="container tool">
+        <form id="fEpisode" onsubmit="return false">
+          <div class="field" id="pickWrap" hidden>
+            <label>Welche Folge bearbeiten?</label>
+            <select id="epPick"></select>
+            <div class="hint">Aussuchen → Felder füllen sich automatisch.</div>
+          </div>
+          <div class="row2">
+            <div class="field">
+              <label>Staffel</label>
+              <select id="epSeason"></select>
+            </div>
+            <div class="field">
+              <label>Folgen-Nummer</label>
+              <input id="epNo" placeholder="z. B. 2">
+              <div class="hint">„Pilot“ oder „Finale“ ist auch ok.</div>
+            </div>
           </div>
           <div class="field">
-            <label>Folgen-Nummer</label>
-            <input id="no" placeholder="z. B. 2" value="2">
-            <div class="hint">„Pilot“ oder „Finale“ ist auch ok.</div>
+            <label>Titel</label>
+            <input id="epTitle" placeholder="z. B. Dienstag">
           </div>
-        </div>
-        <div class="field">
-          <label>Titel</label>
-          <input id="title" placeholder="z. B. Dienstag">
-        </div>
-        <div class="row2">
+          <div class="row2">
+            <div class="field">
+              <label>Datum (Samstag)</label>
+              <input id="epDate" type="date">
+            </div>
+            <div class="field">
+              <label>Typ</label>
+              <select id="epType"><option value="">normale Folge</option><option value="finale">Staffelfinale</option></select>
+            </div>
+          </div>
           <div class="field">
-            <label>Datum (Samstag)</label>
-            <input id="date" type="date">
+            <label>Logline (ein knackiger Satz)</label>
+            <input id="epLogline" placeholder="z. B. Der Kühlschrank ist leer. Der Streit ist voll.">
           </div>
           <div class="field">
-            <label>Typ</label>
-            <select id="type"><option value="">normale Folge</option><option value="finale">Staffelfinale</option></select>
+            <label>Beschreibung (2–3 Sätze)</label>
+            <textarea id="epSummary" rows="3" placeholder="Kurze Inhaltsbeschreibung für die Folgen-Karte und den Player."></textarea>
           </div>
-        </div>
-        <div class="field">
-          <label>Logline (ein knackiger Satz)</label>
-          <input id="logline" placeholder="z. B. Der Kühlschrank ist leer. Der Streit ist voll.">
-        </div>
-        <div class="field">
-          <label>Beschreibung (2–3 Sätze)</label>
-          <textarea id="summary" rows="3" placeholder="Kurze Inhaltsbeschreibung für die Folgen-Karte und den Player."></textarea>
-        </div>
-        <div class="field">
-          <label>Vimeo-Link der Folge</label>
-          <input id="vidUrl" placeholder="https://player.vimeo.com/video/123456789?h=abcdef0123">
-          <div class="hint" id="vidHint">Den Link aus dem Vimeo-Teilen/Einbetten-Fenster reinkopieren.</div>
-        </div>
-        <div class="field">
-          <label>Vimeo-Link Kiez-Talk (optional)</label>
-          <input id="talkUrl" placeholder="leer lassen, wenn es keinen Talk gibt">
-        </div>
-        <div class="field">
-          <label>Link zur Original-Folgenseite (Fallback)</label>
-          <input id="pageUrl" placeholder="https://wg-st-pauli.de/2026/06/12/...">
-          <div class="hint">Wird angezeigt, falls das Video außerhalb von wg-st-pauli.de nicht lädt.</div>
-        </div>
-      </form>
-
-      <!-- OUTPUT -->
-      <div class="out-card">
-        <span class="kicker" style="color:var(--lime)">Fertiger Code</span>
-
-        <!-- NEW mode output -->
-        <div id="outNew">
-          <h3 class="h-sm" style="margin:10px 0 8px">1 · In <code>data/series.js</code> ins Staffel-Array einfügen</h3>
-          <pre id="outEp">…</pre>
-          <button class="btn btn--lime btn--sm" id="copyEp" type="button">Code kopieren</button>
-          <h3 class="h-sm" style="margin:24px 0 8px">2 · In dieselbe Datei in <code>urlMap</code> einfügen</h3>
-          <pre id="outUrl">…</pre>
-          <button class="btn btn--ghost btn--sm" id="copyUrl" type="button">Zeile kopieren</button>
-        </div>
-
-        <!-- EDIT mode output -->
-        <div id="outEdit" hidden>
-          <h3 class="h-sm" style="margin:10px 0 8px">So bearbeitest du diese Folge</h3>
-          <p class="hint" style="margin-bottom:10px">In <code>data/series.js</code> den vorhandenen Block dieser Folge <strong>suchen und ersetzen</strong>. Erkennbar an dieser Zeile:</p>
-          <pre id="findLine">…</pre>
-          <h3 class="h-sm" style="margin:20px 0 8px">Diesen Block dort einsetzen (alt → neu)</h3>
-          <pre id="outEpEdit">…</pre>
-          <button class="btn btn--lime btn--sm" id="copyEpEdit" type="button">Neuen Block kopieren</button>
-          <div class="callout" style="margin-top:18px">
-            <strong>Faustregel:</strong> Du tauschst nur den einen Block aus, der mit der gesuchten Zeile beginnt – von der öffnenden <code>{</code> bis zur passenden <code>},</code>. Die Folgen drüber und drunter bleiben unangetastet.
+          <div class="field">
+            <label>Vimeo-Link der Folge</label>
+            <input id="epVidUrl" placeholder="https://player.vimeo.com/video/123456789?h=abcdef0123">
+            <div class="hint" id="epVidHint">Den Link aus dem Vimeo-Teilen/Einbetten-Fenster reinkopieren.</div>
           </div>
-        </div>
-
-        <p class="hint" id="copyMsg"></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ====================== MODE: TEXTE & BILDER ====================== -->
-  <section class="section section--tight panel" id="panel-text" hidden>
-    <div class="container" style="max-width:900px">
-      <span class="kicker">Alles Inhaltliche steht an einem Ort</span>
-      <h2 class="h-md" style="margin:12px 0 8px">Texte ändern &amp; Bilder einfügen</h2>
-      <p class="lead">Fast alle Texte der Seite liegen in <strong>einer</strong> Datei: <code>data/series.js</code>. Du öffnest sie auf GitHub, klickst das Stift-Symbol (Edit), änderst den Text zwischen den Anführungszeichen und klickst „Commit changes“. Nach 1–2 Minuten ist es live.</p>
-
-      <div class="guide-grid" style="margin-top:26px">
-        <div class="callout">
-          <h3 class="h-sm" style="margin-bottom:8px">Bewohner-Texte</h3>
-          <p class="muted">Name, Spruch, Beschreibung, Schlagworte: im Block <code>characters</code>. Jede Person hat <code>name</code>, <code>role</code>, <code>quote</code>, <code>bio</code> und <code>tags</code>. Nur den Text zwischen den <code>"…"</code> ändern.</p>
-        </div>
-        <div class="callout">
-          <h3 class="h-sm" style="margin-bottom:8px">Folgen-Texte</h3>
-          <p class="muted">Titel, Logline, Beschreibung: im Block <code>seasons</code> bei der jeweiligen Folge – oder ganz bequem oben über <strong>„Folge bearbeiten“</strong>.</p>
-        </div>
-        <div class="callout">
-          <h3 class="h-sm" style="margin-bottom:8px">Links</h3>
-          <p class="muted">Steady, Instagram, Facebook, Newsletter: im Block <code>links</code>.</p>
-        </div>
-        <div class="callout">
-          <h3 class="h-sm" style="margin-bottom:8px">Staffel-Texte</h3>
-          <p class="muted">Überschrift/Untertitel einer Staffel: im Block <code>seasons</code> bei <code>title</code> und <code>tagline</code>.</p>
+          <div class="field">
+            <label>Vimeo-Link Kiez-Talk (optional)</label>
+            <input id="epTalkUrl" placeholder="leer lassen, wenn es keinen Talk gibt">
+          </div>
+          <div class="field">
+            <label>Link zur Original-Folgenseite (Fallback)</label>
+            <input id="epPageUrl" placeholder="https://wg-st-pauli.de/2026/06/12/...">
+            <div class="hint">Wird angezeigt, falls das Video außerhalb von wg-st-pauli.de nicht lädt.</div>
+          </div>
+        </form>
+        <div class="out-card">
+          <span class="kicker" style="color:var(--lime)">Vorschau</span>
+          <div class="preview-card" style="margin-top:10px">
+            <div id="pvSeason" style="font-family:var(--font-mono);font-size:.78rem;color:var(--muted)"></div>
+            <h3 class="ep__title" id="pvTitle"></h3>
+            <p class="ep__log" id="pvLogline" style="color:var(--muted)"></p>
+            <p class="muted" id="pvSummary" style="margin-top:8px"></p>
+          </div>
+          <button class="btn btn--lime" id="btnPublishEpisode" type="button" style="margin-top:18px;width:100%">Veröffentlichen</button>
+          <p class="hint" id="epMsg"></p>
         </div>
       </div>
+    </section>
 
-      <h3 class="h-sm" style="margin:30px 0 10px">Der Abschnitt „Der Look ist kein Versehen“</h3>
-      <p class="muted" style="max-width:70ch">Dieser Text steht auf der Startseite in <code>index.html</code> (Abschnitt <code>WHY WEIRD</code>) und auf <code>kosmos.html</code>. Du darfst ihn frei umschreiben. Beispiel, das den Figuren-„Drift“ als Stilmittel erklärt (gern so übernehmen oder anpassen):</p>
-      <div class="callout">
-        <em>„Die Gesichter sehen in jeder Folge etwas anders aus. Deshalb versuchen wir, möglichst immer dasselbe anzuziehen – damit ihr uns im Zweifel an den Klamotten wiedererkennt.“</em>
+    <!-- ====================== MODE: BEWOHNER ====================== -->
+    <section class="section section--tight panel" id="panel-characters" hidden>
+      <div class="container tool">
+        <form id="fCharacter" onsubmit="return false">
+          <div class="field">
+            <label>Welcher Bewohner / welche Bewohnerin?</label>
+            <select id="chPick"></select>
+          </div>
+          <div class="row2">
+            <div class="field"><label>Name</label><input id="chName"></div>
+            <div class="field"><label>Alter</label><input id="chAge"></div>
+          </div>
+          <div class="field"><label>Rolle / Beschreibung in einem Wort</label><input id="chRole"></div>
+          <div class="field"><label>Zitat</label><input id="chQuote"></div>
+          <div class="field"><label>Bio (2–3 Sätze)</label><textarea id="chBio" rows="4"></textarea></div>
+          <div class="field">
+            <label>Schlagworte (mit Komma getrennt)</label>
+            <input id="chTags" placeholder="z. B. Hafen, Punk-Herz, Mann der Tat">
+          </div>
+          <div class="field">
+            <label>Foto</label>
+            <input id="chImg" disabled>
+            <div class="hint">Bilder ändern läuft weiterhin direkt über GitHub (Ordner <code>assets/img/</code>, gleicher Dateiname ersetzt das alte Foto) – siehe Anleitung unten.</div>
+          </div>
+        </form>
+        <div class="out-card">
+          <span class="kicker" style="color:var(--lime)">Vorschau</span>
+          <article class="preview-card" style="margin-top:10px">
+            <div class="dossier__role" id="pvChRole" style="font-family:var(--font-mono);font-size:.78rem;color:var(--muted)"></div>
+            <h3 class="dossier__name" id="pvChName"></h3>
+            <p class="dossier__quote" id="pvChQuote" style="margin:8px 0"></p>
+            <p class="muted" id="pvChBio"></p>
+            <div class="dossier__tags" id="pvChTags" style="margin-top:10px"></div>
+          </article>
+          <button class="btn btn--lime" id="btnPublishCharacter" type="button" style="margin-top:18px;width:100%">Veröffentlichen</button>
+          <p class="hint" id="chMsg"></p>
+        </div>
       </div>
-      <p class="hint">Tipp: In <code>index.html</code> nach dem Wort <code>flackern</code> suchen – da steht der Absatz. Nur den Text zwischen den <code>&lt;p&gt;…&lt;/p&gt;</code> ändern, die spitzen Klammern stehen lassen.</p>
+    </section>
 
-      <h3 class="h-sm" style="margin:30px 0 10px">Ein Bild einfügen (z. B. neues Bewohner-Foto)</h3>
-      <ul class="stepnum">
-        <li>Im GitHub-Repo in den Ordner <code>assets/img/</code> gehen → Button <strong>„Add file“ → „Upload files“</strong> → dein Bild hochladen (gib ihm einen einfachen Namen ohne Leerzeichen, z. B. <code>cast-silke.jpg</code>). Unten „Commit changes“.</li>
-        <li>Soll das Bild ein bestehendes Foto ersetzen, lade es einfach mit <strong>genau demselben Dateinamen</strong> hoch – fertig, die Seite zeigt sofort das neue Bild.</li>
-        <li>Für ein <em>neues</em> Bild eines Bewohners: in <code>data/series.js</code> beim jeweiligen <code>img:</code> den Pfad eintragen, z. B. <code>img: "assets/img/cast-silke.jpg"</code>.</li>
-        <li>„Commit changes“ → nach 1–2 Minuten live.</li>
-      </ul>
-
-      <div class="step" style="border-color:var(--amber);margin-top:8px">
-        <p class="muted"><strong class="accent">Nichts ist endgültig kaputtbar.</strong> Geht doch mal was schief, in GitHub die Datei-Historie öffnen und die letzte Änderung per <em>„Revert“</em> rückgängig machen – die Seite ist sofort wieder im alten Stand.</p>
+    <!-- ====================== MODE: LINKS ====================== -->
+    <section class="section section--tight panel" id="panel-links" hidden>
+      <div class="container" style="max-width:640px">
+        <form id="fLinks" onsubmit="return false">
+          <div class="field"><label>Steady-Seite</label><input id="lnSteady"></div>
+          <div class="field"><label>Steady „Über uns“</label><input id="lnSteadyAbout"></div>
+          <div class="field"><label>Instagram</label><input id="lnInstagram"></div>
+          <div class="field"><label>Facebook</label><input id="lnFacebook"></div>
+          <div class="field"><label>Original-Website (Fallback-Domain)</label><input id="lnOriginal"></div>
+        </form>
+        <p class="hint">Die technischen Newsletter-Felder (Mailchimp) werden hier bewusst nicht angezeigt – dafür bitte den Helfer fragen, ein falscher Wert dort würde die Anmeldung unbemerkt kaputt machen.</p>
+        <button class="btn btn--lime" id="btnPublishLinks" type="button" style="margin-top:8px">Veröffentlichen</button>
+        <p class="hint" id="lnMsg"></p>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- GUIDE (gilt für Neue Folge & Bearbeiten) -->
-  <section class="section section--ink2 panel" id="panel-guide">
+    <!-- ====================== MODE: STAFFEL-TEXTE ====================== -->
+    <section class="section section--tight panel" id="panel-seasons" hidden>
+      <div class="container" style="max-width:640px">
+        <form id="fSeason" onsubmit="return false">
+          <div class="field">
+            <label>Welche Staffel?</label>
+            <select id="snPick"></select>
+          </div>
+          <div class="field"><label>Überschrift</label><input id="snTitle"></div>
+          <div class="field"><label>Untertitel</label><input id="snTagline"></div>
+        </form>
+        <button class="btn btn--lime" id="btnPublishSeason" type="button" style="margin-top:8px">Veröffentlichen</button>
+        <p class="hint" id="snMsg"></p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ====================== BILDER & SICHERHEITSNETZ ====================== -->
+  <section class="section section--ink2">
     <div class="container" style="max-width:820px">
-      <span class="kicker">Ohne Programme · direkt im Browser</span>
-      <h2 class="h-md" style="margin:12px 0 18px">So kommt die Änderung live (kein Terminal nötig)</h2>
+      <span class="kicker">Bilder &amp; Sicherheitsnetz</span>
+      <h2 class="h-md" style="margin:12px 0 18px">Was dieses Werkzeug nicht macht</h2>
       <ul class="stepnum">
-        <li>Oben die Felder ausfüllen bzw. die Folge auswählen und den Code-Block rechts kopieren.</li>
-        <li>Im GitHub-Repo die Datei <code>data/series.js</code> öffnen und oben rechts auf das <strong>Stift-Symbol</strong> („Edit“) klicken.</li>
-        <li><strong>Neue Folge:</strong> Block 1 als erste Folge oben in den <code>episodes:</code>-Block der richtigen Staffel, Block 2 oben in den <code>urlMap</code>-Block. <br><strong>Folge bearbeiten:</strong> den alten Block der Folge suchen und durch den neuen ersetzen.</li>
-        <li>Unten auf <strong>„Commit changes“</strong> klicken. Fertig – GitHub veröffentlicht die Seite in ein, zwei Minuten automatisch neu.</li>
+        <li>Ein <strong>neues Foto</strong> hochladen: im GitHub-Repo in den Ordner <code>assets/img/</code> gehen → <strong>„Add file“ → „Upload files“</strong> → Bild hochladen, einfacher Dateiname ohne Leerzeichen (z. B. <code>cast-silke.jpg</code>) → „Commit changes“.</li>
+        <li>Soll das Bild ein bestehendes Foto <strong>ersetzen</strong>: mit genau demselben Dateinamen hochladen – fertig, die Seite zeigt sofort das neue Bild.</li>
+        <li>Für ein <em>komplett neues</em> Bild eines Bewohners den Dateipfad im Feld „Foto“ oben eintragen lassen (dafür kurz den Helfer fragen).</li>
       </ul>
-      <p class="muted" style="margin-top:22px">Tipp: Vor dem Speichern kurz schauen, dass die geschweiften Klammern <code>{ }</code> und die Kommas stehen wie bei den anderen Folgen drüber/drunter. Mehr kann eigentlich nicht schiefgehen.</p>
-      <div class="step" style="border-color:var(--amber);margin-top:24px">
-        <p class="muted"><strong class="accent">Damit Videos überall laufen:</strong> Die Vimeo-Videos sind auf <code>wg-st-pauli.de</code> beschränkt. In den Vimeo-Einstellungen jedes Videos unter <em>Privatsphäre → Wo darf eingebettet werden</em> die Domain der Seite ergänzen (auch die Subdomain <code>v2.wg-st-pauli.de</code>) – dann spielt der Player direkt, ohne Vorschau-Hinweis.</p>
+      <div class="step" style="border-color:var(--amber);margin-top:18px">
+        <p class="muted"><strong class="accent">Nichts ist endgültig kaputtbar.</strong> Jede Veröffentlichung ist ein Punkt in der Datei-Historie bei GitHub. Geht doch mal was schief, dort die letzte Änderung per <em>„Revert“</em> rückgängig machen – die Seite ist sofort wieder im alten Stand. Außerdem prüft die Seite jede Änderung automatisch, bevor sie live geht: Ist etwas unvollständig, wird einfach nicht neu veröffentlicht und der letzte gute Stand bleibt online.</p>
+      </div>
+      <div class="step" style="border-color:var(--amber);margin-top:16px">
+        <p class="muted"><strong class="accent">Damit Videos überall laufen:</strong> Vimeo-Videos können auf bestimmte Domains beschränkt sein. In den Vimeo-Einstellungen jedes Videos unter <em>Privatsphäre → Wo darf eingebettet werden</em> die Domain(s) ergänzen, unter denen die Seite erreichbar ist.</p>
       </div>
     </div>
   </section>
@@ -221,120 +271,347 @@
   <script>
   (function(){
     const $ = (id) => document.getElementById(id);
-    const esc = (s) => String(s||"").replace(/\\/g,"\\\\").replace(/"/g,'\\"');
-    const WG = window.WG;
+    const OWNER = "Kim-WG-St-Pauli";
+    const REPO = "wg-st-pauli";
+    const BRANCH = "main";
+    const FILE_PATH = "data/series.json";
+    const CONTENTS_URL = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`;
+    const TOKEN_KEY = "wg:gh_pat";
+
+    const state = { token: localStorage.getItem(TOKEN_KEY) || "", data: null, sha: null };
     let mode = "new";
 
-    /* ---------------- Mode switching ---------------- */
-    const panelForm = $("panel-form"), panelText = $("panel-text"), panelGuide = $("panel-guide");
-    function setMode(m){
-      mode = m;
-      document.querySelectorAll(".mode-btn").forEach(b => b.setAttribute("aria-selected", String(b.dataset.mode === m)));
-      const isText = m === "text";
-      panelForm.hidden = isText;
-      panelGuide.hidden = isText;
-      panelText.hidden = !isText;
-      $("pickWrap").hidden = (m !== "edit");
-      $("outNew").hidden = (m !== "new");
-      $("outEdit").hidden = (m !== "edit");
-      if (m === "edit") populatePicker();
-      build();
+    /* ---------------- base64 <-> utf8 (GitHub-API braucht base64) ---------------- */
+    function utf8ToB64(str) {
+      const bytes = new TextEncoder().encode(str);
+      let bin = "";
+      bytes.forEach((b) => { bin += String.fromCharCode(b); });
+      return btoa(bin);
     }
-    document.querySelectorAll(".mode-btn").forEach(b =>
-      b.addEventListener("click", () => setMode(b.dataset.mode)));
-
-    /* ---------------- Vimeo + id helpers ---------------- */
-    function parseVimeo(url){
-      if(!url) return null;
-      const id = (url.match(/(?:video\/|vimeo\.com\/)(\d+)/)||[])[1];
-      if(!id) return null;
-      let h = (url.match(/[?&]h=([a-z0-9]+)/i)||[])[1];
-      if(!h){ const m = url.match(/vimeo\.com\/\d+\/([a-z0-9]+)/i); if(m) h=m[1]; }
-      return { id, h: h||"" };
-    }
-    function vimeoUrl(v){ return v && v.id ? `https://player.vimeo.com/video/${v.id}${v.h?`?h=${v.h}`:""}` : ""; }
-    function genId(season, no){
-      const n = String(no||"").trim().toLowerCase();
-      if(n==="pilot") return "pilot";
-      const digits = n.replace(/\D/g,"");
-      if(n.includes("finale")) return season+"fin";
-      return season+"f"+(digits||"x");
+    function b64ToUtf8(b64) {
+      const bin = atob(b64);
+      const bytes = Uint8Array.from(bin, (c) => c.charCodeAt(0));
+      return new TextDecoder("utf-8").decode(bytes);
     }
 
-    /* ---------------- Edit: populate picker + prefill ---------------- */
-    function populatePicker(){
-      const sel = $("pick");
-      if (sel.dataset.ready) return;
-      const eps = WG.allEpisodes.slice().sort((a,b)=>b.date.localeCompare(a.date));
-      sel.innerHTML = eps.map(e =>
-        `<option value="${e.id}">${e.seasonTitle} · ${e.id==="pilot"?"Pilot":e.type==="finale"?"Finale":"Folge "+e.no} — ${e.title}</option>`).join("");
-      sel.dataset.ready = "1";
-      sel.addEventListener("change", () => prefill(sel.value));
-      prefill(sel.value);
+    /* ---------------- GitHub API ---------------- */
+    function authHeaders(extra) {
+      return Object.assign({
+        "Authorization": `Bearer ${state.token}`,
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      }, extra || {});
     }
-    function prefill(id){
-      const e = WG.findEpisode(id);
-      if(!e) return;
-      $("season").value = e.season || "s1";
-      $("no").value = e.no || "";
-      $("title").value = e.title || "";
-      $("date").value = e.date || "";
-      $("type").value = e.type || "";
-      $("logline").value = e.logline || "";
-      $("summary").value = e.summary || "";
-      $("vidUrl").value = vimeoUrl(e.video);
-      $("talkUrl").value = vimeoUrl(e.talk);
-      $("pageUrl").value = e.url || "";
-      build();
+    async function loadRemote() {
+      const res = await fetch(`${CONTENTS_URL}?ref=${BRANCH}`, { headers: authHeaders() });
+      if (res.status === 401 || res.status === 403) throw { kind: "auth" };
+      if (!res.ok) throw { kind: "other", status: res.status };
+      const json = await res.json();
+      state.sha = json.sha;
+      state.data = JSON.parse(b64ToUtf8(json.content.replace(/\n/g, "")));
+    }
+    async function saveRemote(newData, message) {
+      const body = {
+        message,
+        content: utf8ToB64(JSON.stringify(newData, null, 2) + "\n"),
+        sha: state.sha,
+        branch: BRANCH,
+      };
+      const res = await fetch(CONTENTS_URL, { method: "PUT", headers: authHeaders({ "Content-Type": "application/json" }), body: JSON.stringify(body) });
+      if (res.status === 401 || res.status === 403) throw { kind: "auth" };
+      if (res.status === 409) throw { kind: "conflict" };
+      if (!res.ok) throw { kind: "other", status: res.status };
+      const json = await res.json();
+      state.sha = json.content.sha;
+      state.data = newData;
+    }
+    async function checkRunStatus() {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/actions/runs?branch=${BRANCH}&per_page=1`, { headers: authHeaders() });
+        if (!res.ok) return null;
+        const json = await res.json();
+        const run = json.workflow_runs && json.workflow_runs[0];
+        if (!run) return null;
+        return { status: run.status, conclusion: run.conclusion, url: run.html_url };
+      } catch { return null; }
     }
 
-    /* ---------------- Build code output ---------------- */
-    function epBlock(id, no, title, date, type, logline, summary, vid, talk){
-      const lines = [];
-      lines.push("        {");
-      lines.push(`          id: "${id}", no: "${esc(no)}", title: "${esc(title)}", date: "${esc(date)}",${type?` type: "${esc(type)}",`:""}`);
-      lines.push(`          logline: "${esc(logline)}",`);
-      lines.push(`          summary: "${esc(summary)}",`);
-      lines.push(`          video: ${vid?`{ id: "${vid.id}", h: "${vid.h}" }`:"null"},`);
-      lines.push(`          talk: ${talk?`{ id: "${talk.id}", h: "${talk.h}" }`:"null"},`);
-      lines.push("        },");
-      return lines.join("\n");
+    /* ---------------- Auth UI ---------------- */
+    const statusBar = $("statusBar"), statusDot = $("statusDot"), statusText = $("statusText");
+    function setStatus(kind, text) {
+      statusBar.hidden = false;
+      statusDot.className = "status-dot " + kind;
+      statusText.textContent = text;
     }
-    function build(){
-      const season=$("season").value, no=$("no").value, title=$("title").value;
-      const date=$("date").value, type=$("type").value;
-      const logline=$("logline").value, summary=$("summary").value;
-      const vid=parseVimeo($("vidUrl").value), talk=parseVimeo($("talkUrl").value);
-      const pageUrl=$("pageUrl").value;
-      const id = (mode === "edit" && $("pick").value) ? $("pick").value : genId(season,no);
+    async function refreshRunStatus() {
+      const run = await checkRunStatus();
+      if (!run) return;
+      if (run.status !== "completed") setStatus("pending", "Letzte Veröffentlichung läuft gerade …");
+      else if (run.conclusion === "success") setStatus("ok", "Seite ist aktuell und live ✓");
+      else setStatus("err", "⚠ Die letzte Änderung konnte nicht veröffentlicht werden — Details in der GitHub-Historie.");
+    }
 
-      const vh = $("vidHint");
-      if($("vidUrl").value){ vh.textContent = vid? ("Erkannt → ID "+vid.id+(vid.h?(", Hash "+vid.h):"")) : "⚠ Link nicht erkannt – bitte den player.vimeo.com- oder vimeo.com-Link verwenden."; vh.className = vid?"hint ok":"hint err"; }
-      else { vh.textContent="Den Link aus dem Vimeo-Teilen/Einbetten-Fenster reinkopieren."; vh.className="hint"; }
-
-      const block = epBlock(id, no, title, date, type, logline, summary, vid, talk);
-      if (mode === "edit"){
-        $("findLine").textContent = `id: "${id}",`;
-        $("outEpEdit").textContent = block;
-      } else {
-        $("outEp").textContent = block;
-        $("outUrl").textContent = `    ${id}: "${esc(pageUrl)}",`;
+    async function connect(token) {
+      state.token = token;
+      $("authMsg").textContent = "Verbinde …";
+      $("authMsg").className = "hint";
+      try {
+        await loadRemote();
+        localStorage.setItem(TOKEN_KEY, token);
+        $("authPanel").hidden = true;
+        $("modeTabs").hidden = false;
+        $("app").hidden = false;
+        setMode(mode);
+        refreshRunStatus();
+      } catch (err) {
+        state.token = "";
+        if (err.kind === "auth") {
+          $("authMsg").textContent = "⚠ Dieser Zugangs-Schlüssel funktioniert nicht. Bitte prüfen oder einen neuen erstellen (siehe Anleitung).";
+        } else {
+          $("authMsg").textContent = "⚠ Verbindung fehlgeschlagen. Internet prüfen und nochmal versuchen.";
+        }
+        $("authMsg").className = "hint err";
       }
     }
-    function copy(elId){
-      navigator.clipboard.writeText($(elId).textContent).then(()=>{
-        $("copyMsg").textContent="✓ Kopiert!"; $("copyMsg").className="hint ok";
-        setTimeout(()=>{$("copyMsg").textContent="";},2000);
-      });
-    }
-    ["season","no","title","date","type","logline","summary","vidUrl","talkUrl","pageUrl"].forEach(id=>{
-      $(id).addEventListener("input", build);
+    $("btnConnect").addEventListener("click", () => {
+      const t = $("tokenInput").value.trim();
+      if (t) connect(t);
     });
-    $("copyEp").addEventListener("click",()=>copy("outEp"));
-    $("copyUrl").addEventListener("click",()=>copy("outUrl"));
-    $("copyEpEdit").addEventListener("click",()=>copy("outEpEdit"));
+    $("btnDisconnect").addEventListener("click", () => {
+      localStorage.removeItem(TOKEN_KEY);
+      location.reload();
+    });
 
-    setMode("new");
+    if (state.token) connect(state.token);
+
+    /* ---------------- Mode switching ---------------- */
+    const panels = {
+      new: $("panel-episode"), edit: $("panel-episode"),
+      characters: $("panel-characters"), links: $("panel-links"), seasons: $("panel-seasons"),
+    };
+    function setMode(m) {
+      mode = m;
+      document.querySelectorAll(".mode-btn").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.mode === m)));
+      [...new Set(Object.values(panels))].forEach((p) => { p.hidden = true; });
+      panels[m].hidden = false;
+      $("pickWrap").hidden = (m !== "edit");
+      if (!state.data) return;
+      if (m === "new" || m === "edit") { populateEpisodePicker(); if (m === "new") resetEpisodeForm(); }
+      if (m === "characters") populateCharacterPicker();
+      if (m === "links") fillLinksForm();
+      if (m === "seasons") populateSeasonPicker();
+    }
+    document.querySelectorAll(".mode-btn").forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
+
+    /* ---------------- Vimeo + id helpers ---------------- */
+    function parseVimeo(url) {
+      if (!url) return null;
+      const id = (url.match(/(?:video\/|vimeo\.com\/)(\d+)/) || [])[1];
+      if (!id) return null;
+      let h = (url.match(/[?&]h=([a-z0-9]+)/i) || [])[1];
+      if (!h) { const m = url.match(/vimeo\.com\/\d+\/([a-z0-9]+)/i); if (m) h = m[1]; }
+      return { id, h: h || "" };
+    }
+    function vimeoUrl(v) { return v && v.id ? `https://player.vimeo.com/video/${v.id}${v.h ? `?h=${v.h}` : ""}` : ""; }
+    function genId(season, no) {
+      const n = String(no || "").trim().toLowerCase();
+      if (n === "pilot") return "pilot";
+      const digits = n.replace(/\D/g, "");
+      if (n.includes("finale")) return season + "fin";
+      return season + "f" + (digits || "x");
+    }
+    function fmtDate(iso) {
+      if (!iso) return "";
+      const d = new Date(iso + "T12:00:00");
+      return d.toLocaleDateString("de-DE", { day: "2-digit", month: "short", year: "numeric" });
+    }
+    function findEpisode(id) {
+      for (const s of state.data.seasons) { const e = s.episodes.find((x) => x.id === id); if (e) return { ep: e, season: s }; }
+      return null;
+    }
+
+    /* ---------------- EPISODE: form <-> preview ---------------- */
+    function populateEpisodePicker() {
+      const sel = $("epSeason");
+      sel.innerHTML = state.data.seasons.map((s) => `<option value="${s.id}">${s.title}</option>`).join("");
+      const pick = $("epPick");
+      const all = state.data.seasons.flatMap((s) => s.episodes.map((e) => ({ ...e, seasonId: s.id, seasonTitle: s.title })));
+      all.sort((a, b) => b.date.localeCompare(a.date));
+      pick.innerHTML = all.map((e) => `<option value="${e.id}">${e.seasonTitle} · ${e.id === "pilot" ? "Pilot" : e.type === "finale" ? "Finale" : "Folge " + e.no} — ${e.title}</option>`).join("");
+      if (!pick.dataset.bound) {
+        pick.addEventListener("change", () => prefillEpisode(pick.value));
+        pick.dataset.bound = "1";
+      }
+      if (mode === "edit") prefillEpisode(pick.value);
+    }
+    function resetEpisodeForm() {
+      ["epNo", "epTitle", "epLogline", "epSummary", "epVidUrl", "epTalkUrl", "epPageUrl"].forEach((id) => { $(id).value = ""; });
+      $("epDate").value = ""; $("epType").value = "";
+      const seasons = state.data.seasons;
+      if (seasons.length) $("epSeason").value = seasons[seasons.length - 1].id; // neueste Staffel vorauswählen
+      updateEpisodePreview();
+    }
+    function prefillEpisode(id) {
+      const found = findEpisode(id);
+      if (!found) return;
+      const { ep, season } = found;
+      $("epSeason").value = season.id;
+      $("epNo").value = ep.no || "";
+      $("epTitle").value = ep.title || "";
+      $("epDate").value = ep.date || "";
+      $("epType").value = ep.type || "";
+      $("epLogline").value = ep.logline || "";
+      $("epSummary").value = ep.summary || "";
+      $("epVidUrl").value = vimeoUrl(ep.video);
+      $("epTalkUrl").value = vimeoUrl(ep.talk);
+      $("epPageUrl").value = state.data.urlMap[ep.id] || "";
+      updateEpisodePreview();
+    }
+    function updateEpisodePreview() {
+      const vid = parseVimeo($("epVidUrl").value);
+      const vh = $("epVidHint");
+      if ($("epVidUrl").value) { vh.textContent = vid ? ("Erkannt → ID " + vid.id + (vid.h ? (", Hash " + vid.h) : "")) : "⚠ Link nicht erkannt – bitte den player.vimeo.com- oder vimeo.com-Link verwenden."; vh.className = vid ? "hint ok" : "hint err"; }
+      else { vh.textContent = "Den Link aus dem Vimeo-Teilen/Einbetten-Fenster reinkopieren."; vh.className = "hint"; }
+      const seasonTitle = ($("epSeason").selectedOptions[0] || {}).textContent || "";
+      $("pvSeason").textContent = seasonTitle + (fmtDate($("epDate").value) ? " · " + fmtDate($("epDate").value) : "");
+      $("pvTitle").textContent = $("epTitle").value || "(Titel)";
+      $("pvLogline").textContent = $("epLogline").value;
+      $("pvSummary").textContent = $("epSummary").value;
+      const ok = $("epTitle").value.trim() && $("epDate").value && $("epLogline").value.trim() && $("epSummary").value.trim() && vid;
+      $("btnPublishEpisode").disabled = !ok;
+    }
+    ["epSeason", "epNo", "epTitle", "epDate", "epType", "epLogline", "epSummary", "epVidUrl", "epTalkUrl", "epPageUrl"].forEach((id) => {
+      $(id).addEventListener("input", updateEpisodePreview);
+      $(id).addEventListener("change", updateEpisodePreview);
+    });
+
+    async function publishEpisode() {
+      const seasonId = $("epSeason").value, no = $("epNo").value, title = $("epTitle").value;
+      const date = $("epDate").value, type = $("epType").value;
+      const logline = $("epLogline").value, summary = $("epSummary").value;
+      const video = parseVimeo($("epVidUrl").value), talk = parseVimeo($("epTalkUrl").value);
+      const pageUrl = $("epPageUrl").value.trim();
+      const id = (mode === "edit" && $("epPick").value) ? $("epPick").value : genId(seasonId, no);
+
+      const next = JSON.parse(JSON.stringify(state.data));
+      const ep = { id, no, title, date };
+      if (type) ep.type = type;
+      ep.logline = logline; ep.summary = summary; ep.video = video; ep.talk = talk;
+
+      const season = next.seasons.find((s) => s.id === seasonId);
+      if (mode === "new") {
+        season.episodes.unshift(ep);
+      } else {
+        for (const s of next.seasons) {
+          const idx = s.episodes.findIndex((e) => e.id === id);
+          if (idx !== -1) { if (s === season) s.episodes[idx] = ep; else { s.episodes.splice(idx, 1); season.episodes.unshift(ep); } }
+        }
+      }
+      if (pageUrl) next.urlMap[id] = pageUrl;
+
+      const message = mode === "new"
+        ? `Neue Folge: ${season.title} – ${id} "${title}" (via Werkzeug)`
+        : `Folge bearbeitet: ${id} "${title}" (via Werkzeug)`;
+      await runPublish(next, message, "epMsg", () => { if (mode === "new") resetEpisodeForm(); refreshRunStatus(); });
+    }
+    $("btnPublishEpisode").addEventListener("click", publishEpisode);
+
+    /* ---------------- BEWOHNER: form <-> preview ---------------- */
+    function populateCharacterPicker() {
+      const sel = $("chPick");
+      sel.innerHTML = state.data.characters.map((c) => `<option value="${c.id}">${c.name}</option>`).join("");
+      if (!sel.dataset.bound) { sel.addEventListener("change", () => prefillCharacter(sel.value)); sel.dataset.bound = "1"; }
+      prefillCharacter(sel.value);
+    }
+    function prefillCharacter(id) {
+      const c = state.data.characters.find((x) => x.id === id);
+      if (!c) return;
+      $("chName").value = c.name || ""; $("chAge").value = c.age || ""; $("chRole").value = c.role || "";
+      $("chQuote").value = c.quote || ""; $("chBio").value = c.bio || "";
+      $("chTags").value = (c.tags || []).join(", ");
+      $("chImg").value = c.img || "";
+      updateCharacterPreview();
+    }
+    function updateCharacterPreview() {
+      $("pvChRole").textContent = $("chRole").value + ($("chAge").value ? " · " + $("chAge").value : "");
+      $("pvChName").textContent = $("chName").value || "(Name)";
+      $("pvChQuote").textContent = $("chQuote").value ? "„" + $("chQuote").value + "“" : "";
+      $("pvChBio").textContent = $("chBio").value;
+      $("pvChTags").innerHTML = $("chTags").value.split(",").map((t) => t.trim()).filter(Boolean).map((t) => `<span class="chip">${t}</span>`).join(" ");
+      $("btnPublishCharacter").disabled = !($("chName").value.trim() && $("chBio").value.trim());
+    }
+    ["chName", "chAge", "chRole", "chQuote", "chBio", "chTags"].forEach((id) => $(id).addEventListener("input", updateCharacterPreview));
+
+    async function publishCharacter() {
+      const id = $("chPick").value;
+      const next = JSON.parse(JSON.stringify(state.data));
+      const c = next.characters.find((x) => x.id === id);
+      c.name = $("chName").value; c.age = $("chAge").value; c.role = $("chRole").value;
+      c.quote = $("chQuote").value; c.bio = $("chBio").value;
+      c.tags = $("chTags").value.split(",").map((t) => t.trim()).filter(Boolean);
+      await runPublish(next, `Bewohner aktualisiert: ${c.name} (via Werkzeug)`, "chMsg", () => {});
+    }
+    $("btnPublishCharacter").addEventListener("click", publishCharacter);
+
+    /* ---------------- LINKS ---------------- */
+    function fillLinksForm() {
+      const l = state.data.links;
+      $("lnSteady").value = l.steady || ""; $("lnSteadyAbout").value = l.steadyAbout || "";
+      $("lnInstagram").value = l.instagram || ""; $("lnFacebook").value = l.facebook || "";
+      $("lnOriginal").value = l.original || "";
+    }
+    async function publishLinks() {
+      const next = JSON.parse(JSON.stringify(state.data));
+      next.links.steady = $("lnSteady").value.trim();
+      next.links.steadyAbout = $("lnSteadyAbout").value.trim();
+      next.links.instagram = $("lnInstagram").value.trim();
+      next.links.facebook = $("lnFacebook").value.trim();
+      next.links.original = $("lnOriginal").value.trim();
+      await runPublish(next, "Links aktualisiert (via Werkzeug)", "lnMsg", () => {});
+    }
+    $("btnPublishLinks").addEventListener("click", publishLinks);
+
+    /* ---------------- STAFFEL-TEXTE ---------------- */
+    function populateSeasonPicker() {
+      const sel = $("snPick");
+      sel.innerHTML = state.data.seasons.map((s) => `<option value="${s.id}">${s.title}</option>`).join("");
+      if (!sel.dataset.bound) { sel.addEventListener("change", () => prefillSeason(sel.value)); sel.dataset.bound = "1"; }
+      prefillSeason(sel.value);
+    }
+    function prefillSeason(id) {
+      const s = state.data.seasons.find((x) => x.id === id);
+      if (!s) return;
+      $("snTitle").value = s.title || ""; $("snTagline").value = s.tagline || "";
+    }
+    async function publishSeason() {
+      const id = $("snPick").value;
+      const next = JSON.parse(JSON.stringify(state.data));
+      const s = next.seasons.find((x) => x.id === id);
+      s.title = $("snTitle").value; s.tagline = $("snTagline").value;
+      await runPublish(next, `Staffel-Text aktualisiert: ${s.title} (via Werkzeug)`, "snMsg", () => {});
+    }
+    $("btnPublishSeason").addEventListener("click", publishSeason);
+
+    /* ---------------- shared publish flow ---------------- */
+    async function runPublish(next, message, msgElId, onSuccess) {
+      const msgEl = $(msgElId);
+      msgEl.textContent = "Speichere …"; msgEl.className = "hint";
+      try {
+        await saveRemote(next, message);
+        msgEl.textContent = "✓ Veröffentlicht! In 1–2 Minuten live.";
+        msgEl.className = "hint ok";
+        onSuccess();
+      } catch (err) {
+        if (err.kind === "conflict") {
+          msgEl.textContent = "⚠ Jemand hat gerade dazwischen gespeichert — bitte Seite neu laden und nochmal versuchen.";
+        } else if (err.kind === "auth") {
+          msgEl.textContent = "⚠ Dein Zugangs-Schlüssel funktioniert nicht mehr. Bitte neuen erstellen (Anleitung oben nach Neuladen).";
+        } else {
+          msgEl.textContent = "⚠ Verbindung fehlgeschlagen. Internet prüfen und nochmal versuchen.";
+        }
+        msgEl.className = "hint err";
+      }
+    }
   })();
   </script>
 </body>
