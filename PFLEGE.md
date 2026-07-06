@@ -1,42 +1,50 @@
 # Seite pflegen — ohne Programmierkenntnisse
 
-Hallo Uli! Diese Anleitung ist für dich. Du brauchst **kein** Programm, **kein** Terminal und musst dir **nichts installieren**. Alles passiert in zwei Browser-Tabs. Nimm dir die erste neue Folge in Ruhe vor — beim zweiten Mal geht es schon wie von selbst.
+Hallo Uli! Diese Anleitung ist für dich. Du brauchst **kein** Programm, **kein** Terminal und musst dir **nichts installieren**. Alles passiert in einem einzigen Browser-Tab: **`werkzeug.html`**. Felder ausfüllen, auf **„Veröffentlichen“** klicken, fertig — du musst nie Code anfassen oder irgendwo Text einfügen.
 
 ---
 
-## 1. Der Überblick: alles läuft über zwei Dinge
+## 1. Einmalig: Zugang einrichten
 
-Du arbeitest immer mit denselben zwei Werkzeugen, beide im Browser:
+Bevor du loslegen kannst, braucht das Werkzeug einmalig einen Zugangs-Schlüssel von GitHub, damit es Änderungen direkt für dich speichern darf. Das machst du **einmal**, danach nie wieder.
 
-1. **Das Werkzeug** — die Seite `werkzeug.html`. Sie ist nicht im Menü versteckt, du rufst sie direkt auf. Hier füllst du ein paar Felder aus und das Werkzeug **baut dir den fertigen Code** und legt ihn dir zum Kopieren bereit. Du musst nie selbst etwas Technisches schreiben.
-2. **GitHub im Browser** — dort liegt die Seite. Du öffnest dort eine Datei, fügst den kopierten Code ein und klickst auf einen Speichern-Knopf. GitHub veröffentlicht die Seite dann **automatisch** neu.
+Öffne `werkzeug.html` und klick oben auf **„Wie bekomme ich einen Zugangs-Schlüssel?“** — dort steht eine Klick-für-Klick-Anleitung. Kurz zusammengefasst:
 
-Der Ablauf ist immer gleich:
+1. Den Link zu GitHubs Token-Seite öffnen (steht im Werkzeug), einloggen.
+2. Nur `wg-st-pauli` als Repository auswählen.
+3. Bei den Berechtigungen **„Contents: Read and write“** einstellen.
+4. „Generate token“ klicken, den Code kopieren.
+5. Den Code oben im Werkzeug einfügen und auf **„Verbinden“** klicken.
 
-> **Werkzeug ausfüllen → Code kopieren → bei GitHub einfügen → „Commit changes“ → nach 1–2 Minuten ist es live.**
+Der Code wird nur in deinem eigenen Browser gespeichert — nirgendwo sonst. Danach zeigt dir das Werkzeug einen grünen Punkt: „Seite ist aktuell und live ✓“.
 
-Im Werkzeug gibt es oben **drei Knöpfe** — du wählst einfach, was du gerade tun willst:
+Falls der Zugang irgendwann nicht mehr funktioniert (z. B. weil der Code abgelaufen ist), einfach nach derselben Anleitung einen neuen erstellen.
+
+---
+
+## 2. Der Ablauf — für alles gleich
+
+Im Werkzeug gibt es oben **fünf Reiter** — du wählst, was du gerade tun willst:
 
 - **＋ Neue Folge** — eine neue Folge anlegen (das machst du jeden Samstag)
 - **✎ Folge bearbeiten** — eine Folge, die es schon gibt, korrigieren
-- **✦ Texte & Bilder** — alles andere: Bewohner-Texte, Links, Bilder
+- **◐ Bewohner** — Name, Rolle, Zitat, Bio, Schlagworte einer Figur ändern
+- **↗ Links** — Steady, Instagram, Facebook, Original-Website
+- **✦ Staffel-Texte** — Überschrift und Untertitel einer Staffel
+
+Egal welcher Reiter: du füllst die Felder aus, siehst rechts sofort eine **Vorschau**, und klickst auf **„Veröffentlichen“**. Nach 1–2 Minuten ist die Änderung live. Das war's — kein Kopieren, kein Einfügen bei GitHub, keine Klammern oder Kommas, um die du dich kümmern musst.
 
 ---
 
-## 2. Neue Folge anlegen (jeden Samstag)
+## 3. Neue Folge anlegen (jeden Samstag)
 
-Das ist deine Routine-Aufgabe. So geht sie:
+Das ist deine Routine-Aufgabe.
 
-1. **Werkzeug öffnen** (`werkzeug.html`) und oben auf **＋ Neue Folge** klicken.
+1. **Werkzeug öffnen** und oben auf **＋ Neue Folge** klicken.
 2. Die **Felder ausfüllen**: Staffel, Folgen-Nummer, Titel, Datum (immer der Samstag), Logline (ein knackiger Satz), Beschreibung (2–3 Sätze).
 3. Den **Vimeo-Link der Folge** einfügen. Du kopierst ihn einfach aus dem Teilen-/Einbetten-Fenster bei Vimeo. Das Werkzeug erkennt den Link automatisch — darunter erscheint grün „Erkannt“. Wenn es einen Kiez-Talk gibt, kommt dessen Vimeo-Link ins nächste Feld (sonst leer lassen). Im letzten Feld trägst du den Link zur Original-Folgenseite ein.
-4. Rechts erscheinen jetzt **zwei Code-Blöcke**. Beide brauchst du:
-   - **Block 1** — die eigentliche Folge.
-   - **Block 2** — eine einzelne Zeile für den `urlMap`-Bereich.
-5. Jetzt zu **GitHub**: die Datei **`data/series.js`** öffnen und oben rechts auf das **Stift-Symbol** („Edit“) klicken.
-6. **Block 1 einfügen**: Bei der richtigen Staffel in den `episodes:`-Bereich, am besten ganz **oben als erste Folge**. Klick im Werkzeug auf **„Code kopieren“**, dann bei GitHub an die richtige Stelle einfügen.
-7. **Block 2 einfügen**: In den `urlMap`-Bereich (weiter unten in derselben Datei), ebenfalls oben. Im Werkzeug auf **„Zeile kopieren“** klicken und einfügen.
-8. Unten bei GitHub auf **„Commit changes“** klicken.
+4. Rechts siehst du die **Vorschau** der Folgenkarte — so wird sie aussehen.
+5. Auf **„Veröffentlichen“** klicken.
 
 Fertig! Nach ein, zwei Minuten ist die neue Folge live auf der Seite.
 
@@ -44,71 +52,53 @@ Fertig! Nach ein, zwei Minuten ist die neue Folge live auf der Seite.
 
 ---
 
-## 3. Eine Folge bearbeiten (Texte korrigieren!)
+## 4. Eine Folge bearbeiten (Texte korrigieren!)
 
-Hat sich ein Fehler eingeschlichen? Zum Beispiel eine **falsche Folgen-Beschreibung** — etwa weil eine Figur falsch beschrieben wurde? Kein Problem, das ist schnell korrigiert und nichts geht dabei kaputt.
+Hat sich ein Fehler eingeschlichen? Zum Beispiel eine **falsche Folgen-Beschreibung**? Kein Problem, das ist schnell korrigiert und nichts geht dabei kaputt.
 
 1. **Werkzeug öffnen** und oben auf **✎ Folge bearbeiten** klicken.
 2. Im Auswahl-Feld die **Folge aussuchen**, die du ändern willst. Die Felder **füllen sich dann von selbst** mit dem aktuellen Text.
-3. Den **Text korrigieren** — also genau das Feld ändern, das falsch ist (z. B. die Beschreibung, in der die Figur falsch beschrieben war).
-4. Rechts erscheint der **neue Block** für diese Folge. Klick auf **„Neuen Block kopieren“**.
-5. Jetzt zu **GitHub**: die Datei **`data/series.js`** öffnen und auf das **Stift-Symbol** klicken.
-6. In der Datei den **alten Block dieser Folge suchen**. Du erkennst ihn an der **`id`-Zeile** — das Werkzeug zeigt dir genau, wonach du suchen musst, z. B. `id: "s2f1",`. (Mit `Strg+F` bzw. `Cmd+F` kannst du im Browser danach suchen.)
-7. Den **alten Block durch den neuen ersetzen**: vom öffnenden `{` bis zum passenden `},`. Die Folgen darüber und darunter rührst du nicht an.
-8. Unten auf **„Commit changes“** klicken.
+3. Den **Text korrigieren** — also genau das Feld ändern, das falsch ist.
+4. In der Vorschau prüfen, ob es jetzt richtig aussieht.
+5. Auf **„Veröffentlichen“** klicken.
 
-Nach 1–2 Minuten zeigt die Seite den korrigierten Text. So einfach ist eine Korrektur.
+Nach 1–2 Minuten zeigt die Seite den korrigierten Text.
 
 ---
 
-## 4. Texte & Bilder ändern
+## 5. Bewohner, Links und Staffel-Texte ändern
 
-Klick im Werkzeug oben auf **✦ Texte & Bilder**. Diese Ansicht zeigt dir genau, **wo welcher Text steht**. Fast alles Inhaltliche liegt in **einer einzigen Datei**: `data/series.js`. Du öffnest sie bei GitHub, klickst auf das Stift-Symbol, änderst den Text **zwischen den Anführungszeichen** und klickst „Commit changes“.
+Genauso einfach: Reiter wählen, in der Auswahl die Person bzw. Staffel aussuchen, Felder anpassen, Vorschau prüfen, veröffentlichen.
 
-**Wo steht was?**
+Bei **Links** siehst du bewusst nicht die technischen Newsletter-Felder (Mailchimp) — dort würde ein falscher Wert die Anmeldung unbemerkt kaputt machen. Wenn daran mal etwas geändert werden muss, bitte den Helfer fragen.
 
-- **Bewohner-Texte** (Name, Spruch, Beschreibung, Schlagworte) — im Bereich `characters`. Jede Person hat `name`, `role`, `quote`, `bio` und `tags`. Du änderst nur den Text zwischen den `"…"`.
-- **Links** (Steady, Instagram, Facebook, Newsletter) — im Bereich `links`.
-- **Staffel-Texte** (Überschrift und Untertitel einer Staffel) — im Bereich `seasons`, bei `title` und `tagline`.
-- **Folgen-Texte** — auch im Bereich `seasons`. Bequemer geht das aber über den Modus **✎ Folge bearbeiten** (siehe oben).
+**Der Abschnitt „Der Look ist kein Versehen“** auf der Startseite (und auf `kosmos.html`) liegt nicht im Werkzeug, sondern direkt in `index.html`. Den darfst du weiterhin frei umschreiben — dafür kurz den Helfer fragen oder direkt bei GitHub den Text zwischen den `<p>…</p>`-Klammern nach dem Wort `flackern` anpassen.
 
-**Der Abschnitt „Der Look ist kein Versehen“**
+**Ein Bild hochladen (z. B. ein neues Bewohner-Foto)** läuft weiterhin direkt über GitHub, nicht über das Werkzeug:
 
-Dieser Text steht **nicht** in `data/series.js`, sondern auf der Startseite in der Datei `index.html` (und ebenso in `kosmos.html`). Du darfst ihn frei umschreiben. So findest du ihn: In `index.html` nach dem Wort **`flackern`** suchen — dort steht der Absatz. Ändere nur den Text **zwischen den `<p>…</p>`-Klammern**, die spitzen Klammern selbst bleiben stehen.
-
-**Ein Bild hochladen (z. B. ein neues Bewohner-Foto)**
-
-1. Bei GitHub in den Ordner **`assets/img`** gehen.
-2. Auf **„Add file“ → „Upload files“** klicken und dein Bild hochladen. Gib ihm einen einfachen Namen **ohne Leerzeichen**, z. B. `cast-silke.jpg`. Unten „Commit changes“.
+1. Diesen Link öffnen: [github.com/.../upload/main/assets/img](https://github.com/Kim-WG-St-Pauli/wg-st-pauli/upload/main/assets/img) — bringt dich direkt zum Hochladen-Fenster im richtigen Ordner.
+2. Bild hineinziehen oder auswählen. Gib ihm einen einfachen Namen **ohne Leerzeichen**, z. B. `cast-silke.jpg`. Unten „Commit changes“.
 3. **Soll das Bild ein bestehendes ersetzen?** Dann lade es einfach mit **genau demselben Dateinamen** hoch — die Seite zeigt sofort das neue Bild, du musst sonst nichts ändern.
-4. Für ein **ganz neues** Bewohner-Bild trägst du in `data/series.js` bei der Person noch den Pfad ein, z. B. `img: "assets/img/cast-silke.jpg"`.
-
----
-
-## 5. Die eine Faustregel
-
-Achte beim Einfügen immer auf die **geschweiften Klammern `{ }`** und die **Kommas**. Das ist alles, was zählt.
-
-> **Merksatz:** Eine neue oder geänderte Folge muss **genauso aussehen** wie die Folgen direkt darüber und darunter. Vergleich einfach kurz: gleiche Einrückung, jede Zeile mit Komma am Ende, ein `{` am Anfang und ein `},` am Schluss. Sieht es aus wie die Nachbarn, ist alles richtig.
+4. **Neuer Dateiname für einen bestehenden Bewohner:** im Werkzeug bei „Bewohner“ im Feld „Foto“ den neuen Dateinamen eintragen — das Werkzeug prüft direkt, ob es das Bild findet (grünes Häkchen).
+5. **Einen komplett neuen Bewohner** (der noch gar nicht existiert) hinzufügen kann das Werkzeug noch nicht — dafür kurz den Helfer ansprechen, am einfachsten mit Name, ein bis zwei Sätzen zur Figur und dem gewünschten Foto.
 
 ---
 
 ## 6. Wenn doch mal was klemmt
 
-**Keine Sorge — du kannst nichts endgültig kaputtmachen.** Jede Änderung lässt sich mit einem Klick rückgängig machen:
+**Keine Sorge — du kannst nichts endgültig kaputtmachen.** Zwei Sicherheitsnetze fangen dich auf:
 
-1. Bei GitHub die geänderte Datei öffnen und die **Datei-Historie** ansehen (der Link mit der Uhr / „History“).
-2. Die letzte Änderung anklicken und auf **„Revert“** gehen.
-3. Bestätigen — und die Seite ist **sofort wieder im alten Stand**, so als wäre nichts gewesen.
+1. **Die Seite prüft jede Änderung automatisch**, bevor sie live geht. Ist etwas unvollständig, wird einfach nicht neu veröffentlicht — der letzte gute Stand bleibt online. Das Werkzeug zeigt dir das oben mit einem roten Warnzeichen an.
+2. **Jede Veröffentlichung lässt sich rückgängig machen.** GitHub speichert jede Version für immer. Genaue Klick-für-Klick-Anleitung mit Bildern: [rueckgaengig.html](rueckgaengig.html) (auch über das Werkzeug verlinkt).
 
-Trau dich also ruhig. Im schlimmsten Fall klickst du einmal auf „Revert“ und alles ist wie vorher.
+Trau dich also ruhig.
 
 ---
 
 ## 7. Was du *nicht* anfassen musst
 
-Für die ganz normale Pflege — neue Folgen, Texte, Bilder — brauchst du **nur** die Dinge aus dieser Anleitung.
+Für die ganz normale Pflege — neue Folgen, Texte, Bilder — brauchst du **nur** das Werkzeug aus dieser Anleitung.
 
-Das **Design und Layout** (die Dateien im Ordner `assets/css`) und die **Technik** (`assets/js/app.js`) musst du **nicht** anfassen. Da ist alles eingerichtet. Wenn am Aussehen oder an der Technik wirklich mal etwas geändert werden soll, ist dafür dein Helfer da — das ist nicht deine Aufgabe.
+Das **Design und Layout** (die Dateien im Ordner `assets/css`) und die **Technik** (`assets/js/app.js`, `data/series.js`, `.github/workflows`) musst du **nicht** anfassen. Da ist alles eingerichtet. Wenn am Aussehen oder an der Technik wirklich mal etwas geändert werden soll, ist dafür dein Helfer da — das ist nicht deine Aufgabe.
 
 Viel Spaß beim Pflegen — du schaffst das mit links. 💪

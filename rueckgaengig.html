@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Änderung rückgängig machen — WG St. Pauli pflegen</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link id="theme-astra-css" rel="stylesheet" href="assets/css/theme-astra.css">
+  <style>
+    .stepnum { counter-reset:s; }
+    .stepnum li { counter-increment:s; position:relative; padding:18px 0 18px 44px; border-bottom:1px solid var(--line-2); }
+    .stepnum li::before { content:counter(s); position:absolute; left:0; top:16px; font-family:var(--font-display); color:var(--pink); font-size:1.4rem; line-height:1; min-width:28px; }
+    .shot { max-width:100%; border:1px solid var(--line); border-radius:12px; margin:14px 0; display:block; }
+    .shot-cap { font-size:.82rem; color:var(--faint); margin-top:-8px; margin-bottom:18px; }
+    .callout { background:var(--ink-2); border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin:14px 0; }
+    .inline-link { color:var(--pink); text-decoration:underline; text-underline-offset:2px; }
+    .inline-link:hover { color:var(--lime); }
+    .callout code { background:rgba(0,0,0,.18); padding:2px 6px; border-radius:6px; font-family:var(--font-mono); font-size:.86em; }
+  </style>
+</head>
+<body data-page="rueckgaengig" class="theme-astra">
+  <div data-nav></div>
+
+  <header class="section section--tight" style="padding-top:64px">
+    <div class="container" style="max-width:760px">
+      <span class="kicker">Sicherheitsnetz</span>
+      <h1 class="h-lg" style="margin:14px 0 12px">Eine Änderung rückgängig machen</h1>
+      <p class="lead">Falls doch mal eine Folge, ein Text oder ein Bewohner nach dem Veröffentlichen falsch aussieht: Hier die genaue Klick-für-Klick-Anleitung, wie du den alten Stand zurückholst. Dauert 2 Minuten, kein Programmieren nötig.</p>
+    </div>
+  </header>
+
+  <section class="section section--tight">
+    <div class="container" style="max-width:760px">
+
+      <div class="callout">
+        <p class="muted"><strong class="accent">Wichtig zu wissen:</strong> Nichts, was du veröffentlichst, überschreibt die Vergangenheit. GitHub speichert jede einzelne Version der Datei für immer. „Rückgängig machen" heißt hier: die alte Version noch einmal ganz normal als neue Änderung speichern. Es ist kein spezieller „Undo"-Knopf, aber es funktioniert genauso zuverlässig.</p>
+      </div>
+
+      <h2 class="h-md" style="margin:34px 0 16px">Schritt für Schritt</h2>
+      <ul class="stepnum">
+        <li>
+          Die <strong>Historie der Datei</strong> öffnen: <a class="inline-link" href="https://github.com/Kim-WG-St-Pauli/wg-st-pauli/commits/main/data/series.json" target="_blank" rel="noopener">github.com/.../commits/main/data/series.json</a>. Hier siehst du jede Änderung, neueste zuerst.
+          <img class="shot" src="assets/img/anleitung-github-historie.png" alt="GitHub-Historie einer Datei mit einer Liste von Commits">
+          <p class="shot-cap">So sieht die Liste aus (Beispiel-Historie einer anderen Datei) — bei dir stehen oben deine eigenen Änderungen, mit Datum und einer kurzen Beschreibung.</p>
+        </li>
+        <li>
+          Die <strong>kaputte Änderung erkennen</strong> — meist die oberste (neueste). Bei der Zeile <strong>direkt darunter</strong> (die letzte gute Version) auf das Symbol <strong>„View code at this point"</strong> klicken (sieht aus wie <code>&lt;&gt;</code>).
+          <img class="shot" src="assets/img/anleitung-github-alte-datei.png" alt="Datei-Ansicht einer alten Version auf GitHub mit Raw- und Kopier-Knopf">
+          <p class="shot-cap">Das zeigt die Datei genau so, wie sie vor der kaputten Änderung aussah.</p>
+        </li>
+        <li>
+          Oben rechts im Code-Feld auf <strong>„Raw"</strong> klicken (zeigt den reinen Text), dann <strong>alles markieren und kopieren</strong> (Strg/Cmd+A, dann Strg/Cmd+C).
+        </li>
+        <li>
+          Diesen Link öffnen, er bringt dich direkt zum Bearbeiten der <strong>aktuellen</strong> Datei: <a class="inline-link" href="https://github.com/Kim-WG-St-Pauli/wg-st-pauli/edit/main/data/series.json" target="_blank" rel="noopener">github.com/.../edit/main/data/series.json</a>.
+        </li>
+        <li>
+          Im Editor <strong>alles markieren</strong> (hineinklicken, dann Strg/Cmd+A), <strong>löschen</strong>, und den kopierten alten Text <strong>einfügen</strong> (Strg/Cmd+V).
+        </li>
+        <li>
+          Ganz unten eine kurze Nachricht eintragen (z. B. „Zurück auf alten Stand") und auf <strong>„Commit changes"</strong> klicken.
+        </li>
+        <li>
+          Nach 1–2 Minuten prüfen, ob es geklappt hat: einfach die Seite neu laden, oder im Werkzeug oben auf den Status-Punkt schauen (grün = alles gut).
+        </li>
+      </ul>
+
+      <div class="callout" style="border-color:var(--amber);margin-top:28px">
+        <p class="muted"><strong class="accent">Unsicher, welche Version die richtige war?</strong> Lieber einmal zu viel nachfragen als etwas falsch zurücksetzen. Schreib dem Helfer kurz mit dem Link zur Historie-Seite (Schritt 1) — er sieht dann sofort, was passiert ist, und sagt dir genau, welche Version die richtige ist.</p>
+      </div>
+
+      <h2 class="h-md" style="margin:34px 0 12px">Warum nicht einfach ein „Revert"-Knopf?</h2>
+      <p class="muted">Bei GitHub gibt es einen Ein-Klick-„Revert"-Knopf nur für Änderungen, die über einen Pull Request gelaufen sind. Da Änderungen aus dem Werkzeug direkt gespeichert werden (ohne Pull Request), fehlt dieser Knopf hier — die Kopieren-und-Einfügen-Methode oben ist der offizielle Weg von GitHub dafür und genauso sicher.</p>
+
+    </div>
+  </section>
+
+  <div data-footer></div>
+  <script src="data/series.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
