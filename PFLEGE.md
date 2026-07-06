@@ -24,13 +24,14 @@ Falls der Zugang irgendwann nicht mehr funktioniert (z. B. weil der Code abgelau
 
 ## 2. Der Ablauf — für alles gleich
 
-Im Werkzeug gibt es oben **fünf Reiter** — du wählst, was du gerade tun willst:
+Im Werkzeug gibt es oben **sechs Reiter** — du wählst, was du gerade tun willst:
 
 - **＋ Neue Folge** — eine neue Folge anlegen (das machst du jeden Samstag)
 - **✎ Folge bearbeiten** — eine Folge, die es schon gibt, korrigieren
 - **◐ Bewohner** — Name, Rolle, Zitat, Bio, Schlagworte einer Figur ändern
 - **↗ Links** — Steady, Instagram, Facebook, Original-Website
 - **✦ Staffel-Texte** — Überschrift und Untertitel einer Staffel
+- **✧ Team** — Profiltext von Kim Perator (Macherin) und Milo Relotio (Reporter) ändern
 
 Egal welcher Reiter: du füllst die Felder aus, siehst rechts sofort eine **Vorschau**, und klickst auf **„Veröffentlichen“**. Nach 1–2 Minuten ist die Änderung live. Das war's — kein Kopieren, kein Einfügen bei GitHub, keine Klammern oder Kommas, um die du dich kümmern musst.
 
@@ -84,7 +85,21 @@ Bei **Links** siehst du bewusst nicht die technischen Newsletter-Felder (Mailchi
 
 ---
 
-## 6. Wenn doch mal was klemmt
+## 6. Kims und Milos Profiltext ändern
+
+Auch der Text über Kim (die Macherin der Serie) und über Milo (den Reporter aus den Kiez-Talks) lässt sich im Werkzeug pflegen.
+
+1. **Werkzeug öffnen** und oben auf **✧ Team** klicken.
+2. Im Auswahl-Feld **Kim Perator** oder **Milo Relotio** aussuchen. Die Felder füllen sich automatisch mit dem aktuellen Text.
+3. **Name, Rolle und Bio** anpassen. Bei Kim gibt es zusätzlich ein **Zitat**-Feld — das gibt es bei Milo bewusst nicht, weil er als Figur kein eigenes Zitat hat; das Feld verschwindet automatisch, wenn du Milo auswählst.
+4. In der Vorschau rechts prüfen, ob es gut aussieht.
+5. Auf **„Veröffentlichen“** klicken.
+
+Nach 1–2 Minuten zeigt die Seite den neuen Text.
+
+---
+
+## 7. Wenn doch mal was klemmt
 
 **Keine Sorge — du kannst nichts endgültig kaputtmachen.** Zwei Sicherheitsnetze fangen dich auf:
 
@@ -95,7 +110,7 @@ Trau dich also ruhig.
 
 ---
 
-## 7. Was du *nicht* anfassen musst
+## 8. Was du *nicht* anfassen musst
 
 Für die ganz normale Pflege — neue Folgen, Texte, Bilder — brauchst du **nur** das Werkzeug aus dieser Anleitung.
 

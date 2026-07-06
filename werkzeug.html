@@ -99,6 +99,7 @@
         <button class="mode-btn" data-mode="characters" role="tab" aria-selected="false">◐ Bewohner</button>
         <button class="mode-btn" data-mode="links" role="tab" aria-selected="false">↗ Links</button>
         <button class="mode-btn" data-mode="seasons" role="tab" aria-selected="false">✦ Staffel-Texte</button>
+        <button class="mode-btn" data-mode="team" role="tab" aria-selected="false">✧ Team</button>
       </div>
     </div>
   </header>
@@ -248,6 +249,33 @@
         <p class="hint" id="snMsg"></p>
       </div>
     </section>
+
+    <!-- ====================== MODE: TEAM (Kim & Milo) ====================== -->
+    <section class="section section--tight panel" id="panel-team" hidden>
+      <div class="container tool">
+        <form id="fTeam" onsubmit="return false">
+          <div class="field">
+            <label>Wer soll bearbeitet werden?</label>
+            <select id="tmPick"></select>
+          </div>
+          <div class="field"><label>Name</label><input id="tmName"></div>
+          <div class="field"><label>Rolle</label><input id="tmRole"></div>
+          <div class="field" id="tmQuoteWrap"><label>Zitat</label><input id="tmQuote"></div>
+          <div class="field"><label>Bio</label><textarea id="tmBio" rows="5"></textarea></div>
+        </form>
+        <div class="out-card">
+          <span class="kicker" style="color:var(--lime)">Vorschau</span>
+          <article class="preview-card" style="margin-top:10px">
+            <div class="dossier__role" id="pvTmRole" style="font-family:var(--font-mono);font-size:.78rem;color:var(--muted)"></div>
+            <h3 class="dossier__name" id="pvTmName"></h3>
+            <p class="dossier__quote" id="pvTmQuote" style="margin:8px 0"></p>
+            <p class="muted" id="pvTmBio"></p>
+          </article>
+          <button class="btn btn--lime" id="btnPublishTeam" type="button" style="margin-top:18px;width:100%">Veröffentlichen</button>
+          <p class="hint" id="tmMsg"></p>
+        </div>
+      </div>
+    </section>
   </div>
 
   <!-- ====================== BILDER & SICHERHEITSNETZ ====================== -->
@@ -394,6 +422,7 @@
     const panels = {
       new: $("panel-episode"), edit: $("panel-episode"),
       characters: $("panel-characters"), links: $("panel-links"), seasons: $("panel-seasons"),
+      team: $("panel-team"),
     };
     function setMode(m) {
       mode = m;
@@ -406,6 +435,7 @@
       if (m === "characters") populateCharacterPicker();
       if (m === "links") fillLinksForm();
       if (m === "seasons") populateSeasonPicker();
+      if (m === "team") populateTeamPicker();
     }
     document.querySelectorAll(".mode-btn").forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
 
@@ -648,6 +678,51 @@
         msgEl.className = "hint err";
       }
     }
+
+    /* ---------------- TEAM: Kim (creator) & Milo (reporter) ---------------- */
+    function populateTeamPicker() {
+      const sel = $("tmPick");
+      const creator = state.data.creator, reporter = state.data.reporter;
+      sel.innerHTML = [
+        `<option value="creator">${creator.name} (${creator.role})</option>`,
+        `<option value="reporter">${reporter.name} (${reporter.role})</option>`,
+      ].join("");
+      if (!sel.dataset.bound) { sel.addEventListener("change", () => prefillTeam(sel.value)); sel.dataset.bound = "1"; }
+      prefillTeam(sel.value);
+    }
+    function prefillTeam(which) {
+      const person = state.data[which];
+      if (!person) return;
+      $("tmName").value = person.name || "";
+      $("tmRole").value = person.role || "";
+      $("tmQuote").value = person.quote || "";
+      $("tmBio").value = person.bio || "";
+      $("tmQuoteWrap").hidden = (which !== "creator");
+      updateTeamPreview();
+    }
+    function updateTeamPreview() {
+      const which = $("tmPick").value;
+      $("pvTmRole").textContent = $("tmRole").value;
+      $("pvTmName").textContent = $("tmName").value || "(Name)";
+      $("pvTmQuote").textContent = (which === "creator" && $("tmQuote").value) ? "„" + $("tmQuote").value + "“" : "";
+      $("pvTmBio").textContent = $("tmBio").value;
+      $("btnPublishTeam").disabled = !($("tmName").value.trim() && $("tmBio").value.trim());
+    }
+    ["tmName", "tmRole", "tmQuote", "tmBio"].forEach((id) => $(id).addEventListener("input", updateTeamPreview));
+    $("tmPick").addEventListener("change", updateTeamPreview);
+
+    async function publishTeam() {
+      const which = $("tmPick").value; // "creator" | "reporter"
+      const next = JSON.parse(JSON.stringify(state.data));
+      const person = next[which];
+      person.name = $("tmName").value.trim();
+      person.role = $("tmRole").value.trim();
+      person.bio = $("tmBio").value.trim();
+      if (which === "creator") person.quote = $("tmQuote").value.trim();
+      const label = state.data[which].name;
+      await runPublish(next, `${label} aktualisiert (via Werkzeug)`, "tmMsg", () => {});
+    }
+    $("btnPublishTeam").addEventListener("click", publishTeam);
   })();
   </script>
 </body>
