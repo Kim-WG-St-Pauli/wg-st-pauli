@@ -76,10 +76,11 @@ Bei **Links** siehst du bewusst nicht die technischen Newsletter-Felder (Mailchi
 
 **Ein Bild hochladen (z. B. ein neues Bewohner-Foto)** läuft weiterhin direkt über GitHub, nicht über das Werkzeug:
 
-1. Bei GitHub in den Ordner **`assets/img`** gehen.
-2. Auf **„Add file“ → „Upload files“** klicken und dein Bild hochladen. Gib ihm einen einfachen Namen **ohne Leerzeichen**, z. B. `cast-silke.jpg`. Unten „Commit changes“.
+1. Diesen Link öffnen: [github.com/.../upload/main/assets/img](https://github.com/Kim-WG-St-Pauli/wg-st-pauli/upload/main/assets/img) — bringt dich direkt zum Hochladen-Fenster im richtigen Ordner.
+2. Bild hineinziehen oder auswählen. Gib ihm einen einfachen Namen **ohne Leerzeichen**, z. B. `cast-silke.jpg`. Unten „Commit changes“.
 3. **Soll das Bild ein bestehendes ersetzen?** Dann lade es einfach mit **genau demselben Dateinamen** hoch — die Seite zeigt sofort das neue Bild, du musst sonst nichts ändern.
-4. Für ein **ganz neues** Bewohner-Bild trägst du im Werkzeug bei „Bewohner“ den Bildpfad ein (dafür kurz den Helfer fragen).
+4. **Neuer Dateiname für einen bestehenden Bewohner:** im Werkzeug bei „Bewohner“ im Feld „Foto“ den neuen Dateinamen eintragen — das Werkzeug prüft direkt, ob es das Bild findet (grünes Häkchen).
+5. **Einen komplett neuen Bewohner** (der noch gar nicht existiert) hinzufügen kann das Werkzeug noch nicht — dafür kurz den Helfer ansprechen, am einfachsten mit Name, ein bis zwei Sätzen zur Figur und dem gewünschten Foto.
 
 ---
 
@@ -88,7 +89,7 @@ Bei **Links** siehst du bewusst nicht die technischen Newsletter-Felder (Mailchi
 **Keine Sorge — du kannst nichts endgültig kaputtmachen.** Zwei Sicherheitsnetze fangen dich auf:
 
 1. **Die Seite prüft jede Änderung automatisch**, bevor sie live geht. Ist etwas unvollständig, wird einfach nicht neu veröffentlicht — der letzte gute Stand bleibt online. Das Werkzeug zeigt dir das oben mit einem roten Warnzeichen an.
-2. **Jede Veröffentlichung lässt sich rückgängig machen.** Bei GitHub in `data/series.json` die **Datei-Historie** öffnen (Link mit der Uhr / „History“), die letzte Änderung anklicken, auf **„Revert“** gehen, bestätigen — die Seite ist sofort wieder im alten Stand.
+2. **Jede Veröffentlichung lässt sich rückgängig machen.** GitHub speichert jede Version für immer. Genaue Klick-für-Klick-Anleitung mit Bildern: [rueckgaengig.html](rueckgaengig.html) (auch über das Werkzeug verlinkt).
 
 Trau dich also ruhig.
 

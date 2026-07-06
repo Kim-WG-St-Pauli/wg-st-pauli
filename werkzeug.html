@@ -193,14 +193,16 @@
             <input id="chTags" placeholder="z. B. Hafen, Punk-Herz, Mann der Tat">
           </div>
           <div class="field">
-            <label>Foto</label>
-            <input id="chImg" disabled>
-            <div class="hint">Bilder ändern läuft weiterhin direkt über GitHub (Ordner <code>assets/img/</code>, gleicher Dateiname ersetzt das alte Foto) – siehe Anleitung unten.</div>
+            <label>Foto (Dateipfad)</label>
+            <input id="chImg" placeholder="assets/img/cast-name.jpg">
+            <div class="hint">Neues Foto zuerst <a href="https://github.com/Kim-WG-St-Pauli/wg-st-pauli/upload/main/assets/img" target="_blank" rel="noopener">hier direkt hochladen</a> (Ordner <code>assets/img/</code>), dann den Dateinamen oben eintragen. Gleicher Dateiname wie vorher = ersetzt automatisch das alte Foto, kein Eintrag hier nötig.</div>
+            <div class="hint" id="chImgCheck"></div>
           </div>
         </form>
         <div class="out-card">
           <span class="kicker" style="color:var(--lime)">Vorschau</span>
           <article class="preview-card" style="margin-top:10px">
+            <img id="pvChImg" alt="" style="width:88px;height:88px;object-fit:cover;border-radius:10px;display:none;margin-bottom:12px">
             <div class="dossier__role" id="pvChRole" style="font-family:var(--font-mono);font-size:.78rem;color:var(--muted)"></div>
             <h3 class="dossier__name" id="pvChName"></h3>
             <p class="dossier__quote" id="pvChQuote" style="margin:8px 0"></p>
@@ -252,12 +254,13 @@
       <span class="kicker">Bilder &amp; Sicherheitsnetz</span>
       <h2 class="h-md" style="margin:12px 0 18px">Was dieses Werkzeug nicht macht</h2>
       <ul class="stepnum">
-        <li>Ein <strong>neues Foto</strong> hochladen: im GitHub-Repo in den Ordner <code>assets/img/</code> gehen → <strong>„Add file“ → „Upload files“</strong> → Bild hochladen, einfacher Dateiname ohne Leerzeichen (z. B. <code>cast-silke.jpg</code>) → „Commit changes“.</li>
-        <li>Soll das Bild ein bestehendes Foto <strong>ersetzen</strong>: mit genau demselben Dateinamen hochladen – fertig, die Seite zeigt sofort das neue Bild.</li>
-        <li>Für ein <em>komplett neues</em> Bild eines Bewohners den Dateipfad im Feld „Foto“ oben eintragen lassen (dafür kurz den Helfer fragen).</li>
+        <li>Ein <strong>neues Foto</strong> hochladen: <a href="https://github.com/Kim-WG-St-Pauli/wg-st-pauli/upload/main/assets/img" target="_blank" rel="noopener">diesen Link öffnen</a> (bringt dich direkt zum Hochladen-Fenster im Ordner <code>assets/img/</code>) → Bild hineinziehen oder auswählen, einfacher Dateiname ohne Leerzeichen (z. B. <code>cast-silke.jpg</code>) → unten „Commit changes“ klicken.</li>
+        <li>Soll das Bild ein bestehendes Foto <strong>ersetzen</strong>: mit genau demselben Dateinamen hochladen – fertig, die Seite zeigt sofort das neue Bild, nichts weiter zu tun.</li>
+        <li>Ein <em>neuer</em> Dateiname für einen <strong>bestehenden</strong> Bewohner: Bild wie oben hochladen, dann im Werkzeug bei „Bewohner“ im Feld „Foto“ den neuen Dateinamen eintragen – das Werkzeug prüft direkt, ob es das Bild findet.</li>
+        <li>Einen <strong>komplett neuen</strong> Bewohner hinzufügen, der noch gar nicht existiert: das ist ein größerer Eingriff (neue Person im Datenmodell), das kann das Werkzeug noch nicht. Dafür kurz den Helfer ansprechen – am einfachsten mit Name der Person, ein bis zwei Sätzen zur Figur und dem gewünschten Foto.</li>
       </ul>
       <div class="callout" style="border-color:var(--amber);margin-top:18px">
-        <p class="muted"><strong class="accent">Nichts ist endgültig kaputtbar.</strong> Jede Veröffentlichung ist ein Punkt in der Datei-Historie bei GitHub. Geht doch mal was schief, dort die letzte Änderung per <em>„Revert“</em> rückgängig machen – die Seite ist sofort wieder im alten Stand. Außerdem prüft die Seite jede Änderung automatisch, bevor sie live geht: Ist etwas unvollständig, wird einfach nicht neu veröffentlicht und der letzte gute Stand bleibt online.</p>
+        <p class="muted"><strong class="accent">Nichts ist endgültig kaputtbar.</strong> Jede Veröffentlichung ist ein Punkt in der Datei-Historie bei GitHub, nichts wird je gelöscht. Geht doch mal was schief: <a href="rueckgaengig.html">genaue Anleitung, wie du eine Änderung rückgängig machst ↗</a>. Außerdem prüft die Seite jede Änderung automatisch, bevor sie live geht: Ist etwas unvollständig, wird einfach nicht neu veröffentlicht und der letzte gute Stand bleibt online.</p>
       </div>
       <div class="callout" style="border-color:var(--amber);margin-top:16px">
         <p class="muted"><strong class="accent">Damit Videos überall laufen:</strong> Vimeo-Videos können auf bestimmte Domains beschränkt sein. In den Vimeo-Einstellungen jedes Videos unter <em>Privatsphäre → Wo darf eingebettet werden</em> die Domain(s) ergänzen, unter denen die Seite erreichbar ist.</p>
@@ -539,6 +542,28 @@
       $("chTags").value = (c.tags || []).join(", ");
       $("chImg").value = c.img || "";
       updateCharacterPreview();
+      checkImagePath();
+    }
+    let imgCheckTimer = null;
+    function checkImagePath() {
+      const path = $("chImg").value.trim();
+      const img = $("pvChImg"), hint = $("chImgCheck");
+      clearTimeout(imgCheckTimer);
+      if (!path) { img.style.display = "none"; hint.textContent = ""; return; }
+      hint.textContent = "Prüfe Bild …"; hint.className = "hint";
+      imgCheckTimer = setTimeout(() => {
+        const test = new Image();
+        test.onload = () => {
+          img.src = test.src; img.style.display = "block";
+          hint.textContent = "✓ Bild gefunden"; hint.className = "hint ok";
+        };
+        test.onerror = () => {
+          img.style.display = "none";
+          hint.textContent = "⚠ Kein Bild unter diesem Pfad gefunden — erst hochladen (Link oben), dann Namen genau so eintragen.";
+          hint.className = "hint err";
+        };
+        test.src = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/${path}?t=${Date.now()}`;
+      }, 500);
     }
     function updateCharacterPreview() {
       $("pvChRole").textContent = $("chRole").value + ($("chAge").value ? " · " + $("chAge").value : "");
@@ -549,13 +574,14 @@
       $("btnPublishCharacter").disabled = !($("chName").value.trim() && $("chBio").value.trim());
     }
     ["chName", "chAge", "chRole", "chQuote", "chBio", "chTags"].forEach((id) => $(id).addEventListener("input", updateCharacterPreview));
+    $("chImg").addEventListener("input", checkImagePath);
 
     async function publishCharacter() {
       const id = $("chPick").value;
       const next = JSON.parse(JSON.stringify(state.data));
       const c = next.characters.find((x) => x.id === id);
       c.name = $("chName").value; c.age = $("chAge").value; c.role = $("chRole").value;
-      c.quote = $("chQuote").value; c.bio = $("chBio").value;
+      c.quote = $("chQuote").value; c.bio = $("chBio").value; c.img = $("chImg").value.trim();
       c.tags = $("chTags").value.split(",").map((t) => t.trim()).filter(Boolean);
       await runPublish(next, `Bewohner aktualisiert: ${c.name} (via Werkzeug)`, "chMsg", () => {});
     }
