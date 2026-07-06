@@ -238,10 +238,11 @@
     return `<iframe src="https://player.vimeo.com/video/${v.id}?${h}dnt=1&autoplay=1&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
   }
 
-  // Die Vimeo-Videos sind auf wg-st-pauli.de domaingebunden. Außerhalb (z. B. GitHub-Pages-
-  // Vorschau) würde Vimeo „Sorry, privacy settings“ zeigen – dort lieber sauberen Hinweis + Link.
-  const VIDEO_HOST = "wg-st-pauli.de";
-  const canEmbed = location.hostname === "" || location.hostname.endsWith(VIDEO_HOST);
+  // Die Vimeo-Videos sind domaingebunden. Freigegebene Domains (Vimeo-Privatsphäre-Einstellungen
+  // je Video pflegen!): wg-st-pauli.de und die GitHub-Pages-Domain zum Testen. Auf jeder anderen
+  // Domain würde Vimeo „Sorry, privacy settings“ zeigen – dort lieber sauberen Hinweis + Link.
+  const VIDEO_HOSTS = ["wg-st-pauli.de", "kim-wg-st-pauli.github.io"];
+  const canEmbed = location.hostname === "" || VIDEO_HOSTS.some((host) => location.hostname.endsWith(host));
   function videoBlock(ep, v, seg) {
     if (!v) return "";
     if (canEmbed) return vimeoFrame(v);
