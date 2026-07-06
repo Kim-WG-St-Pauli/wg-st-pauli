@@ -66,6 +66,21 @@ Nach 1–2 Minuten zeigt die Seite den korrigierten Text.
 
 ---
 
+## 4a. Eine Folge löschen
+
+Ist eine Folge aus Versehen doppelt angelegt oder soll komplett verschwinden? Auch das geht direkt im Werkzeug.
+
+1. **Werkzeug öffnen** und oben auf **✎ Folge bearbeiten** klicken.
+2. Im Auswahl-Feld die **Folge aussuchen**, die weg soll. Die Felder füllen sich zur Kontrolle mit dem aktuellen Text.
+3. Unten auf den roten Knopf **„Folge löschen“** klicken (er steht direkt unter „Veröffentlichen“).
+4. Es kommt eine Sicherheitsfrage: „Wirklich die Folge … löschen?“ — erst nach **Bestätigen** wird tatsächlich etwas gelöscht.
+
+Nach 1–2 Minuten ist die Folge von der Seite verschwunden. Das Werkzeug wählt danach automatisch die nächste Folge aus, damit du direkt weiterarbeiten kannst.
+
+> **Auch das ist rückgängig zu machen:** Genau wie bei allen anderen Änderungen bleibt die gelöschte Folge in der GitHub-Historie erhalten. Hast du dich vertan, hilft die gleiche Anleitung wie bei jeder anderen Änderung: [rueckgaengig.html](rueckgaengig.html).
+
+---
+
 ## 5. Bewohner, Links und Staffel-Texte ändern
 
 Genauso einfach: Reiter wählen, in der Auswahl die Person bzw. Staffel aussuchen, Felder anpassen, Vorschau prüfen, veröffentlichen.
