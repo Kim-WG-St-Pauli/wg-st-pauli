@@ -25,8 +25,8 @@
     .ok { color:var(--lime); }
     .err { color:#ff6b6b; }
     .stepnum { counter-reset:s; }
-    .stepnum li { counter-increment:s; display:flex; gap:14px; padding:12px 0; border-bottom:1px solid var(--line-2); }
-    .stepnum li::before { content:counter(s); font-family:var(--font-display); color:var(--pink); font-size:1.4rem; line-height:1; min-width:28px; }
+    .stepnum li { counter-increment:s; position:relative; padding:12px 0 12px 44px; border-bottom:1px solid var(--line-2); }
+    .stepnum li::before { content:counter(s); position:absolute; left:0; top:10px; font-family:var(--font-display); color:var(--pink); font-size:1.4rem; line-height:1; min-width:28px; }
     .modes { display:flex; gap:10px; flex-wrap:wrap; margin:8px 0 4px; }
     .modes[hidden] { display:none; }
     .mode-btn {
@@ -256,10 +256,10 @@
         <li>Soll das Bild ein bestehendes Foto <strong>ersetzen</strong>: mit genau demselben Dateinamen hochladen – fertig, die Seite zeigt sofort das neue Bild.</li>
         <li>Für ein <em>komplett neues</em> Bild eines Bewohners den Dateipfad im Feld „Foto“ oben eintragen lassen (dafür kurz den Helfer fragen).</li>
       </ul>
-      <div class="step" style="border-color:var(--amber);margin-top:18px">
+      <div class="callout" style="border-color:var(--amber);margin-top:18px">
         <p class="muted"><strong class="accent">Nichts ist endgültig kaputtbar.</strong> Jede Veröffentlichung ist ein Punkt in der Datei-Historie bei GitHub. Geht doch mal was schief, dort die letzte Änderung per <em>„Revert“</em> rückgängig machen – die Seite ist sofort wieder im alten Stand. Außerdem prüft die Seite jede Änderung automatisch, bevor sie live geht: Ist etwas unvollständig, wird einfach nicht neu veröffentlicht und der letzte gute Stand bleibt online.</p>
       </div>
-      <div class="step" style="border-color:var(--amber);margin-top:16px">
+      <div class="callout" style="border-color:var(--amber);margin-top:16px">
         <p class="muted"><strong class="accent">Damit Videos überall laufen:</strong> Vimeo-Videos können auf bestimmte Domains beschränkt sein. In den Vimeo-Einstellungen jedes Videos unter <em>Privatsphäre → Wo darf eingebettet werden</em> die Domain(s) ergänzen, unter denen die Seite erreichbar ist.</p>
       </div>
     </div>
