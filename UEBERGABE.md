@@ -85,9 +85,8 @@ In **deinem** Projekt (das jetzt dir gehört):
 
 1. Oben auf **„Settings"** klicken.
 2. Links im Menü auf **„Pages"** klicken.
-3. Bei **„Source"** auswählen: **„Deploy from a branch"**.
-4. Als **Branch** wählst du **`main`**, als Ordner **`/(root)`**.
-5. Auf **„Save"** (Speichern) klicken.
+3. Bei **„Source"** auswählen: **„GitHub Actions"**.
+4. Fertig — GitHub findet die vorbereitete Veröffentlichungs-Automatik (`.github/workflows/deploy.yml`) im Projekt automatisch.
 
 Nach **1–2 Minuten** ist deine Seite unter dieser **Test-Adresse** erreichbar:
 
@@ -98,6 +97,8 @@ https://DEIN-NUTZER.github.io/wg-st-pauli/
 > Diese Adresse ist nur zum Testen. Deine schöne eigene Adresse kommt im nächsten Teil.
 
 ✅ Wenn du die Seite unter der Test-Adresse im Browser siehst, ist Teil C fertig.
+
+> **Wichtig, falls du diese Anleitung schon einmal durchgegangen bist:** Die Seite prüft seit Kurzem jede Änderung automatisch, bevor sie live geht — dafür wurde diese eine Einstellung geändert (**„Deploy from a branch"** → **„GitHub Actions"**). Nur mit dieser Einstellung kann eine kaputte Änderung nicht mehr versehentlich die ganze Seite lahmlegen. Falls bei dir unter Settings → Pages noch **„Deploy from a branch"** steht, bitte einmalig auf **„GitHub Actions"** umstellen (Schritte oben) — das ist der einzige Schritt, den nur du als Eigentümerin machen kannst, der Helfer hat dafür keine Berechtigung.
 
 ---
 
