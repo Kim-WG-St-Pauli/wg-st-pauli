@@ -39,6 +39,8 @@
     .panel[hidden] { display:none; }
     .callout { background:var(--ink-2); border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin:14px 0; }
     .callout code { background:rgba(0,0,0,.18); padding:2px 6px; border-radius:6px; font-family:var(--font-mono); font-size:.86em; }
+    .inline-link { color:var(--pink); text-decoration:underline; text-underline-offset:2px; }
+    .inline-link:hover { color:var(--lime); }
     .guide-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
     .status-bar { display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:14px 18px; border-radius:12px; border:1px solid var(--line); background:var(--ink-2); margin-bottom:22px; }
     .status-bar[hidden] { display:none; }
@@ -81,7 +83,7 @@
         <details class="setup" style="margin-top:16px">
           <summary>Wie bekomme ich einen Zugangs-Schlüssel?</summary>
           <ul class="stepnum" style="margin-top:10px">
-            <li>Diesen Link öffnen (am besten in einem neuen Tab): <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a>. Falls GitHub nach dem Passwort fragt, einloggen.</li>
+            <li>Diesen Link öffnen (am besten in einem neuen Tab): <a class="inline-link" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a>. Falls GitHub nach dem Passwort fragt, einloggen.</li>
             <li>Bei <strong>„Repository access“</strong> die Option <strong>„Only select repositories“</strong> wählen und <code>wg-st-pauli</code> auswählen.</li>
             <li>Weiter unten bei <strong>„Permissions“</strong> auf <strong>„Repository permissions“</strong> klicken, bei <strong>„Contents“</strong> auf <strong>„Read and write“</strong> stellen. Mehr muss nicht angehakt werden.</li>
             <li>Ganz unten auf <strong>„Generate token“</strong> klicken. GitHub zeigt dir jetzt einmalig einen langen Code, der mit <code>github_pat_</code> beginnt.</li>
@@ -195,7 +197,7 @@
           <div class="field">
             <label>Foto (Dateipfad)</label>
             <input id="chImg" placeholder="assets/img/cast-name.jpg">
-            <div class="hint">Neues Foto zuerst <a href="https://github.com/Kim-WG-St-Pauli/wg-st-pauli/upload/main/assets/img" target="_blank" rel="noopener">hier direkt hochladen</a> (Ordner <code>assets/img/</code>), dann den Dateinamen oben eintragen. Gleicher Dateiname wie vorher = ersetzt automatisch das alte Foto, kein Eintrag hier nötig.</div>
+            <div class="hint">Neues Foto zuerst <a class="inline-link" href="https://github.com/Kim-WG-St-Pauli/wg-st-pauli/upload/main/assets/img" target="_blank" rel="noopener">hier direkt hochladen</a> (Ordner <code>assets/img/</code>), dann den Dateinamen oben eintragen. Gleicher Dateiname wie vorher = ersetzt automatisch das alte Foto, kein Eintrag hier nötig.</div>
             <div class="hint" id="chImgCheck"></div>
           </div>
         </form>
@@ -254,13 +256,13 @@
       <span class="kicker">Bilder &amp; Sicherheitsnetz</span>
       <h2 class="h-md" style="margin:12px 0 18px">Was dieses Werkzeug nicht macht</h2>
       <ul class="stepnum">
-        <li>Ein <strong>neues Foto</strong> hochladen: <a href="https://github.com/Kim-WG-St-Pauli/wg-st-pauli/upload/main/assets/img" target="_blank" rel="noopener">diesen Link öffnen</a> (bringt dich direkt zum Hochladen-Fenster im Ordner <code>assets/img/</code>) → Bild hineinziehen oder auswählen, einfacher Dateiname ohne Leerzeichen (z. B. <code>cast-silke.jpg</code>) → unten „Commit changes“ klicken.</li>
+        <li>Ein <strong>neues Foto</strong> hochladen: <a class="inline-link" href="https://github.com/Kim-WG-St-Pauli/wg-st-pauli/upload/main/assets/img" target="_blank" rel="noopener">diesen Link öffnen</a> (bringt dich direkt zum Hochladen-Fenster im Ordner <code>assets/img/</code>) → Bild hineinziehen oder auswählen, einfacher Dateiname ohne Leerzeichen (z. B. <code>cast-silke.jpg</code>) → unten „Commit changes“ klicken.</li>
         <li>Soll das Bild ein bestehendes Foto <strong>ersetzen</strong>: mit genau demselben Dateinamen hochladen – fertig, die Seite zeigt sofort das neue Bild, nichts weiter zu tun.</li>
         <li>Ein <em>neuer</em> Dateiname für einen <strong>bestehenden</strong> Bewohner: Bild wie oben hochladen, dann im Werkzeug bei „Bewohner“ im Feld „Foto“ den neuen Dateinamen eintragen – das Werkzeug prüft direkt, ob es das Bild findet.</li>
         <li>Einen <strong>komplett neuen</strong> Bewohner hinzufügen, der noch gar nicht existiert: das ist ein größerer Eingriff (neue Person im Datenmodell), das kann das Werkzeug noch nicht. Dafür kurz den Helfer ansprechen – am einfachsten mit Name der Person, ein bis zwei Sätzen zur Figur und dem gewünschten Foto.</li>
       </ul>
       <div class="callout" style="border-color:var(--amber);margin-top:18px">
-        <p class="muted"><strong class="accent">Nichts ist endgültig kaputtbar.</strong> Jede Veröffentlichung ist ein Punkt in der Datei-Historie bei GitHub, nichts wird je gelöscht. Geht doch mal was schief: <a href="rueckgaengig.html">genaue Anleitung, wie du eine Änderung rückgängig machst ↗</a>. Außerdem prüft die Seite jede Änderung automatisch, bevor sie live geht: Ist etwas unvollständig, wird einfach nicht neu veröffentlicht und der letzte gute Stand bleibt online.</p>
+        <p class="muted"><strong class="accent">Nichts ist endgültig kaputtbar.</strong> Jede Veröffentlichung ist ein Punkt in der Datei-Historie bei GitHub, nichts wird je gelöscht. Geht doch mal was schief: <a class="inline-link" href="rueckgaengig.html">genaue Anleitung, wie du eine Änderung rückgängig machst ↗</a>. Außerdem prüft die Seite jede Änderung automatisch, bevor sie live geht: Ist etwas unvollständig, wird einfach nicht neu veröffentlicht und der letzte gute Stand bleibt online.</p>
       </div>
       <div class="callout" style="border-color:var(--amber);margin-top:16px">
         <p class="muted"><strong class="accent">Damit Videos überall laufen:</strong> Vimeo-Videos können auf bestimmte Domains beschränkt sein. In den Vimeo-Einstellungen jedes Videos unter <em>Privatsphäre → Wo darf eingebettet werden</em> die Domain(s) ergänzen, unter denen die Seite erreichbar ist.</p>

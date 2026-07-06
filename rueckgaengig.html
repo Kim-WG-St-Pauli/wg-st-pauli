@@ -17,6 +17,8 @@
     .shot { max-width:100%; border:1px solid var(--line); border-radius:12px; margin:14px 0; display:block; }
     .shot-cap { font-size:.82rem; color:var(--faint); margin-top:-8px; margin-bottom:18px; }
     .callout { background:var(--ink-2); border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin:14px 0; }
+    .inline-link { color:var(--pink); text-decoration:underline; text-underline-offset:2px; }
+    .inline-link:hover { color:var(--lime); }
     .callout code { background:rgba(0,0,0,.18); padding:2px 6px; border-radius:6px; font-family:var(--font-mono); font-size:.86em; }
   </style>
 </head>
@@ -41,7 +43,7 @@
       <h2 class="h-md" style="margin:34px 0 16px">Schritt für Schritt</h2>
       <ul class="stepnum">
         <li>
-          Die <strong>Historie der Datei</strong> öffnen: <a href="https://github.com/Kim-WG-St-Pauli/wg-st-pauli/commits/main/data/series.json" target="_blank" rel="noopener">github.com/.../commits/main/data/series.json</a>. Hier siehst du jede Änderung, neueste zuerst.
+          Die <strong>Historie der Datei</strong> öffnen: <a class="inline-link" href="https://github.com/Kim-WG-St-Pauli/wg-st-pauli/commits/main/data/series.json" target="_blank" rel="noopener">github.com/.../commits/main/data/series.json</a>. Hier siehst du jede Änderung, neueste zuerst.
           <img class="shot" src="assets/img/anleitung-github-historie.png" alt="GitHub-Historie einer Datei mit einer Liste von Commits">
           <p class="shot-cap">So sieht die Liste aus (Beispiel-Historie einer anderen Datei) — bei dir stehen oben deine eigenen Änderungen, mit Datum und einer kurzen Beschreibung.</p>
         </li>
@@ -54,7 +56,7 @@
           Oben rechts im Code-Feld auf <strong>„Raw"</strong> klicken (zeigt den reinen Text), dann <strong>alles markieren und kopieren</strong> (Strg/Cmd+A, dann Strg/Cmd+C).
         </li>
         <li>
-          Diesen Link öffnen, er bringt dich direkt zum Bearbeiten der <strong>aktuellen</strong> Datei: <a href="https://github.com/Kim-WG-St-Pauli/wg-st-pauli/edit/main/data/series.json" target="_blank" rel="noopener">github.com/.../edit/main/data/series.json</a>.
+          Diesen Link öffnen, er bringt dich direkt zum Bearbeiten der <strong>aktuellen</strong> Datei: <a class="inline-link" href="https://github.com/Kim-WG-St-Pauli/wg-st-pauli/edit/main/data/series.json" target="_blank" rel="noopener">github.com/.../edit/main/data/series.json</a>.
         </li>
         <li>
           Im Editor <strong>alles markieren</strong> (hineinklicken, dann Strg/Cmd+A), <strong>löschen</strong>, und den kopierten alten Text <strong>einfügen</strong> (Strg/Cmd+V).
