@@ -20,7 +20,7 @@ function isNonEmptyString(v) {
 function checkVideo(video, where) {
   if (video === null) return;
   if (typeof video !== "object" || !isNonEmptyString(video.id)) {
-    fail(`${where}: video muss null oder { id, h } sein`);
+    fail(`${where}: video muss null oder { id } sein (h ist optional)`);
   }
 }
 
@@ -44,8 +44,13 @@ for (const key of ["characters", "creator", "reporter", "seasons", "links", "url
   if (!(key in data)) fail(`Oberste Ebene: "${key}" fehlt`);
 }
 
+function isObject(v) {
+  return typeof v === "object" && v !== null && !Array.isArray(v);
+}
+
 if (Array.isArray(data.characters)) {
   data.characters.forEach((c, i) => {
+    if (!isObject(c)) { fail(`characters[${i}]: muss ein Objekt sein`); return; }
     if (!isNonEmptyString(c.id)) fail(`characters[${i}]: id fehlt`);
     if (!isNonEmptyString(c.name)) fail(`characters[${i}]: name fehlt`);
   });
@@ -57,6 +62,7 @@ const seenEpisodeIds = new Set();
 
 if (Array.isArray(data.seasons)) {
   data.seasons.forEach((season, si) => {
+    if (!isObject(season)) { fail(`seasons[${si}]: muss ein Objekt sein`); return; }
     if (!isNonEmptyString(season.id)) fail(`seasons[${si}]: id fehlt`);
     if (!isNonEmptyString(season.title)) fail(`seasons[${si}]: title fehlt`);
     if (!Array.isArray(season.episodes)) {
@@ -64,7 +70,8 @@ if (Array.isArray(data.seasons)) {
       return;
     }
     season.episodes.forEach((ep, ei) => {
-      const where = `seasons[${si}].episodes[${ei}] (${ep && ep.id})`;
+      if (!isObject(ep)) { fail(`seasons[${si}].episodes[${ei}]: muss ein Objekt sein`); return; }
+      const where = `seasons[${si}].episodes[${ei}] (${ep.id})`;
       if (!isNonEmptyString(ep.id)) fail(`${where}: id fehlt`);
       else if (seenEpisodeIds.has(ep.id)) fail(`${where}: id "${ep.id}" ist doppelt vergeben`);
       else seenEpisodeIds.add(ep.id);
