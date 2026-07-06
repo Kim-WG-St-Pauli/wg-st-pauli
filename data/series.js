@@ -178,8 +178,7 @@ window.WG = (function () {
                 {
           id: "s2f4", no: "4", title: "Das Wasserbett", date: "2026-07-04",
           logline: "Bettgeschichten Teil2",
-          summary: "Kai schweisst ein Wasserbett. Logisch, oder?
-– Folge vier von Staffel zwei.",
+          summary: "Kai schweisst ein Wasserbett. Logisch, oder? – Folge vier von Staffel zwei.",
           video: { id: "1201567968", h: "d259e888c5" },
           talk: null,
         },
