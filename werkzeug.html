@@ -345,7 +345,7 @@
     }
     async function refreshRunStatus() {
       const run = await checkRunStatus();
-      if (!run) return;
+      if (!run) return; // z. B. Token ohne "Actions: read" — Statusleiste bleibt trotzdem sichtbar (siehe connect())
       if (run.status !== "completed") setStatus("pending", "Letzte Veröffentlichung läuft gerade …");
       else if (run.conclusion === "success") setStatus("ok", "Seite ist aktuell und live ✓");
       else setStatus("err", "⚠ Die letzte Änderung konnte nicht veröffentlicht werden — Details in der GitHub-Historie.");
@@ -362,6 +362,7 @@
         $("modeTabs").hidden = false;
         $("app").hidden = false;
         setMode(mode);
+        setStatus("pending", "Verbunden ✓"); // sofort sichtbar, unabhängig davon ob der Status-Check unten klappt
         refreshRunStatus();
       } catch (err) {
         state.token = "";
@@ -499,7 +500,13 @@
       ep.logline = logline; ep.summary = summary; ep.video = video; ep.talk = talk;
 
       const season = next.seasons.find((s) => s.id === seasonId);
+      const msgEl = $("epMsg");
       if (mode === "new") {
+        if (next.seasons.some((s) => s.episodes.some((e) => e.id === id))) {
+          msgEl.textContent = "⚠ Eine Folge mit dieser Nummer gibt es in dieser Staffel schon. Bitte „Folge bearbeiten“ nutzen oder eine andere Nummer wählen.";
+          msgEl.className = "hint err";
+          return;
+        }
         season.episodes.unshift(ep);
       } else {
         for (const s of next.seasons) {
@@ -508,6 +515,7 @@
         }
       }
       if (pageUrl) next.urlMap[id] = pageUrl;
+      else delete next.urlMap[id];
 
       const message = mode === "new"
         ? `Neue Folge: ${season.title} – ${id} "${title}" (via Werkzeug)`
