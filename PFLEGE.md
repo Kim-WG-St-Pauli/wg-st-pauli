@@ -24,13 +24,14 @@ Falls der Zugang irgendwann nicht mehr funktioniert (z. B. weil der Code abgelau
 
 ## 2. Der Ablauf — für alles gleich
 
-Im Werkzeug gibt es oben **fünf Reiter** — du wählst, was du gerade tun willst:
+Im Werkzeug gibt es oben **sechs Reiter** — du wählst, was du gerade tun willst:
 
 - **＋ Neue Folge** — eine neue Folge anlegen (das machst du jeden Samstag)
 - **✎ Folge bearbeiten** — eine Folge, die es schon gibt, korrigieren
 - **◐ Bewohner** — Name, Rolle, Zitat, Bio, Schlagworte einer Figur ändern
 - **↗ Links** — Steady, Instagram, Facebook, Original-Website
 - **✦ Staffel-Texte** — Überschrift und Untertitel einer Staffel
+- **✱ Neue Staffel** — eine ganz neue Staffel anlegen
 
 Egal welcher Reiter: du füllst die Felder aus, siehst rechts sofort eine **Vorschau**, und klickst auf **„Veröffentlichen“**. Nach 1–2 Minuten ist die Änderung live. Das war's — kein Kopieren, kein Einfügen bei GitHub, keine Klammern oder Kommas, um die du dich kümmern musst.
 
@@ -66,7 +67,22 @@ Nach 1–2 Minuten zeigt die Seite den korrigierten Text.
 
 ---
 
-## 5. Bewohner, Links und Staffel-Texte ändern
+## 5. Eine neue Staffel anlegen
+
+Steht eine ganz neue Staffel an? Dafür gibt es den Reiter **✱ Neue Staffel**.
+
+1. **Werkzeug öffnen** und oben auf **✱ Neue Staffel** klicken.
+2. **Überschrift** eintragen (z. B. „Staffel 3“) und **Untertitel** (der Satz darunter).
+3. Rechts siehst du direkt die **Vorschau**.
+4. Auf **„Veröffentlichen“** klicken.
+
+Fertig — die neue Staffel ist angelegt, erstmal noch ganz ohne Folgen. Um die Sache kümmert sich das Werkzeug: Du musst dir keine Nummer oder ID ausdenken, das passiert automatisch im Hintergrund.
+
+Danach kannst du sofort unter **＋ Neue Folge** die erste Folge der neuen Staffel anlegen — sie taucht in der Staffel-Auswahl direkt mit auf, ganz ohne die Seite neu zu laden.
+
+---
+
+## 6. Bewohner, Links und Staffel-Texte ändern
 
 Genauso einfach: Reiter wählen, in der Auswahl die Person bzw. Staffel aussuchen, Felder anpassen, Vorschau prüfen, veröffentlichen.
 
@@ -84,7 +100,7 @@ Bei **Links** siehst du bewusst nicht die technischen Newsletter-Felder (Mailchi
 
 ---
 
-## 6. Wenn doch mal was klemmt
+## 7. Wenn doch mal was klemmt
 
 **Keine Sorge — du kannst nichts endgültig kaputtmachen.** Zwei Sicherheitsnetze fangen dich auf:
 
@@ -95,7 +111,7 @@ Trau dich also ruhig.
 
 ---
 
-## 7. Was du *nicht* anfassen musst
+## 8. Was du *nicht* anfassen musst
 
 Für die ganz normale Pflege — neue Folgen, Texte, Bilder — brauchst du **nur** das Werkzeug aus dieser Anleitung.
 
