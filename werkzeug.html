@@ -99,6 +99,7 @@
         <button class="mode-btn" data-mode="characters" role="tab" aria-selected="false">◐ Bewohner</button>
         <button class="mode-btn" data-mode="links" role="tab" aria-selected="false">↗ Links</button>
         <button class="mode-btn" data-mode="seasons" role="tab" aria-selected="false">✦ Staffel-Texte</button>
+        <button class="mode-btn" data-mode="newseason" role="tab" aria-selected="false">✱ Neue Staffel</button>
         <button class="mode-btn" data-mode="team" role="tab" aria-selected="false">✧ Team</button>
       </div>
     </div>
@@ -252,6 +253,25 @@
         </form>
         <button class="btn btn--lime" id="btnPublishSeason" type="button" style="margin-top:8px">Veröffentlichen</button>
         <p class="hint" id="snMsg"></p>
+      </div>
+    </section>
+
+    <!-- ====================== MODE: NEUE STAFFEL ====================== -->
+    <section class="section section--tight panel" id="panel-newseason" hidden>
+      <div class="container tool">
+        <form id="fNewSeason" onsubmit="return false">
+          <div class="field"><label>Überschrift</label><input id="nsTitle" placeholder="z. B. Staffel 3"></div>
+          <div class="field"><label>Untertitel</label><input id="nsTagline" placeholder="z. B. Der Sommer, der alles änderte"></div>
+        </form>
+        <div class="out-card">
+          <span class="kicker" style="color:var(--lime)">Vorschau</span>
+          <div class="preview-card" style="margin-top:10px">
+            <h3 class="ep__title" id="pvNsTitle"></h3>
+            <p class="ep__log" id="pvNsTagline" style="color:var(--muted)"></p>
+          </div>
+          <button class="btn btn--lime" id="btnPublishNewSeason" type="button" style="margin-top:18px;width:100%">Veröffentlichen</button>
+          <p class="hint" id="nsMsg"></p>
+        </div>
       </div>
     </section>
 
@@ -427,6 +447,7 @@
     const panels = {
       new: $("panel-episode"), edit: $("panel-episode"),
       characters: $("panel-characters"), links: $("panel-links"), seasons: $("panel-seasons"),
+      newseason: $("panel-newseason"),
       team: $("panel-team"),
     };
     function setMode(m) {
@@ -440,6 +461,7 @@
       if (m === "characters") populateCharacterPicker();
       if (m === "links") fillLinksForm();
       if (m === "seasons") populateSeasonPicker();
+      if (m === "newseason") resetNewSeasonForm();
       if (m === "team") populateTeamPicker();
     }
     document.querySelectorAll(".mode-btn").forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
@@ -732,6 +754,30 @@
         msgEl.className = "hint err";
       }
     }
+
+    /* ---------------- NEUE STAFFEL ---------------- */
+    function resetNewSeasonForm() {
+      $("nsTitle").value = ""; $("nsTagline").value = "";
+      updateNewSeasonPreview();
+    }
+    function updateNewSeasonPreview() {
+      $("pvNsTitle").textContent = $("nsTitle").value || "(Überschrift)";
+      $("pvNsTagline").textContent = $("nsTagline").value;
+      const ok = $("nsTitle").value.trim() && $("nsTagline").value.trim();
+      $("btnPublishNewSeason").disabled = !ok;
+    }
+    ["nsTitle", "nsTagline"].forEach((id) => $(id).addEventListener("input", updateNewSeasonPreview));
+
+    async function publishNewSeason() {
+      const title = $("nsTitle").value.trim();
+      const tagline = $("nsTagline").value.trim();
+      const next = JSON.parse(JSON.stringify(state.data));
+      const newId = "s" + (next.seasons.length + 1);
+      const newSeason = { id: newId, title, tagline, episodes: [] };
+      next.seasons.push(newSeason);
+      await runPublish(next, `Neue Staffel angelegt: ${title} (via Werkzeug)`, "nsMsg", () => { resetNewSeasonForm(); refreshRunStatus(); });
+    }
+    $("btnPublishNewSeason").addEventListener("click", publishNewSeason);
 
     /* ---------------- TEAM: Kim (creator) & Milo (reporter) ---------------- */
     function populateTeamPicker() {

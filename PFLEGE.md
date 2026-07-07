@@ -24,13 +24,14 @@ Falls der Zugang irgendwann nicht mehr funktioniert (z. B. weil der Code abgelau
 
 ## 2. Der Ablauf — für alles gleich
 
-Im Werkzeug gibt es oben **sechs Reiter** — du wählst, was du gerade tun willst:
+Im Werkzeug gibt es oben **sieben Reiter** — du wählst, was du gerade tun willst:
 
 - **＋ Neue Folge** — eine neue Folge anlegen (das machst du jeden Samstag)
 - **✎ Folge bearbeiten** — eine Folge, die es schon gibt, korrigieren
 - **◐ Bewohner** — Name, Rolle, Zitat, Bio, Schlagworte einer Figur ändern
 - **↗ Links** — Steady, Instagram, Facebook, Original-Website
 - **✦ Staffel-Texte** — Überschrift und Untertitel einer Staffel
+- **✱ Neue Staffel** — eine ganz neue Staffel anlegen
 - **✧ Team** — Profiltext von Kim Perator (Macherin) und Milo Relotio (Reporter) ändern
 
 Egal welcher Reiter: du füllst die Felder aus, siehst rechts sofort eine **Vorschau**, und klickst auf **„Veröffentlichen“**. Nach 1–2 Minuten ist die Änderung live. Das war's — kein Kopieren, kein Einfügen bei GitHub, keine Klammern oder Kommas, um die du dich kümmern musst.
@@ -67,7 +68,22 @@ Nach 1–2 Minuten zeigt die Seite den korrigierten Text.
 
 ---
 
-## 5. Bewohner, Links und Staffel-Texte ändern
+## 5. Eine neue Staffel anlegen
+
+Steht eine ganz neue Staffel an? Dafür gibt es den Reiter **✱ Neue Staffel**.
+
+1. **Werkzeug öffnen** und oben auf **✱ Neue Staffel** klicken.
+2. **Überschrift** eintragen (z. B. „Staffel 3“) und **Untertitel** (der Satz darunter).
+3. Rechts siehst du direkt die **Vorschau**.
+4. Auf **„Veröffentlichen“** klicken.
+
+Fertig — die neue Staffel ist angelegt, erstmal noch ganz ohne Folgen. Um die Sache kümmert sich das Werkzeug: Du musst dir keine Nummer oder ID ausdenken, das passiert automatisch im Hintergrund.
+
+Danach kannst du sofort unter **＋ Neue Folge** die erste Folge der neuen Staffel anlegen — sie taucht in der Staffel-Auswahl direkt mit auf, ganz ohne die Seite neu zu laden.
+
+---
+
+## 6. Bewohner, Links und Staffel-Texte ändern
 
 Genauso einfach: Reiter wählen, in der Auswahl die Person bzw. Staffel aussuchen, Felder anpassen, Vorschau prüfen, veröffentlichen.
 
@@ -81,11 +97,11 @@ Bei **Links** siehst du bewusst nicht die technischen Newsletter-Felder (Mailchi
 2. Bild hineinziehen oder auswählen. Gib ihm einen einfachen Namen **ohne Leerzeichen**, z. B. `cast-silke.jpg`. Unten „Commit changes“.
 3. **Soll das Bild ein bestehendes ersetzen?** Dann lade es einfach mit **genau demselben Dateinamen** hoch — die Seite zeigt sofort das neue Bild, du musst sonst nichts ändern.
 4. **Neuer Dateiname für einen bestehenden Bewohner:** im Werkzeug bei „Bewohner“ im Feld „Foto“ den neuen Dateinamen eintragen — das Werkzeug prüft direkt, ob es das Bild findet (grünes Häkchen).
-5. **Einen komplett neuen Bewohner** hinzufügen: siehe Abschnitt 5a unten.
+5. **Einen komplett neuen Bewohner** hinzufügen: siehe Abschnitt 6a unten.
 
 ---
 
-## 5a. Einen Bewohner hinzufügen oder entfernen
+## 6a. Einen Bewohner hinzufügen oder entfernen
 
 **Hinzufügen:**
 
@@ -107,7 +123,7 @@ Auch das ist **jederzeit rückgängig zu machen** — genau wie bei allen andere
 
 ---
 
-## 6. Kims und Milos Profiltext ändern
+## 7. Kims und Milos Profiltext ändern
 
 Auch der Text über Kim (die Macherin der Serie) und über Milo (den Reporter aus den Kiez-Talks) lässt sich im Werkzeug pflegen.
 
@@ -121,7 +137,7 @@ Nach 1–2 Minuten zeigt die Seite den neuen Text.
 
 ---
 
-## 7. Wenn doch mal was klemmt
+## 8. Wenn doch mal was klemmt
 
 **Keine Sorge — du kannst nichts endgültig kaputtmachen.** Zwei Sicherheitsnetze fangen dich auf:
 
