@@ -100,6 +100,7 @@
         <button class="mode-btn" data-mode="links" role="tab" aria-selected="false">↗ Links</button>
         <button class="mode-btn" data-mode="seasons" role="tab" aria-selected="false">✦ Staffel-Texte</button>
         <button class="mode-btn" data-mode="newseason" role="tab" aria-selected="false">✱ Neue Staffel</button>
+        <button class="mode-btn" data-mode="team" role="tab" aria-selected="false">✧ Team</button>
       </div>
     </div>
   </header>
@@ -182,7 +183,11 @@
         <form id="fCharacter" onsubmit="return false">
           <div class="field">
             <label>Welcher Bewohner / welche Bewohnerin?</label>
-            <select id="chPick"></select>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <select id="chPick" style="flex:1"></select>
+              <button class="btn btn--ghost btn--sm" id="btnNewCharacter" type="button" style="white-space:nowrap">＋ Neu</button>
+            </div>
+            <div class="hint">Bestehende Person aussuchen zum Bearbeiten, oder „＋ Neu“ für eine neue Person.</div>
           </div>
           <div class="row2">
             <div class="field"><label>Name</label><input id="chName"></div>
@@ -213,6 +218,7 @@
             <div class="dossier__tags" id="pvChTags" style="margin-top:10px"></div>
           </article>
           <button class="btn btn--lime" id="btnPublishCharacter" type="button" style="margin-top:18px;width:100%">Veröffentlichen</button>
+          <button class="btn btn--ghost btn--sm" id="btnRemoveCharacter" type="button" style="margin-top:10px;width:100%;border-color:var(--amber);color:var(--amber)" hidden>Bewohner entfernen</button>
           <p class="hint" id="chMsg"></p>
         </div>
       </div>
@@ -268,6 +274,33 @@
         </div>
       </div>
     </section>
+
+    <!-- ====================== MODE: TEAM (Kim & Milo) ====================== -->
+    <section class="section section--tight panel" id="panel-team" hidden>
+      <div class="container tool">
+        <form id="fTeam" onsubmit="return false">
+          <div class="field">
+            <label>Wer soll bearbeitet werden?</label>
+            <select id="tmPick"></select>
+          </div>
+          <div class="field"><label>Name</label><input id="tmName"></div>
+          <div class="field"><label>Rolle</label><input id="tmRole"></div>
+          <div class="field" id="tmQuoteWrap"><label>Zitat</label><input id="tmQuote"></div>
+          <div class="field"><label>Bio</label><textarea id="tmBio" rows="5"></textarea></div>
+        </form>
+        <div class="out-card">
+          <span class="kicker" style="color:var(--lime)">Vorschau</span>
+          <article class="preview-card" style="margin-top:10px">
+            <div class="dossier__role" id="pvTmRole" style="font-family:var(--font-mono);font-size:.78rem;color:var(--muted)"></div>
+            <h3 class="dossier__name" id="pvTmName"></h3>
+            <p class="dossier__quote" id="pvTmQuote" style="margin:8px 0"></p>
+            <p class="muted" id="pvTmBio"></p>
+          </article>
+          <button class="btn btn--lime" id="btnPublishTeam" type="button" style="margin-top:18px;width:100%">Veröffentlichen</button>
+          <p class="hint" id="tmMsg"></p>
+        </div>
+      </div>
+    </section>
   </div>
 
   <!-- ====================== BILDER & SICHERHEITSNETZ ====================== -->
@@ -279,7 +312,7 @@
         <li>Ein <strong>neues Foto</strong> hochladen: <a class="inline-link" href="https://github.com/Kim-WG-St-Pauli/wg-st-pauli/upload/main/assets/img" target="_blank" rel="noopener">diesen Link öffnen</a> (bringt dich direkt zum Hochladen-Fenster im Ordner <code>assets/img/</code>) → Bild hineinziehen oder auswählen, einfacher Dateiname ohne Leerzeichen (z. B. <code>cast-silke.jpg</code>) → unten „Commit changes“ klicken.</li>
         <li>Soll das Bild ein bestehendes Foto <strong>ersetzen</strong>: mit genau demselben Dateinamen hochladen – fertig, die Seite zeigt sofort das neue Bild, nichts weiter zu tun.</li>
         <li>Ein <em>neuer</em> Dateiname für einen <strong>bestehenden</strong> Bewohner: Bild wie oben hochladen, dann im Werkzeug bei „Bewohner“ im Feld „Foto“ den neuen Dateinamen eintragen – das Werkzeug prüft direkt, ob es das Bild findet.</li>
-        <li>Einen <strong>komplett neuen</strong> Bewohner hinzufügen, der noch gar nicht existiert: das ist ein größerer Eingriff (neue Person im Datenmodell), das kann das Werkzeug noch nicht. Dafür kurz den Helfer ansprechen – am einfachsten mit Name der Person, ein bis zwei Sätzen zur Figur und dem gewünschten Foto.</li>
+        <li>Einen <strong>komplett neuen</strong> Bewohner hinzufügen: bei „Bewohner“ auf „＋ Neu“ klicken, Felder ausfüllen, veröffentlichen. Foto vorher wie oben hochladen und den Dateinamen ins Feld „Foto“ eintragen.</li>
       </ul>
       <div class="callout" style="border-color:var(--amber);margin-top:18px">
         <p class="muted"><strong class="accent">Nichts ist endgültig kaputtbar.</strong> Jede Veröffentlichung ist ein Punkt in der Datei-Historie bei GitHub, nichts wird je gelöscht. Geht doch mal was schief: <a class="inline-link" href="rueckgaengig.html">genaue Anleitung, wie du eine Änderung rückgängig machst ↗</a>. Außerdem prüft die Seite jede Änderung automatisch, bevor sie live geht: Ist etwas unvollständig, wird einfach nicht neu veröffentlicht und der letzte gute Stand bleibt online.</p>
@@ -415,6 +448,7 @@
       new: $("panel-episode"), edit: $("panel-episode"),
       characters: $("panel-characters"), links: $("panel-links"), seasons: $("panel-seasons"),
       newseason: $("panel-newseason"),
+      team: $("panel-team"),
     };
     function setMode(m) {
       mode = m;
@@ -428,6 +462,7 @@
       if (m === "links") fillLinksForm();
       if (m === "seasons") populateSeasonPicker();
       if (m === "newseason") resetNewSeasonForm();
+      if (m === "team") populateTeamPicker();
     }
     document.querySelectorAll(".mode-btn").forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
 
@@ -552,15 +587,25 @@
     $("btnPublishEpisode").addEventListener("click", publishEpisode);
 
     /* ---------------- BEWOHNER: form <-> preview ---------------- */
+    let chIsNew = false; // true = wir bauen gerade einen neuen Bewohner, false = bestehenden bearbeiten
     function populateCharacterPicker() {
       const sel = $("chPick");
-      sel.innerHTML = state.data.characters.map((c) => `<option value="${c.id}">${c.name}</option>`).join("");
+      sel.innerHTML = `<option value="">＋ Neuen Bewohner anlegen</option>` +
+        state.data.characters.map((c) => `<option value="${c.id}">${c.name}</option>`).join("");
       if (!sel.dataset.bound) { sel.addEventListener("change", () => prefillCharacter(sel.value)); sel.dataset.bound = "1"; }
-      prefillCharacter(sel.value);
+      if (state.data.characters.length) { sel.value = state.data.characters[0].id; prefillCharacter(sel.value); }
+      else { sel.value = ""; prefillCharacter(""); }
     }
     function prefillCharacter(id) {
-      const c = state.data.characters.find((x) => x.id === id);
-      if (!c) return;
+      const c = id ? state.data.characters.find((x) => x.id === id) : null;
+      chIsNew = !c;
+      $("btnRemoveCharacter").hidden = chIsNew;
+      if (!c) {
+        ["chName", "chAge", "chRole", "chQuote", "chBio", "chTags", "chImg"].forEach((fid) => { $(fid).value = ""; });
+        updateCharacterPreview();
+        checkImagePath();
+        return;
+      }
       $("chName").value = c.name || ""; $("chAge").value = c.age || ""; $("chRole").value = c.role || "";
       $("chQuote").value = c.quote || ""; $("chBio").value = c.bio || "";
       $("chTags").value = (c.tags || []).join(", ");
@@ -568,6 +613,12 @@
       updateCharacterPreview();
       checkImagePath();
     }
+    function startNewCharacter() {
+      $("chPick").value = "";
+      prefillCharacter("");
+      $("chName").focus();
+    }
+    $("btnNewCharacter").addEventListener("click", startNewCharacter);
     let imgCheckTimer = null;
     function checkImagePath() {
       const path = $("chImg").value.trim();
@@ -601,15 +652,48 @@
     $("chImg").addEventListener("input", checkImagePath);
 
     async function publishCharacter() {
-      const id = $("chPick").value;
       const next = JSON.parse(JSON.stringify(state.data));
-      const c = next.characters.find((x) => x.id === id);
-      c.name = $("chName").value; c.age = $("chAge").value; c.role = $("chRole").value;
-      c.quote = $("chQuote").value; c.bio = $("chBio").value; c.img = $("chImg").value.trim();
-      c.tags = $("chTags").value.split(",").map((t) => t.trim()).filter(Boolean);
-      await runPublish(next, `Bewohner aktualisiert: ${c.name} (via Werkzeug)`, "chMsg", () => {});
+      const name = $("chName").value;
+      if (chIsNew) {
+        const newChar = {
+          id: genCharacterId(name, next.characters),
+          name,
+          age: $("chAge").value,
+          role: $("chRole").value,
+          quote: $("chQuote").value,
+          bio: $("chBio").value,
+          tags: $("chTags").value.split(",").map((t) => t.trim()).filter(Boolean),
+          img: $("chImg").value.trim(),
+        };
+        next.characters.push(newChar);
+        await runPublish(next, `Bewohner hinzugefügt: ${name} (via Werkzeug)`, "chMsg", () => {
+          populateCharacterPicker();
+        });
+      } else {
+        const id = $("chPick").value;
+        const c = next.characters.find((x) => x.id === id);
+        c.name = name; c.age = $("chAge").value; c.role = $("chRole").value;
+        c.quote = $("chQuote").value; c.bio = $("chBio").value; c.img = $("chImg").value.trim();
+        c.tags = $("chTags").value.split(",").map((t) => t.trim()).filter(Boolean);
+        await runPublish(next, `Bewohner aktualisiert: ${c.name} (via Werkzeug)`, "chMsg", () => {
+          populateCharacterPicker();
+        });
+      }
     }
     $("btnPublishCharacter").addEventListener("click", publishCharacter);
+
+    async function removeCharacter() {
+      const id = $("chPick").value;
+      const c = state.data.characters.find((x) => x.id === id);
+      if (!c) return;
+      if (!confirm(`Wirklich "${c.name}" entfernen? Das kannst du über die GitHub-Historie rückgängig machen.`)) return;
+      const next = JSON.parse(JSON.stringify(state.data));
+      next.characters = next.characters.filter((x) => x.id !== id);
+      await runPublish(next, `Bewohner entfernt: ${c.name} (via Werkzeug)`, "chMsg", () => {
+        populateCharacterPicker();
+      });
+    }
+    $("btnRemoveCharacter").addEventListener("click", removeCharacter);
 
     /* ---------------- LINKS ---------------- */
     function fillLinksForm() {
@@ -694,6 +778,68 @@
       await runPublish(next, `Neue Staffel angelegt: ${title} (via Werkzeug)`, "nsMsg", () => { resetNewSeasonForm(); refreshRunStatus(); });
     }
     $("btnPublishNewSeason").addEventListener("click", publishNewSeason);
+
+    /* ---------------- TEAM: Kim (creator) & Milo (reporter) ---------------- */
+    function populateTeamPicker() {
+      const sel = $("tmPick");
+      const creator = state.data.creator, reporter = state.data.reporter;
+      sel.innerHTML = [
+        `<option value="creator">${creator.name} (${creator.role})</option>`,
+        `<option value="reporter">${reporter.name} (${reporter.role})</option>`,
+      ].join("");
+      if (!sel.dataset.bound) { sel.addEventListener("change", () => prefillTeam(sel.value)); sel.dataset.bound = "1"; }
+      prefillTeam(sel.value);
+    }
+    function prefillTeam(which) {
+      const person = state.data[which];
+      if (!person) return;
+      $("tmName").value = person.name || "";
+      $("tmRole").value = person.role || "";
+      $("tmQuote").value = person.quote || "";
+      $("tmBio").value = person.bio || "";
+      $("tmQuoteWrap").hidden = (which !== "creator");
+      updateTeamPreview();
+    }
+    function updateTeamPreview() {
+      const which = $("tmPick").value;
+      $("pvTmRole").textContent = $("tmRole").value;
+      $("pvTmName").textContent = $("tmName").value || "(Name)";
+      $("pvTmQuote").textContent = (which === "creator" && $("tmQuote").value) ? "„" + $("tmQuote").value + "“" : "";
+      $("pvTmBio").textContent = $("tmBio").value;
+      $("btnPublishTeam").disabled = !($("tmName").value.trim() && $("tmBio").value.trim());
+    }
+    ["tmName", "tmRole", "tmQuote", "tmBio"].forEach((id) => $(id).addEventListener("input", updateTeamPreview));
+    $("tmPick").addEventListener("change", updateTeamPreview);
+
+    async function publishTeam() {
+      const which = $("tmPick").value; // "creator" | "reporter"
+      const next = JSON.parse(JSON.stringify(state.data));
+      const person = next[which];
+      person.name = $("tmName").value.trim();
+      person.role = $("tmRole").value.trim();
+      person.bio = $("tmBio").value.trim();
+      if (which === "creator") person.quote = $("tmQuote").value.trim();
+      const label = state.data[which].name;
+      await runPublish(next, `${label} aktualisiert (via Werkzeug)`, "tmMsg", () => {});
+    }
+    $("btnPublishTeam").addEventListener("click", publishTeam);
+
+    /* ---------------- BEWOHNER: neue id erzeugen ---------------- */
+    function slugify(name) {
+      let s = String(name || "").toLowerCase();
+      s = s.replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss");
+      s = s.replace(/[^a-z0-9]+/g, "-");
+      s = s.replace(/-+/g, "-").replace(/^-+|-+$/g, "");
+      return s;
+    }
+    function genCharacterId(name, existingCharacters) {
+      const base = slugify(name) || "bewohner";
+      let candidate = base;
+      let n = 2;
+      const ids = new Set(existingCharacters.map((c) => c.id));
+      while (ids.has(candidate)) { candidate = `${base}-${n}`; n++; }
+      return candidate;
+    }
   })();
   </script>
 </body>

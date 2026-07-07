@@ -58,6 +58,20 @@ if (Array.isArray(data.characters)) {
   fail("characters muss eine Liste sein");
 }
 
+if (isObject(data.creator)) {
+  if (!isNonEmptyString(data.creator.name)) fail("creator: name fehlt");
+  if (!isNonEmptyString(data.creator.bio)) fail("creator: bio fehlt");
+} else {
+  fail("creator muss ein Objekt sein");
+}
+
+if (isObject(data.reporter)) {
+  if (!isNonEmptyString(data.reporter.name)) fail("reporter: name fehlt");
+  if (!isNonEmptyString(data.reporter.bio)) fail("reporter: bio fehlt");
+} else {
+  fail("reporter muss ein Objekt sein");
+}
+
 const seenEpisodeIds = new Set();
 
 if (Array.isArray(data.seasons)) {
