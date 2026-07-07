@@ -24,13 +24,15 @@ Falls der Zugang irgendwann nicht mehr funktioniert (z. B. weil der Code abgelau
 
 ## 2. Der Ablauf — für alles gleich
 
-Im Werkzeug gibt es oben **sechs Reiter** — du wählst, was du gerade tun willst:
+Im Werkzeug gibt es oben **acht Reiter** — du wählst, was du gerade tun willst:
 
 - **＋ Neue Folge** — eine neue Folge anlegen (das machst du jeden Samstag)
 - **✎ Folge bearbeiten** — eine Folge, die es schon gibt, korrigieren
 - **◐ Bewohner** — Name, Rolle, Zitat, Bio, Schlagworte einer Figur ändern
 - **↗ Links** — Steady, Instagram, Facebook, Original-Website
 - **✦ Staffel-Texte** — Überschrift und Untertitel einer Staffel
+- **✱ Neue Staffel** — eine ganz neue Staffel anlegen
+- **✧ Team** — Profiltext von Kim Perator (Macherin) und Milo Relotio (Reporter) ändern
 - **♥ Unterstützer-Stufen** — Name, Tagline und Vorteile der Steady-Stufen auf `mitmachen.html` ändern
 
 Egal welcher Reiter: du füllst die Felder aus, siehst rechts sofort eine **Vorschau**, und klickst auf **„Veröffentlichen“**. Nach 1–2 Minuten ist die Änderung live. Das war's — kein Kopieren, kein Einfügen bei GitHub, keine Klammern oder Kommas, um die du dich kümmern musst.
@@ -67,7 +69,22 @@ Nach 1–2 Minuten zeigt die Seite den korrigierten Text.
 
 ---
 
-## 5. Bewohner, Links und Staffel-Texte ändern
+## 5. Eine neue Staffel anlegen
+
+Steht eine ganz neue Staffel an? Dafür gibt es den Reiter **✱ Neue Staffel**.
+
+1. **Werkzeug öffnen** und oben auf **✱ Neue Staffel** klicken.
+2. **Überschrift** eintragen (z. B. „Staffel 3“) und **Untertitel** (der Satz darunter).
+3. Rechts siehst du direkt die **Vorschau**.
+4. Auf **„Veröffentlichen“** klicken.
+
+Fertig — die neue Staffel ist angelegt, erstmal noch ganz ohne Folgen. Um die Sache kümmert sich das Werkzeug: Du musst dir keine Nummer oder ID ausdenken, das passiert automatisch im Hintergrund.
+
+Danach kannst du sofort unter **＋ Neue Folge** die erste Folge der neuen Staffel anlegen — sie taucht in der Staffel-Auswahl direkt mit auf, ganz ohne die Seite neu zu laden.
+
+---
+
+## 6. Bewohner, Links und Staffel-Texte ändern
 
 Genauso einfach: Reiter wählen, in der Auswahl die Person bzw. Staffel aussuchen, Felder anpassen, Vorschau prüfen, veröffentlichen.
 
@@ -81,11 +98,47 @@ Bei **Links** siehst du bewusst nicht die technischen Newsletter-Felder (Mailchi
 2. Bild hineinziehen oder auswählen. Gib ihm einen einfachen Namen **ohne Leerzeichen**, z. B. `cast-silke.jpg`. Unten „Commit changes“.
 3. **Soll das Bild ein bestehendes ersetzen?** Dann lade es einfach mit **genau demselben Dateinamen** hoch — die Seite zeigt sofort das neue Bild, du musst sonst nichts ändern.
 4. **Neuer Dateiname für einen bestehenden Bewohner:** im Werkzeug bei „Bewohner“ im Feld „Foto“ den neuen Dateinamen eintragen — das Werkzeug prüft direkt, ob es das Bild findet (grünes Häkchen).
-5. **Einen komplett neuen Bewohner** (der noch gar nicht existiert) hinzufügen kann das Werkzeug noch nicht — dafür kurz den Helfer ansprechen, am einfachsten mit Name, ein bis zwei Sätzen zur Figur und dem gewünschten Foto.
+5. **Einen komplett neuen Bewohner** hinzufügen: siehe Abschnitt 6a unten.
 
 ---
 
-## 6. Die Steady-Unterstützer-Stufen ändern
+## 6a. Einen Bewohner hinzufügen oder entfernen
+
+**Hinzufügen:**
+
+1. Im Werkzeug auf **◐ Bewohner** klicken.
+2. Neben der Auswahl-Liste auf **„＋ Neu“** klicken — die Felder leeren sich, du legst eine neue Person an.
+3. Falls es ein Foto geben soll: erst wie oben beschrieben hochladen, dann den Dateinamen ins Feld „Foto“ eintragen (das Werkzeug prüft automatisch, ob es gefunden wird).
+4. **Name** und **Bio** ausfüllen (Pflichtfelder — ohne die bleibt „Veröffentlichen“ ausgegraut). Rolle, Alter, Zitat und Schlagworte sind optional.
+5. In der Vorschau rechts prüfen, dann auf **„Veröffentlichen“** klicken.
+
+Das Werkzeug vergibt automatisch eine passende interne Kennung aus dem Namen — darum musst du dich nicht kümmern.
+
+**Entfernen:**
+
+1. Im Werkzeug auf **◐ Bewohner** klicken und die Person in der Auswahl-Liste aussuchen.
+2. Unter „Veröffentlichen“ auf **„Bewohner entfernen“** klicken (nur sichtbar, wenn eine bestehende Person ausgewählt ist, nicht bei „＋ Neu“).
+3. Die Sicherheitsabfrage bestätigen.
+
+Auch das ist **jederzeit rückgängig zu machen** — genau wie bei allen anderen Änderungen über das Werkzeug landet das Entfernen als eigener Punkt in der GitHub-Historie. Anleitung dazu: [rueckgaengig.html](rueckgaengig.html).
+
+---
+
+## 7. Kims und Milos Profiltext ändern
+
+Auch der Text über Kim (die Macherin der Serie) und über Milo (den Reporter aus den Kiez-Talks) lässt sich im Werkzeug pflegen.
+
+1. **Werkzeug öffnen** und oben auf **✧ Team** klicken.
+2. Im Auswahl-Feld **Kim Perator** oder **Milo Relotio** aussuchen. Die Felder füllen sich automatisch mit dem aktuellen Text.
+3. **Name, Rolle und Bio** anpassen. Bei Kim gibt es zusätzlich ein **Zitat**-Feld — das gibt es bei Milo bewusst nicht, weil er als Figur kein eigenes Zitat hat; das Feld verschwindet automatisch, wenn du Milo auswählst.
+4. In der Vorschau rechts prüfen, ob es gut aussieht.
+5. Auf **„Veröffentlichen“** klicken.
+
+Nach 1–2 Minuten zeigt die Seite den neuen Text.
+
+---
+
+## 8. Die Steady-Unterstützer-Stufen ändern
 
 Auf `mitmachen.html` stehen die drei Stufen, mit denen man die WG auf Steady unterstützen kann (aktuell „Hausgemeinschaft“, „WG-Mitglied“, „Wohnungsretter:in“). Die kannst du im Werkzeug unter dem Reiter **♥ Unterstützer-Stufen** pflegen.
 
@@ -100,7 +153,7 @@ Auf `mitmachen.html` stehen die drei Stufen, mit denen man die WG auf Steady unt
 
 ---
 
-## 7. Wenn doch mal was klemmt
+## 9. Wenn doch mal was klemmt
 
 **Keine Sorge — du kannst nichts endgültig kaputtmachen.** Zwei Sicherheitsnetze fangen dich auf:
 
