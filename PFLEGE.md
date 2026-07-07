@@ -179,7 +179,7 @@ Trau dich also ruhig.
 
 ---
 
-## 8. Was du *nicht* anfassen musst
+## 10. Was du *nicht* anfassen musst
 
 Für die ganz normale Pflege — neue Folgen, Texte, Bilder — brauchst du **nur** das Werkzeug aus dieser Anleitung.
 
