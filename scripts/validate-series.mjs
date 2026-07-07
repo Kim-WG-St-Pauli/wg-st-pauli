@@ -58,6 +58,20 @@ if (Array.isArray(data.characters)) {
   fail("characters muss eine Liste sein");
 }
 
+if (isObject(data.creator)) {
+  if (!isNonEmptyString(data.creator.name)) fail("creator: name fehlt");
+  if (!isNonEmptyString(data.creator.bio)) fail("creator: bio fehlt");
+} else {
+  fail("creator muss ein Objekt sein");
+}
+
+if (isObject(data.reporter)) {
+  if (!isNonEmptyString(data.reporter.name)) fail("reporter: name fehlt");
+  if (!isNonEmptyString(data.reporter.bio)) fail("reporter: bio fehlt");
+} else {
+  fail("reporter muss ein Objekt sein");
+}
+
 const seenEpisodeIds = new Set();
 
 if (Array.isArray(data.seasons)) {
@@ -86,6 +100,31 @@ if (Array.isArray(data.seasons)) {
   });
 } else {
   fail("seasons muss eine Liste sein");
+}
+
+if ("tiers" in data) {
+  if (Array.isArray(data.tiers)) {
+    let featuredCount = 0;
+    data.tiers.forEach((t, i) => {
+      if (!isObject(t)) { fail(`tiers[${i}]: muss ein Objekt sein`); return; }
+      const where = `tiers[${i}] (${t.id})`;
+      if (!isNonEmptyString(t.id)) fail(`${where}: id fehlt`);
+      if (!isNonEmptyString(t.name)) fail(`${where}: name fehlt`);
+      if (!isNonEmptyString(t.tagline)) fail(`${where}: tagline fehlt`);
+      if (Array.isArray(t.perks)) {
+        if (t.perks.length === 0) fail(`${where}: perks darf nicht leer sein`);
+        t.perks.forEach((p, pi) => {
+          if (!isNonEmptyString(p)) fail(`${where}.perks[${pi}]: muss ein nicht-leerer Text sein`);
+        });
+      } else {
+        fail(`${where}: perks muss eine Liste sein`);
+      }
+      if (t.featured === true) featuredCount++;
+    });
+    if (featuredCount > 1) fail(`tiers: höchstens eine Stufe darf "featured": true haben (gefunden: ${featuredCount})`);
+  } else {
+    fail("tiers muss eine Liste sein");
+  }
 }
 
 if (typeof data.urlMap === "object" && data.urlMap !== null) {
