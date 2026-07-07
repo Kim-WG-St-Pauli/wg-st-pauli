@@ -102,6 +102,31 @@ if (Array.isArray(data.seasons)) {
   fail("seasons muss eine Liste sein");
 }
 
+if ("tiers" in data) {
+  if (Array.isArray(data.tiers)) {
+    let featuredCount = 0;
+    data.tiers.forEach((t, i) => {
+      if (!isObject(t)) { fail(`tiers[${i}]: muss ein Objekt sein`); return; }
+      const where = `tiers[${i}] (${t.id})`;
+      if (!isNonEmptyString(t.id)) fail(`${where}: id fehlt`);
+      if (!isNonEmptyString(t.name)) fail(`${where}: name fehlt`);
+      if (!isNonEmptyString(t.tagline)) fail(`${where}: tagline fehlt`);
+      if (Array.isArray(t.perks)) {
+        if (t.perks.length === 0) fail(`${where}: perks darf nicht leer sein`);
+        t.perks.forEach((p, pi) => {
+          if (!isNonEmptyString(p)) fail(`${where}.perks[${pi}]: muss ein nicht-leerer Text sein`);
+        });
+      } else {
+        fail(`${where}: perks muss eine Liste sein`);
+      }
+      if (t.featured === true) featuredCount++;
+    });
+    if (featuredCount > 1) fail(`tiers: höchstens eine Stufe darf "featured": true haben (gefunden: ${featuredCount})`);
+  } else {
+    fail("tiers muss eine Liste sein");
+  }
+}
+
 if (typeof data.urlMap === "object" && data.urlMap !== null) {
   for (const [id, url] of Object.entries(data.urlMap)) {
     if (!isNonEmptyString(url)) fail(`urlMap.${id}: muss eine nicht-leere URL sein`);
