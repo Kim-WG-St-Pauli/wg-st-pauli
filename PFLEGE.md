@@ -80,7 +80,29 @@ Bei **Links** siehst du bewusst nicht die technischen Newsletter-Felder (Mailchi
 2. Bild hineinziehen oder auswählen. Gib ihm einen einfachen Namen **ohne Leerzeichen**, z. B. `cast-silke.jpg`. Unten „Commit changes“.
 3. **Soll das Bild ein bestehendes ersetzen?** Dann lade es einfach mit **genau demselben Dateinamen** hoch — die Seite zeigt sofort das neue Bild, du musst sonst nichts ändern.
 4. **Neuer Dateiname für einen bestehenden Bewohner:** im Werkzeug bei „Bewohner“ im Feld „Foto“ den neuen Dateinamen eintragen — das Werkzeug prüft direkt, ob es das Bild findet (grünes Häkchen).
-5. **Einen komplett neuen Bewohner** (der noch gar nicht existiert) hinzufügen kann das Werkzeug noch nicht — dafür kurz den Helfer ansprechen, am einfachsten mit Name, ein bis zwei Sätzen zur Figur und dem gewünschten Foto.
+5. **Einen komplett neuen Bewohner** hinzufügen: siehe Abschnitt 5a unten.
+
+---
+
+## 5a. Einen Bewohner hinzufügen oder entfernen
+
+**Hinzufügen:**
+
+1. Im Werkzeug auf **◐ Bewohner** klicken.
+2. Neben der Auswahl-Liste auf **„＋ Neu“** klicken — die Felder leeren sich, du legst eine neue Person an.
+3. Falls es ein Foto geben soll: erst wie oben beschrieben hochladen, dann den Dateinamen ins Feld „Foto“ eintragen (das Werkzeug prüft automatisch, ob es gefunden wird).
+4. **Name** und **Bio** ausfüllen (Pflichtfelder — ohne die bleibt „Veröffentlichen“ ausgegraut). Rolle, Alter, Zitat und Schlagworte sind optional.
+5. In der Vorschau rechts prüfen, dann auf **„Veröffentlichen“** klicken.
+
+Das Werkzeug vergibt automatisch eine passende interne Kennung aus dem Namen — darum musst du dich nicht kümmern.
+
+**Entfernen:**
+
+1. Im Werkzeug auf **◐ Bewohner** klicken und die Person in der Auswahl-Liste aussuchen.
+2. Unter „Veröffentlichen“ auf **„Bewohner entfernen“** klicken (nur sichtbar, wenn eine bestehende Person ausgewählt ist, nicht bei „＋ Neu“).
+3. Die Sicherheitsabfrage bestätigen.
+
+Auch das ist **jederzeit rückgängig zu machen** — genau wie bei allen anderen Änderungen über das Werkzeug landet das Entfernen als eigener Punkt in der GitHub-Historie. Anleitung dazu: [rueckgaengig.html](rueckgaengig.html).
 
 ---
 
