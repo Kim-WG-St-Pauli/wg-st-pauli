@@ -24,6 +24,9 @@
     .hint { font-size:.84rem; color:var(--faint); margin-top:6px; }
     .ok { color:var(--lime); }
     .err { color:#ff6b6b; }
+    .btn--danger { border-color:#ff6b6b; color:#ff6b6b; }
+    .btn--danger:hover { background:#ff6b6b; border-color:#ff6b6b; color:#15030c; }
+    .btn--danger[hidden] { display:none; }
     .stepnum { counter-reset:s; }
     .stepnum li { counter-increment:s; position:relative; padding:12px 0 12px 44px; border-bottom:1px solid var(--line-2); }
     .stepnum li::before { content:counter(s); position:absolute; left:0; top:10px; font-family:var(--font-display); color:var(--pink); font-size:1.4rem; line-height:1; min-width:28px; }
@@ -173,6 +176,7 @@
             <p class="muted" id="pvSummary" style="margin-top:8px"></p>
           </div>
           <button class="btn btn--lime" id="btnPublishEpisode" type="button" style="margin-top:18px;width:100%">Veröffentlichen</button>
+          <button class="btn btn--ghost btn--danger" id="btnDeleteEpisode" type="button" hidden style="margin-top:10px;width:100%">Folge löschen</button>
           <p class="hint" id="epMsg"></p>
         </div>
       </div>
@@ -495,6 +499,7 @@
       [...new Set(Object.values(panels))].forEach((p) => { p.hidden = true; });
       panels[m].hidden = false;
       $("pickWrap").hidden = (m !== "edit");
+      $("btnDeleteEpisode").hidden = (m !== "edit");
       if (!state.data) return;
       if (m === "new" || m === "edit") { populateEpisodePicker(); if (m === "new") resetEpisodeForm(); }
       if (m === "characters") populateCharacterPicker();
@@ -845,6 +850,43 @@
         msgEl.className = "hint err";
       }
     }
+
+    /* ---------------- EPISODE: löschen ---------------- */
+    async function deleteEpisode() {
+      const id = $("epPick").value;
+      const found = id ? findEpisode(id) : null;
+      if (!found) return;
+      const { ep, season } = found;
+      const ok = confirm(`Wirklich die Folge "${ep.title}" löschen? Das kannst du über die GitHub-Historie rückgängig machen.`);
+      if (!ok) return;
+
+      const next = JSON.parse(JSON.stringify(state.data));
+      const nextSeason = next.seasons.find((s) => s.id === season.id);
+      const idx = nextSeason.episodes.findIndex((e) => e.id === id);
+      if (idx === -1) return;
+      nextSeason.episodes.splice(idx, 1);
+      if (next.urlMap && (id in next.urlMap)) delete next.urlMap[id];
+
+      const message = `Folge gelöscht: ${id} "${ep.title}" (via Werkzeug)`;
+      const seasonId = season.id;
+      await runPublish(next, message, "epMsg", () => {
+        populateEpisodePicker();
+        const pick = $("epPick");
+        if (pick.options.length > 0) {
+          // Bevorzugt die neueste verbliebene Folge derselben Staffel, sonst die insgesamt neueste.
+          const sameSeasonOpt = [...pick.options].find((o) => {
+            const f = findEpisode(o.value);
+            return f && f.season.id === seasonId;
+          });
+          pick.value = sameSeasonOpt ? sameSeasonOpt.value : pick.options[0].value;
+          prefillEpisode(pick.value);
+        } else {
+          setMode("new");
+        }
+        refreshRunStatus();
+      });
+    }
+    $("btnDeleteEpisode").addEventListener("click", deleteEpisode);
 
     /* ---------------- NEUE STAFFEL ---------------- */
     function resetNewSeasonForm() {
