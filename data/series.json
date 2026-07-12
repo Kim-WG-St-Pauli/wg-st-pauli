@@ -232,6 +232,19 @@
       "tagline": "Die WG geht weiter. Jeden Samstag eine neue Folge.",
       "episodes": [
         {
+          "id": "s2f5",
+          "no": "5",
+          "title": "Die Matratze",
+          "date": "2026-07-11",
+          "logline": "Bettgeschichten Teil3",
+          "summary": "Wasserbett oder Sarg? Wer war das noch mit dem Sarg? Wo ist das Bier - und wo bleibt die Matratze? – Folge fünf von Staffel zwei.",
+          "video": {
+            "id": "1207130468",
+            "h": "87e8032b53"
+          },
+          "talk": null
+        },
+        {
           "id": "s2f1",
           "no": "1",
           "title": "Montag",
@@ -341,6 +354,7 @@
     "s2f1": "https://wg-st-pauli.de/2026/06/05/staffel-2-folge-1-montag/",
     "s2f2": "https://wg-st-pauli.de/2026/06/13/s2f2kochen/",
     "s2f3": "https://wg-st-pauli.de/2026/06/20/s2f3-das-bett/",
-    "s2f4": "https://wg-st-pauli.de/2026/07/04/s2f4-wasserbett/"
+    "s2f4": "https://wg-st-pauli.de/2026/07/04/s2f4-wasserbett/",
+    "s2f5": "https://wg-st-pauli.de/2026/07/10/s2f5-die-matratze/"
   }
 }
