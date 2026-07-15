@@ -200,7 +200,10 @@
           <h3 class="ep__title">${ep.title}</h3>
           <p class="ep__log">${ep.logline}</p>
           <div class="ep__foot">
-            <button class="ep__watch" data-watch="${ep.id}">${I.play} Ansehen</button>
+            <div class="ep__actions">
+              <button class="ep__watch" data-watch="${ep.id}">${I.play} Ansehen</button>
+              ${ep.talk ? `<button class="ep__talk" data-talk="${ep.id}">🎙 Kiez-Talk</button>` : ""}
+            </div>
             <span class="ep__seen">${I.check} Gesehen</span>
           </div>
         </div>
@@ -224,6 +227,10 @@
         </div>
         <div class="modal__frame"><div data-m-frame></div></div>
         <div class="modal__seg" data-m-seg></div>
+        <div class="modal__nav">
+          <button class="btn btn--ghost btn--sm" data-m-prev>← Vorherige Folge</button>
+          <button class="btn btn--ghost btn--sm" data-m-next>Nächste Folge →</button>
+        </div>
         <p class="modal__desc" data-m-desc></p>
         <p class="nl-note" style="margin-top:6px">Video lädt nicht? <a data-m-fallback target="_blank" rel="noopener" style="color:var(--pink)">Folge auf wg-st-pauli.de ansehen ↗</a></p>
       </div>`;
@@ -277,6 +284,25 @@
     $("[data-m-frame]", modal).innerHTML = videoBlock(ep, v, seg);
     $$("[data-seg]", segMount).forEach((b) =>
       b.addEventListener("click", () => openModal(epId, b.dataset.seg)));
+
+    // Blättern: chronologisch (Pilot → aktuellste Folge). onclick, damit sich
+    // bei wiederholtem Öffnen keine Handler stapeln.
+    const chrono = WG.allEpisodes.slice().sort((a, b) => a.date.localeCompare(b.date));
+    const idx = chrono.findIndex((e) => e.id === ep.id);
+    const prevEp = idx > 0 ? chrono[idx - 1] : null;
+    const nextEp = idx >= 0 && idx < chrono.length - 1 ? chrono[idx + 1] : null;
+    const prevBtn = $("[data-m-prev]", modal), nextBtn = $("[data-m-next]", modal);
+    if (prevBtn) {
+      prevBtn.disabled = !prevEp;
+      prevBtn.textContent = prevEp ? `← ${prevEp.title}` : "← Vorherige Folge";
+      prevBtn.onclick = prevEp ? () => openModal(prevEp.id) : null;
+    }
+    if (nextBtn) {
+      nextBtn.disabled = !nextEp;
+      nextBtn.textContent = nextEp ? `${nextEp.title} →` : "Nächste Folge →";
+      nextBtn.onclick = nextEp ? () => openModal(nextEp.id) : null;
+    }
+
     modal.classList.add("open");
     document.body.style.overflow = "hidden";
     watched.add(ep.id);
@@ -295,6 +321,8 @@
 
   // delegate play clicks globally
   document.addEventListener("click", (e) => {
+    const talk = e.target.closest("[data-talk]");
+    if (talk) { e.preventDefault(); openModal(talk.dataset.talk, "talk"); return; }
     const t = e.target.closest("[data-watch]");
     if (t) { e.preventDefault(); openModal(t.dataset.watch); }
   });
