@@ -161,9 +161,11 @@
     try { localStorage.setItem("wg:theme", next); } catch {}
     location.href = location.pathname + (next === "astra" ? "" : "?theme=" + next);
   }
-  function posterFor(ep, idx) {
+  function posterFor(ep, idx, mode) {
     const [a, b] = POSTER_THEMES[idx % POSTER_THEMES.length];
-    const label = ep.type === "finale" ? "FINALE" : ep.id === "pilot" ? "PILOT" : "FOLGE " + ep.no;
+    const label = mode === "talk"
+      ? "KIEZ-TALK"
+      : ep.type === "finale" ? "FINALE" : ep.id === "pilot" ? "PILOT" : "FOLGE " + ep.no;
     return `
       <div class="ep__poster" style="background:
         radial-gradient(130% 100% at 15% 0%, ${a}33, transparent 60%),
@@ -188,21 +190,25 @@
     return d.toLocaleDateString("de-DE", { day: "2-digit", month: "short", year: "numeric" });
   }
 
-  function epCard(ep, idx) {
+  function epCard(ep, idx, mode) {
+    const talkMode = mode === "talk";
     return `
       <article class="ep reveal" data-ep="${ep.id}" data-watched="${watched.has(ep.id) ? 1 : 0}">
-        ${posterFor(ep, idx)}
+        ${posterFor(ep, idx, mode)}
         <div class="ep__no">${ep.seasonTitle || ""}</div>
         ${epTag(ep)}
-        <button class="ep__play" data-watch="${ep.id}" aria-label="Folge abspielen"><span>${I.play}</span></button>
+        <button class="ep__play" data-${talkMode ? "talk" : "watch"}="${ep.id}" aria-label="${talkMode ? "Kiez-Talk abspielen" : "Folge abspielen"}"><span>${I.play}</span></button>
         <div class="ep__body">
           <div class="ep__meta"><span>${fmtDate(ep.date)}</span></div>
           <h3 class="ep__title">${ep.title}</h3>
           <p class="ep__log">${ep.logline}</p>
           <div class="ep__foot">
             <div class="ep__actions">
-              <button class="ep__watch" data-watch="${ep.id}">${I.play} Ansehen</button>
-              ${ep.talk ? `<button class="ep__talk" data-talk="${ep.id}">🎙 Kiez-Talk</button>` : ""}
+              ${talkMode
+                ? `<button class="ep__watch" data-talk="${ep.id}">🎙 Kiez-Talk</button>
+                   <button class="ep__talk" data-watch="${ep.id}">▶ Die Folge</button>`
+                : `<button class="ep__watch" data-watch="${ep.id}">${I.play} Ansehen</button>
+                   ${ep.talk ? `<button class="ep__talk" data-talk="${ep.id}">🎙 Kiez-Talk</button>` : ""}`}
             </div>
             <span class="ep__seen">${I.check} Gesehen</span>
           </div>
@@ -406,20 +412,33 @@
     const tabs = $("[data-season-tabs]");
     const seasons = WG.seasons.slice().reverse(); // neueste Staffel zuerst
     // Deep-Link: "#id" öffnet die Folge, "#id:talk" öffnet direkt den Kiez-Talk (Meta-Folge).
+    // "#talks" öffnet die Übersicht aller Kiez-Talks.
     const rawHash = decodeURIComponent(location.hash.slice(1));
     const [hashId, hashSeg] = rawHash.split(":");
-    const hashEp = hashId ? WG.findEpisode(hashId) : null;
-    let active = hashEp ? hashEp.season : seasons[0].id;
+    const talksHash = hashId === "talks";
+    const hashEp = hashId && !talksHash ? WG.findEpisode(hashId) : null;
+    let active = talksHash ? "talks" : hashEp ? hashEp.season : seasons[0].id;
 
-    tabs.innerHTML = [`<button class="tab" data-tab="all">Alle</button>`]
-      .concat(seasons.map((s) => `<button class="tab" data-tab="${s.id}">${s.title}</button>`)).join("");
+    tabs.innerHTML = [
+      `<button class="tab" data-tab="all">Alle</button>`,
+      `<button class="tab" data-tab="talks">🎙 Kiez-Talks</button>`,
+    ].concat(seasons.map((s) => `<button class="tab" data-tab="${s.id}">${s.title}</button>`)).join("");
 
     function paint(sel) {
       $$(".tab", tabs).forEach((t) => t.setAttribute("aria-selected", String(t.dataset.tab === sel)));
-      let eps = sel === "all"
-        ? WG.allEpisodes.slice().sort((a, b) => b.date.localeCompare(a.date))
-        : WG.seasons.find((s) => s.id === sel).episodes.map((e) => ({ ...e, season: sel, seasonTitle: WG.seasons.find((s) => s.id === sel).title }));
-      mount.innerHTML = eps.map((e, i) => epCard(e, i)).join("");
+      let eps, mode;
+      if (sel === "talks") {
+        mode = "talk";
+        eps = WG.allEpisodes.filter((e) => e.talk).sort((a, b) => b.date.localeCompare(a.date));
+      } else if (sel === "all") {
+        eps = WG.allEpisodes.slice().sort((a, b) => b.date.localeCompare(a.date));
+      } else {
+        const s = WG.seasons.find((s) => s.id === sel);
+        eps = s.episodes.map((e) => ({ ...e, season: sel, seasonTitle: s.title }));
+      }
+      mount.innerHTML = eps.length
+        ? eps.map((e, i) => epCard(e, i, mode)).join("")
+        : `<p class="muted" style="grid-column:1/-1">Für diese Ansicht gibt es aktuell noch keine Einträge.</p>`;
       observeReveal();
       updateProgress();
     }
