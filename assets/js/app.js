@@ -271,6 +271,7 @@
     if (!modal) buildModal();
     const ep = WG.findEpisode(epId);
     if (!ep) return;
+    if (seg === "talk" && !ep.talk) seg = "video";   // Folge hat keinen Kiez-Talk → normale Folge
     $("[data-m-sub]", modal).textContent = `${ep.seasonTitle} · ${ep.id === "pilot" ? "Pilotfilm" : ep.type === "finale" ? "Staffelfinale" : "Folge " + ep.no}`;
     $("[data-m-title]", modal).textContent = ep.title;
     $("[data-m-desc]", modal).textContent = ep.summary || ep.logline;
@@ -404,9 +405,11 @@
     if (!mount) return;
     const tabs = $("[data-season-tabs]");
     const seasons = WG.seasons.slice().reverse(); // neueste Staffel zuerst
-    let active = location.hash && WG.findEpisode(location.hash.slice(1))
-      ? WG.findEpisode(location.hash.slice(1)).season
-      : seasons[0].id;
+    // Deep-Link: "#id" öffnet die Folge, "#id:talk" öffnet direkt den Kiez-Talk (Meta-Folge).
+    const rawHash = decodeURIComponent(location.hash.slice(1));
+    const [hashId, hashSeg] = rawHash.split(":");
+    const hashEp = hashId ? WG.findEpisode(hashId) : null;
+    let active = hashEp ? hashEp.season : seasons[0].id;
 
     tabs.innerHTML = [`<button class="tab" data-tab="all">Alle</button>`]
       .concat(seasons.map((s) => `<button class="tab" data-tab="${s.id}">${s.title}</button>`)).join("");
@@ -423,9 +426,9 @@
     $$(".tab", tabs).forEach((t) => t.addEventListener("click", () => paint(t.dataset.tab)));
     paint(active);
 
-    // deep link → open modal
-    if (location.hash && WG.findEpisode(location.hash.slice(1))) {
-      setTimeout(() => openModal(location.hash.slice(1)), 250);
+    // deep link → open modal (mit optionalem Segment #id:talk)
+    if (hashEp) {
+      setTimeout(() => openModal(hashId, hashSeg === "talk" ? "talk" : "video"), 250);
     }
   }
 
