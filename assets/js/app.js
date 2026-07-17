@@ -238,6 +238,7 @@
           <button class="btn btn--ghost btn--sm" data-m-next>Nächste Folge →</button>
         </div>
         <p class="modal__desc" data-m-desc></p>
+        <div class="talk-body" data-m-talk hidden></div>
         <p class="nl-note" style="margin-top:6px">Video lädt nicht? <a data-m-fallback target="_blank" rel="noopener" style="color:var(--pink)">Folge auf wg-st-pauli.de ansehen ↗</a></p>
       </div>`;
     document.body.appendChild(modal);
@@ -273,6 +274,38 @@
       </div>`;
   }
 
+  // Kiez-Talk-Inhalt: Uli pflegt reinen Text (nie HTML) über werkzeug.html.
+  // Deshalb hier konsequent escapen und Absätze aus Leerzeilen bauen.
+  function escHtml(s) {
+    return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  }
+  function toParagraphs(text) {
+    return String(text)
+      .split(/\n{2,}/)
+      .map((p) => p.trim())
+      .filter(Boolean)
+      .map((p) => `<p>${escHtml(p).replace(/\n/g, "<br>")}</p>`)
+      .join("");
+  }
+  function hasText(v) { return typeof v === "string" && v.trim().length > 0; }
+  function sectionHasContent(s) { return s && (hasText(s.heading) || hasText(s.text)); }
+
+  function renderTalkBody(mount, tc) {
+    if (!mount) return;
+    const sections = (tc && Array.isArray(tc.sections)) ? tc.sections.filter(sectionHasContent) : [];
+    const show = tc && (hasText(tc.headline) || hasText(tc.intro) || sections.length);
+    if (!show) { mount.hidden = true; mount.innerHTML = ""; return; }
+    let html = "";
+    if (hasText(tc.headline)) html += `<h3 class="talk-body__headline">${escHtml(tc.headline)}</h3>`;
+    if (hasText(tc.intro)) html += `<div class="talk-body__intro">${toParagraphs(tc.intro)}</div>`;
+    sections.forEach((s) => {
+      if (hasText(s.heading)) html += `<h4 class="talk-body__heading">${escHtml(s.heading)}</h4>`;
+      if (hasText(s.text)) html += `<div class="talk-body__text">${toParagraphs(s.text)}</div>`;
+    });
+    mount.innerHTML = html;
+    mount.hidden = false;
+  }
+
   function openModal(epId, seg = "video") {
     if (!modal) buildModal();
     const ep = WG.findEpisode(epId);
@@ -289,6 +322,7 @@
       : "";
     const v = seg === "talk" ? ep.talk : ep.video;
     $("[data-m-frame]", modal).innerHTML = videoBlock(ep, v, seg);
+    renderTalkBody($("[data-m-talk]", modal), seg === "talk" ? ep.talkContent : null);
     $$("[data-seg]", segMount).forEach((b) =>
       b.addEventListener("click", () => openModal(epId, b.dataset.seg)));
 

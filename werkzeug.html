@@ -27,6 +27,14 @@
     .btn--danger { border-color:#ff6b6b; color:#ff6b6b; }
     .btn--danger:hover { background:#ff6b6b; border-color:#ff6b6b; color:#15030c; }
     .btn--danger[hidden] { display:none; }
+    .talk-editor { border:1px solid var(--line); border-radius:var(--radius); padding:16px 16px 18px; margin-bottom:16px; }
+    .talk-editor legend { font-family:var(--font-mono); font-size:.74rem; letter-spacing:.08em; text-transform:uppercase; color:var(--pink); padding:0 8px; }
+    .talk-editor > .hint { margin-top:0; margin-bottom:14px; }
+    .tc-section { border-left:3px solid var(--line-2); padding:12px 0 4px 14px; margin-bottom:12px; position:relative; }
+    .tc-section__head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px; }
+    .tc-section__num { font-family:var(--font-mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); }
+    .tc-remove { border-color:var(--line); color:var(--muted); padding:6px 12px; }
+    .tc-remove:hover { border-color:#ff6b6b; color:#ff6b6b; }
     .stepnum { counter-reset:s; }
     .stepnum li { counter-increment:s; position:relative; padding:12px 0 12px 44px; border-bottom:1px solid var(--line-2); }
     .stepnum li::before { content:counter(s); position:absolute; left:0; top:10px; font-family:var(--font-display); color:var(--pink); font-size:1.4rem; line-height:1; min-width:28px; }
@@ -161,6 +169,22 @@
             <label>Vimeo-Link Kiez-Talk (optional)</label>
             <input id="epTalkUrl" placeholder="leer lassen, wenn es keinen Talk gibt">
           </div>
+
+          <fieldset class="talk-editor" id="talkEditor">
+            <legend>🎙 Kiez-Talk-Inhalt (optional)</legend>
+            <p class="hint">Steht unter dem Talk-Video. Lass alles leer, wenn du keinen Text möchtest. Für lange Talks fügst du einfach mehr Abschnitte hinzu.</p>
+            <div class="field">
+              <label>Überschrift des Talks</label>
+              <input id="tcHeadline" placeholder="z. B. Milo trifft die WG – das Nachgespräch">
+            </div>
+            <div class="field">
+              <label>Einordnung / kurze Einleitung</label>
+              <textarea id="tcIntro" rows="3" placeholder="Ein, zwei Sätze, worum es im Talk geht. Für einen Absatz einfach eine Leerzeile lassen."></textarea>
+            </div>
+            <div id="tcSections"></div>
+            <button class="btn btn--ghost btn--sm" id="btnAddSection" type="button" style="margin-top:6px">➕ Abschnitt hinzufügen</button>
+          </fieldset>
+
           <div class="field">
             <label>Link zur Original-Folgenseite (Fallback)</label>
             <input id="epPageUrl" placeholder="https://wg-st-pauli.de/2026/06/12/...">
@@ -555,6 +579,7 @@
     function resetEpisodeForm() {
       ["epNo", "epTitle", "epLogline", "epSummary", "epVidUrl", "epTalkUrl", "epPageUrl"].forEach((id) => { $(id).value = ""; });
       $("epDate").value = ""; $("epType").value = "";
+      clearTalkContent();
       const seasons = state.data.seasons;
       if (seasons.length) $("epSeason").value = seasons[seasons.length - 1].id; // neueste Staffel vorauswählen
       updateEpisodePreview();
@@ -573,6 +598,7 @@
       $("epVidUrl").value = vimeoUrl(ep.video);
       $("epTalkUrl").value = vimeoUrl(ep.talk);
       $("epPageUrl").value = state.data.urlMap[ep.id] || "";
+      fillTalkContent(ep.talkContent);
       updateEpisodePreview();
     }
     function updateEpisodePreview() {
@@ -593,6 +619,56 @@
       $(id).addEventListener("change", updateEpisodePreview);
     });
 
+    /* ---------------- Kiez-Talk-Inhalt: beliebig viele Abschnitte ---------------- */
+    function renumberTalkSections() {
+      $("tcSections").querySelectorAll(".tc-section").forEach((el, i) => {
+        el.querySelector(".tc-section__num").textContent = "Abschnitt " + (i + 1);
+      });
+    }
+    function makeTalkSection(heading, text) {
+      const wrap = document.createElement("div");
+      wrap.className = "tc-section";
+      wrap.innerHTML =
+        `<div class="tc-section__head">
+           <span class="tc-section__num"></span>
+           <button type="button" class="btn btn--sm tc-remove">Entfernen</button>
+         </div>
+         <div class="field"><label>Überschrift</label><input class="tc-heading" placeholder="z. B. Über das Älterwerden"></div>
+         <div class="field"><label>Text</label><textarea class="tc-text" rows="4" placeholder="Fließtext. Für einen neuen Absatz eine Leerzeile lassen."></textarea></div>`;
+      wrap.querySelector(".tc-heading").value = heading || "";
+      wrap.querySelector(".tc-text").value = text || "";
+      wrap.querySelector(".tc-remove").addEventListener("click", () => { wrap.remove(); renumberTalkSections(); });
+      return wrap;
+    }
+    function addTalkSection(heading, text) {
+      $("tcSections").appendChild(makeTalkSection(heading, text));
+      renumberTalkSections();
+    }
+    function clearTalkContent() {
+      $("tcHeadline").value = ""; $("tcIntro").value = ""; $("tcSections").innerHTML = "";
+    }
+    function fillTalkContent(tc) {
+      clearTalkContent();
+      if (!tc) return;
+      $("tcHeadline").value = tc.headline || "";
+      $("tcIntro").value = tc.intro || "";
+      (Array.isArray(tc.sections) ? tc.sections : []).forEach((s) => addTalkSection(s.heading, s.text));
+    }
+    function gatherTalkContent() {
+      const headline = $("tcHeadline").value.trim();
+      const intro = $("tcIntro").value.trim();
+      const sections = Array.from($("tcSections").querySelectorAll(".tc-section"))
+        .map((el) => ({ heading: el.querySelector(".tc-heading").value.trim(), text: el.querySelector(".tc-text").value.trim() }))
+        .filter((s) => s.heading || s.text);
+      if (!headline && !intro && !sections.length) return null;
+      const tc = {};
+      if (headline) tc.headline = headline;
+      if (intro) tc.intro = intro;
+      if (sections.length) tc.sections = sections;
+      return tc;
+    }
+    $("btnAddSection").addEventListener("click", () => addTalkSection());
+
     async function publishEpisode() {
       const seasonId = $("epSeason").value, no = $("epNo").value, title = $("epTitle").value;
       const date = $("epDate").value, type = $("epType").value;
@@ -605,6 +681,8 @@
       const ep = { id, no, title, date };
       if (type) ep.type = type;
       ep.logline = logline; ep.summary = summary; ep.video = video; ep.talk = talk;
+      const talkContent = gatherTalkContent();
+      if (talkContent) ep.talkContent = talkContent;
 
       const season = next.seasons.find((s) => s.id === seasonId);
       const msgEl = $("epMsg");
