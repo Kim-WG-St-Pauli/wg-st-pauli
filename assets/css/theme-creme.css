@@ -43,6 +43,8 @@ body.theme-creme .section--paper .muted { color: var(--muted); }
 body.theme-creme .section--paper .lead { color: var(--bone); }
 body.theme-creme .section--paper .kicker { color: var(--pink); }
 body.theme-creme .section--paper .kicker::before { background: var(--pink); box-shadow: none; }
+body.theme-creme .talk-body__headline,
+body.theme-creme .talk-body__heading { color: var(--pink); }
 body.theme-creme .section--paper .step { background: #efe7d6; }
 
 /* Hero: kräftigere Überblendung nach Creme + ruhigeres Foto */

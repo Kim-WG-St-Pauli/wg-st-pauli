@@ -508,21 +508,29 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 0.
   color: #f1eee7; border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.09);
   font-size: 0.82rem; padding: 13px 20px;
 }
-/* aktive Auswahl (Die Folge / Kiez-Talk) klar erkennbar hervorheben */
-.modal__seg .btn--primary { color: #15030c; background: #ff2e88; border-color: #ff2e88; box-shadow: none; }
+/* aktive Auswahl (Die Folge / Kiez-Talk): gefüllt im Theme-Akzent + weiße Schrift
+   (Weiß auf Astra-Rot ≈ 4,9:1 – immer lesbar, und passt zum jeweiligen Theme). */
+.modal__seg .btn--primary { color: #fff; background: var(--pink); border-color: var(--pink); box-shadow: none; }
 .modal__seg .btn--ghost:hover, .modal__nav .btn:hover:not(:disabled) {
-  border-color: #ff2e88; color: #fff; background: rgba(255,46,136,0.18);
+  border-color: var(--pink); color: #fff; background: rgba(255,255,255,0.16);
 }
-.modal__seg .btn--primary:hover { color: #15030c; background: #ff63a6; border-color: #ff63a6; }
+.modal__seg .btn--primary:hover { color: #fff; background: var(--pink-2); border-color: var(--pink-2); }
 
-/* Kiez-Talk-Inhalt unter dem Video: Überschrift/Einleitung + beliebig viele Abschnitte.
-   Modal ist immer dunkel → feste helle Farben (wie .modal__desc). */
-.talk-body { margin-top: 22px; border-top: 1px solid rgba(255,255,255,0.16); padding-top: 20px; max-width: 70ch; }
-.talk-body__headline { font-family: var(--font-display); font-size: clamp(1.3rem, 2.6vw, 1.9rem); color: #f6f4ef; line-height: 1.15; }
-.talk-body__intro { color: #e6e0d2; font-size: 1.12rem; line-height: 1.6; margin-top: 12px; }
+/* Kiez-Talk-Inhalt unter dem Video: helle „Papier"-Fläche wie .section--paper,
+   damit der rote Akzent (var(--pink)) lesbar bleibt – rotes Rot auf Hell statt auf
+   Schwarz. Das Video bleibt in seinem dunklen Rahmen darüber. */
+.talk-body {
+  margin-top: 18px;
+  background: var(--paper);
+  color: #16141a;
+  border-radius: var(--radius);
+  padding: 22px 24px 24px;
+}
+.talk-body__headline { font-family: var(--font-display); font-size: clamp(1.4rem, 2.8vw, 2rem); color: #c2105e; line-height: 1.12; }
+.talk-body__intro { color: #2c2832; font-size: 1.12rem; line-height: 1.6; margin-top: 12px; }
 .talk-body__intro p { margin: 0 0 0.7em; }
-.talk-body__heading { font-family: var(--font-display); font-size: 1.25rem; color: #ff7ab0; margin-top: 26px; line-height: 1.2; }
-.talk-body__text { color: #e6e0d2; font-size: 1.06rem; line-height: 1.65; margin-top: 8px; }
+.talk-body__heading { font-family: var(--font-display); font-size: 1.3rem; color: #c2105e; margin-top: 24px; line-height: 1.2; }
+.talk-body__text { color: #16141a; font-size: 1.06rem; line-height: 1.65; margin-top: 8px; }
 .talk-body__text p { margin: 0 0 0.8em; }
 .talk-body__text p:last-child, .talk-body__intro p:last-child { margin-bottom: 0; }
 
