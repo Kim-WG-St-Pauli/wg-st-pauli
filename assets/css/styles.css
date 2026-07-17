@@ -480,7 +480,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 0.
 .modal { position: fixed; inset: 0; z-index: 1000; display: none; place-items: center; padding: 24px; }
 .modal.open { display: grid; }
 .modal__backdrop { position: absolute; inset: 0; background: rgba(5,5,8,0.86); backdrop-filter: blur(6px); }
-.modal__box { position: relative; z-index: 2; width: min(960px, 100%); }
+.modal__box { position: relative; z-index: 2; width: min(960px, 100%); max-height: calc(100vh - 48px); overflow-y: auto; }
 .modal__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
 .modal__title { font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 2.2rem); }
 .modal__sub { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--pink); }
@@ -514,6 +514,17 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 0.
   border-color: #ff2e88; color: #fff; background: rgba(255,46,136,0.18);
 }
 .modal__seg .btn--primary:hover { color: #15030c; background: #ff63a6; border-color: #ff63a6; }
+
+/* Kiez-Talk-Inhalt unter dem Video: Überschrift/Einleitung + beliebig viele Abschnitte.
+   Modal ist immer dunkel → feste helle Farben (wie .modal__desc). */
+.talk-body { margin-top: 22px; border-top: 1px solid rgba(255,255,255,0.16); padding-top: 20px; max-width: 70ch; }
+.talk-body__headline { font-family: var(--font-display); font-size: clamp(1.3rem, 2.6vw, 1.9rem); color: #f6f4ef; line-height: 1.15; }
+.talk-body__intro { color: #e6e0d2; font-size: 1.12rem; line-height: 1.6; margin-top: 12px; }
+.talk-body__intro p { margin: 0 0 0.7em; }
+.talk-body__heading { font-family: var(--font-display); font-size: 1.25rem; color: #ff7ab0; margin-top: 26px; line-height: 1.2; }
+.talk-body__text { color: #e6e0d2; font-size: 1.06rem; line-height: 1.65; margin-top: 8px; }
+.talk-body__text p { margin: 0 0 0.8em; }
+.talk-body__text p:last-child, .talk-body__intro p:last-child { margin-bottom: 0; }
 
 /* poster-wall divider */
 .posterwall { position: relative; height: 220px; overflow: hidden; border-block: 1px solid var(--line); }

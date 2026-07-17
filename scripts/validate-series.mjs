@@ -24,6 +24,33 @@ function checkVideo(video, where) {
   }
 }
 
+function checkTalkContent(tc, where) {
+  if (tc === undefined || tc === null) return; // optional
+  if (typeof tc !== "object" || Array.isArray(tc)) {
+    fail(`${where}: talkContent muss ein Objekt sein`);
+    return;
+  }
+  if ("headline" in tc && typeof tc.headline !== "string") fail(`${where}: talkContent.headline muss Text sein`);
+  if ("intro" in tc && typeof tc.intro !== "string") fail(`${where}: talkContent.intro muss Text sein`);
+  if ("sections" in tc) {
+    if (!Array.isArray(tc.sections)) {
+      fail(`${where}: talkContent.sections muss eine Liste sein`);
+      return;
+    }
+    tc.sections.forEach((s, si) => {
+      if (typeof s !== "object" || s === null || Array.isArray(s)) {
+        fail(`${where}: talkContent.sections[${si}] muss ein Objekt sein`);
+        return;
+      }
+      if (!isNonEmptyString(s.heading) && !isNonEmptyString(s.text)) {
+        fail(`${where}: talkContent.sections[${si}] braucht Überschrift oder Text`);
+      }
+      if ("heading" in s && typeof s.heading !== "string") fail(`${where}: talkContent.sections[${si}].heading muss Text sein`);
+      if ("text" in s && typeof s.text !== "string") fail(`${where}: talkContent.sections[${si}].text muss Text sein`);
+    });
+  }
+}
+
 let raw;
 try {
   raw = readFileSync(PATH, "utf8");
@@ -96,6 +123,7 @@ if (Array.isArray(data.seasons)) {
       if (!isNonEmptyString(ep.summary)) fail(`${where}: summary fehlt`);
       checkVideo(ep.video, where);
       checkVideo(ep.talk, where);
+      checkTalkContent(ep.talkContent, where);
     });
   });
 } else {
