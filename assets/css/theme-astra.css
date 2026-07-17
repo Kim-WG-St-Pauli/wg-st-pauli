@@ -43,6 +43,8 @@ body.theme-astra .section--paper .muted { color: var(--muted); }
 body.theme-astra .section--paper .lead { color: var(--bone); }
 body.theme-astra .section--paper .kicker { color: var(--pink); }
 body.theme-astra .section--paper .kicker::before { background: var(--pink); box-shadow: none; }
+body.theme-astra .talk-body__headline,
+body.theme-astra .talk-body__heading { color: var(--pink); }
 body.theme-astra .section--paper .step { background: #e6d8b9; }
 
 /* Hero: Überblendung nach Sandpapier, ruhiges sepia-warmes Foto */

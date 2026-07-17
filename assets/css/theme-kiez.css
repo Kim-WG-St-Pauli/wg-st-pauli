@@ -45,6 +45,8 @@ body.theme-kiez .section--paper .muted { color: var(--muted); }
 body.theme-kiez .section--paper .lead { color: var(--bone); }
 body.theme-kiez .section--paper .kicker { color: var(--pink); }
 body.theme-kiez .section--paper .kicker::before { background: var(--pink); box-shadow: none; }
+body.theme-kiez .talk-body__headline,
+body.theme-kiez .talk-body__heading { color: var(--pink); }
 body.theme-kiez .section--paper .step { background: #e7dabd; }
 
 /* Hero: Überblendung nach Kraftpapier + ruhigeres, sepia-warmes Foto */
