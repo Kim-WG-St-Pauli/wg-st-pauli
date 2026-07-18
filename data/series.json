@@ -250,6 +250,19 @@
       "tagline": "Die WG geht weiter. Jeden Samstag eine neue Folge.",
       "episodes": [
         {
+          "id": "s2f6",
+          "no": "6",
+          "title": "Wasser marsch!",
+          "date": "2026-07-18",
+          "logline": "Im Schlafzimmer wird's nass...",
+          "summary": "Bettgeschichten Teil4 – Folge sechs von Staffel zwei. Wie lange dauert es eigentlich, ein Wasserbett zu befüllen? Und: Womit füllt man die Wartezeit? ",
+          "video": {
+            "id": "1209218403",
+            "h": "65fc946ff2"
+          },
+          "talk": null
+        },
+        {
           "id": "s2f5",
           "no": "5",
           "title": "Die Matratze",
@@ -373,6 +386,7 @@
     "s2f2": "https://wg-st-pauli.de/2026/06/13/s2f2kochen/",
     "s2f3": "https://wg-st-pauli.de/2026/06/20/s2f3-das-bett/",
     "s2f4": "https://wg-st-pauli.de/2026/07/04/s2f4-wasserbett/",
-    "s2f5": "https://wg-st-pauli.de/2026/07/10/s2f5-die-matratze/"
+    "s2f5": "https://wg-st-pauli.de/2026/07/10/s2f5-die-matratze/",
+    "s2f6": "https://wg-st-pauli.de/2026/07/18/s2f6-wasser-marsch/"
   }
 }
