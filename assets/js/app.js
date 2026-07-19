@@ -460,15 +460,20 @@
 
     function paint(sel) {
       $$(".tab", tabs).forEach((t) => t.setAttribute("aria-selected", String(t.dataset.tab === sel)));
+      // Chronologisch aufsteigend (Pilot → neueste Folge): die Seite verspricht
+      // „Fang oben beim Pilotfilm an“, und nummerierte Folgen lesen sich 1, 2, 3 …
+      // Nicht auf die Reihenfolge in series.json verlassen – werkzeug.html fügt
+      // neue Folgen vorne in die Staffel ein.
+      const byDate = (a, b) => a.date.localeCompare(b.date);
       let eps, mode;
       if (sel === "talks") {
         mode = "talk";
-        eps = WG.allEpisodes.filter((e) => e.talk).sort((a, b) => b.date.localeCompare(a.date));
+        eps = WG.allEpisodes.filter((e) => e.talk).sort(byDate);
       } else if (sel === "all") {
-        eps = WG.allEpisodes.slice().sort((a, b) => b.date.localeCompare(a.date));
+        eps = WG.allEpisodes.slice().sort(byDate);
       } else {
         const s = WG.seasons.find((s) => s.id === sel);
-        eps = s.episodes.map((e) => ({ ...e, season: sel, seasonTitle: s.title }));
+        eps = s.episodes.map((e) => ({ ...e, season: sel, seasonTitle: s.title })).sort(byDate);
       }
       mount.innerHTML = eps.length
         ? eps.map((e, i) => epCard(e, i, mode)).join("")
@@ -501,6 +506,10 @@
     const btn = $("[data-resume]");
     if (!btn) return;
     const seenIds = watched.list;
+    // Ohne Fortschritt wäre das Label „Beim Pilotfilm starten“ – auf der Startseite
+    // steht der feste Pilot-Button direkt daneben, der Text stünde doppelt.
+    // Dort (data-resume-optional) den Button dann ganz weglassen.
+    if (!seenIds.length && btn.hasAttribute("data-resume-optional")) { btn.remove(); return; }
     // erste ungesehene Folge in chronologischer Reihenfolge
     const chrono = WG.allEpisodes.slice().sort((a, b) => a.date.localeCompare(b.date));
     const next = chrono.find((e) => !seenIds.includes(e.id)) || chrono[0];
