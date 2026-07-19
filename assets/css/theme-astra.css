@@ -32,6 +32,11 @@ body.theme-astra {
 /* Grain dezenter & multiplizierend auf hellem Papier */
 body.theme-astra::after { opacity: 0.07; mix-blend-mode: multiply; }
 
+/* Kicker-Labels wie auf einem echten Etikett: dunkler Text, roter Strich davor.
+   Lesbarer als durchgehend roter Text; das Rot bleibt als Akzent im Tick. */
+body.theme-astra .kicker { color: var(--text); }
+body.theme-astra .kicker::before { background: var(--pink); box-shadow: none; }
+
 /* Helle Schrift auf Rot/Messing */
 body.theme-astra .btn--primary,
 body.theme-astra .btn--lime,
@@ -41,7 +46,7 @@ body.theme-astra .marquee { color: #fff7ec; }
 body.theme-astra .section--paper { background: #ede1c6; color: var(--text); }
 body.theme-astra .section--paper .muted { color: var(--muted); }
 body.theme-astra .section--paper .lead { color: var(--bone); }
-body.theme-astra .section--paper .kicker { color: var(--pink); }
+body.theme-astra .section--paper .kicker { color: var(--text); }
 body.theme-astra .section--paper .kicker::before { background: var(--pink); box-shadow: none; }
 body.theme-astra .talk-body__headline,
 body.theme-astra .talk-body__heading { color: var(--pink); }
@@ -55,8 +60,8 @@ body.theme-astra .hero__photo::after {
     linear-gradient(180deg, rgba(229, 213, 176, 0.5) 0%, rgba(229, 213, 176, 0.82) 55%, var(--ink) 100%);
 }
 body.theme-astra .hero__stamp { color: #111; border-color: rgba(28, 18, 8, 0.45); }
-/* "St. Pauli" im Hero als rotes Banner-Wort */
-body.theme-astra .hero h1 .neon { color: var(--pink); text-shadow: none; }
+/* "St. Pauli" im Hero als rotes Banner-Wort — tieferes Rot für bessere Lesbarkeit */
+body.theme-astra .hero h1 .neon { color: var(--pink-2); text-shadow: none; }
 
 /* Karten / Akzentflächen mit hartkodierten Pink-Schatten neutralisieren */
 body.theme-astra .tier--feature {
