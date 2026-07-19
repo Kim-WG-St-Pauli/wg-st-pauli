@@ -143,6 +143,28 @@
           "talk": {
             "id": "1169523200",
             "h": "986bd7a503"
+          },
+          "talkContent": {
+            "headline": "Kiez Talk zu Folge 1: „9 Quadratmeter“",
+            "intro": "Wie viel Platz braucht ein Mensch zum Leben? Im zweiten Kiez Talk spricht Journalist Milo Relotio mit Autorin Kim Perator über Wohnraummangel, Einsamkeit und die Idee, warum gemeinschaftliches Wohnen gerade für Menschen über 50 wieder an Bedeutung gewinnt.",
+            "sections": [
+              {
+                "heading": "Wenn neun Quadratmeter zum Zuhause werden",
+                "text": "Milo: Hi Kim.\n\nKim: Schön, dass Du wieder da bist, Milo!\n\nMilo: Kim, Folge eins trägt den Titel ‚9 Quadratmeter‘. Warum dieser Fokus auf so wenig Raum?\n\nKim: Weil das gerade jetzt, in 2026, ein brandheisses Eisen zu sein scheint! Du glaubst ja garnicht, wie viele Leute sich bei meinem Kneipenjob nachts an meinem Tresen ausheulen. Es ist, als hätte jemand gerade irgendwo ein Fass aufgemacht. Die „9 Quadratmeter“ Story basiert also auf mehreren echten Geschichten.  \n\nMilo: Viele verbinden Wohnraummangel vor allem mit jungen Menschen.\n\nKim:  Dabei trifft es gerade auch Menschen zwischen fünfzig und sechzig. Nach Trennungen, wenn Kinder ausziehen, stehen viele plötzlich allein da und können sich ihre Wohnung nicht mehr leisten. \n\nMilo: Dieser Aspekt fehlt oft in den Medien. \n\nKim: Ja. Diese Generation fällt häufig durch alle Raster. Zu jung für klassische Altersmodelle, zu alt für die günstigeren WGs. Dabei ist genau hier die Not oft besonders groß."
+              },
+              {
+                "heading": "Die stille Wohnungskrise der Älteren",
+                "text": "Milo: Gleichzeitig gibt es viel ungenutzten Wohnraum.\n\nKim: Ja, vor allem bei der Grosseltern-Generation.\nViele Frauen leben nach dem Tod ihres Partners allein in großen Wohnungen. Sie sind oft einsam, aber öffnen ihre Türen nur ungern für Fremde.\n\nMilo: Das ist ein paradoxes Bild.\n\n Kim: „Absolut. Aber meine Oma hat mir diese Beobachtung direkt bestätigt: Sie selbst und ihre Bekannten würden ihre Wohnung allerhöchstens noch mit einer Pflegekraft teilen. Also: Nur dann, wenn sie es wirklich muss...."
+              },
+              {
+                "heading": "Kann gemeinschaftliches Wohnen die Lösung sein?",
+                "text": "Milo: Es gibt Projekte wie ‚Wohnen gegen Hand oder Hilfe‘.\n\nKim: Genau. Studierende ziehen bei älteren Menschen ein und helfen im Alltag, statt Miete zu zahlen. Das gibt es in verschiedenen Varianten. Ziemlich cool. Das kann sehr gut funktionieren, wenn Vertrauen entsteht.\n\nMilo: Du wirbst in „WG St. Pauli“ ja quasi für gemeinschaftliches Wohnen.\n\nKim: Ja. Wohngemeinschaften sind nicht nur etwas für Studierende. Sie können eine Antwort auf Einsamkeit, finanzielle Sorgen und Wohnraummangel sein."
+              },
+              {
+                "heading": "Mehr als Unterhaltung",
+                "text": "Milo: Deine Serie will also auch politisch wirken.\n\nKim: Sie will sichtbar machen, was oft übersehen wird. Wohnraum ist kein Luxus, sondern eine Grundlage für Würde.\n\nMilo: „Kim, danke für dieses Gespräch.\n\nKim: „Danke dir, Milo."
+              }
+            ]
           }
         },
         {
