@@ -422,6 +422,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 0.
 @media (max-width: 860px) {
   .kosmos-hero { grid-template-columns: 1fr; gap: 30px; }
   .kosmos-hero__logo img { max-width: 260px; }
+  /* Premise ("Die Idee"): auf schmalen Screens untereinander statt zwei enge Spalten */
+  .premise-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
 }
 
 /* ----------------------------------------------------------- Tiers (support) */
