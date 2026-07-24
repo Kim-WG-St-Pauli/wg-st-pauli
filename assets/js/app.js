@@ -100,6 +100,7 @@
                 <a href="mitmachen.html#newsletter">Gästeliste / Newsletter</a>
                 <a href="${WG.links.instagram}" target="_blank" rel="noopener">Täglich auf Insta</a>
                 <a href="impressum.html">Impressum</a>
+                <a href="datenschutz.html">Datenschutz</a>
               </div>
             </div>
           </div>

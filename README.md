@@ -57,7 +57,8 @@ wg-st-pauli/
 ├── folgen.html         # Mediathek (Staffeln, Folgen, Fortschritt)
 ├── bewohner.html       # Die fünf Bewohner + Kim Perator
 ├── mitmachen.html      # Unterstützen (Steady), Newsletter, Social
-├── impressum.html      # Platzhalter (rechtliche Angaben ergänzen)
+├── impressum.html      # Impressum (§ 5 DDG, offizielle Angaben)
+├── datenschutz.html    # Datenschutzerklärung (DSGVO)
 ├── data/series.js      # ← hier neue Folgen eintragen
 ├── assets/css/styles.css
 ├── assets/js/app.js
