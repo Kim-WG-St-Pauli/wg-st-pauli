@@ -1,0 +1,10 @@
+# WG St. Pauli
+# Interne Werkzeuge und das eingefrorene Alt-Archiv gehoeren nicht in Suchmaschinen.
+# Hinweis: Wirksam ist robots.txt nur in der Domain-Wurzel (also unter einer eigenen
+# Domain wie wg-st-pauli.de). Die betroffenen Seiten tragen zusaetzlich ein
+# <meta name="robots" content="noindex">.
+
+User-agent: *
+Disallow: /werkzeug.html
+Disallow: /rueckgaengig.html
+Disallow: /v1/

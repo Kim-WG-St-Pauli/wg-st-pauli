@@ -31,6 +31,13 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - name: Alt-Archiv nicht mitveröffentlichen
+        # v1/ ist der eingefrorene Export der alten WordPress-Seite. Er bleibt im
+        # Repository erhalten, wird aber nicht ausgeliefert: Die Seiten enthalten ein
+        # veraltetes Impressum, eine englische WordPress-Muster-Datenschutzerklärung
+        # (Login-Cookies, Gravatar – trifft hier alles nicht zu) und laden Font Awesome
+        # von cdnjs.cloudflare.com. Zum Wiederveröffentlichen diesen Schritt entfernen.
+        run: rm -rf v1
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
