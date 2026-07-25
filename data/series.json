@@ -272,6 +272,20 @@
       "tagline": "Die WG geht weiter. Jeden Samstag eine neue Folge.",
       "episodes": [
         {
+          "id": "s2f7",
+          "no": "7",
+          "title": "Der Bettgeschichten letzter Teil",
+          "date": "2026-07-25",
+          "type": "finale",
+          "logline": "Endlich ist das Wasserbett fertig - doch… was nun?",
+          "summary": "Was alles passieren kann, wenn KI-Figuren auf Wasserbetten springen.... Viel Spaß!",
+          "video": {
+            "id": "1211827200",
+            "h": "ce5e165b9a"
+          },
+          "talk": null
+        },
+        {
           "id": "s2f6",
           "no": "6",
           "title": "Wasser marsch!",
