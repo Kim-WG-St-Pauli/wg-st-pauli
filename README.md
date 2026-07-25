@@ -58,8 +58,12 @@ wg-st-pauli/
 ├── bewohner.html       # Die fünf Bewohner + Kim Perator
 ├── mitmachen.html      # Unterstützen (Steady), Newsletter, Social
 ├── impressum.html      # Impressum (§ 5 DDG, offizielle Angaben)
+├── datenschutz.html    # Datenschutzerklärung (DSGVO)
+├── robots.txt          # hält Werkzeug + Alt-Archiv aus Suchmaschinen
 ├── data/series.js      # ← hier neue Folgen eintragen
 ├── assets/css/styles.css
+├── assets/css/fonts.css # lokale Schriften (kein Google-Fonts-CDN)
+├── assets/fonts/       # Anton, Space Grotesk, DM Mono (OFL)
 ├── assets/js/app.js
 └── assets/img/         # Cast-Fotos (aus dem Original) + zugeschnittene Porträts
 ```
