@@ -241,6 +241,36 @@
           "talk": {
             "id": "1172469671",
             "h": "80fea2ed4c"
+          },
+          "talkContent": {
+            "headline": "Wenn sich die Figuren über ihre KI beschweren",
+            "intro": "Nicht jede Frage zu \"WG St. Pauli\" kommt von Journalist Milo Relotio. Diesmal melden sich die Bewohner der WG selbst zu Wort. Sie wollen wissen, warum sie plötzlich jünger aussehen, sich seltsam bewegen oder klingen wie ein Navigationsgerät. Kim versucht, die Eigenheiten künstlicher Intelligenz zu erklären. Ob das beruhigt, ist eine andere Frage.",
+            "sections": [
+              {
+                "heading": "Zwischen Figur und Wahrscheinlichkeit",
+                "text": "Kai: Ich beweg mich komisch. Beim Bierkastenheben knick ich ein wie'n Campingstuhl. Und ich werd dabei klein. Und dick. Das war nicht abgesprochen.\nKim: Das ist kein Körper. Das ist eine Wahrscheinlichkeitsrechnung. Die KI weiß nicht, wie du aussiehst. Sie weiß nur, wie jemand aussehen könnte, der statistisch du sein soll. Bei Bewegung muss sie raten. Und sie rät schlecht unter Zeitdruck.\nPetra: Dafür sieht er in manchen Einstellungen plötzlich zwanzig Jahre jünger aus.\nKim: Sobald Bewegung reinkommt, versucht das System zu optimieren. Falten gelten technisch als Fehler. Die werden dann einfach weggerechnet. Die KI hat mehr Angst vorm Altern als jede Kosmetikfirma.\nSilke: Super. Dann kann ich mir das Lifting ja komplett sparen.\nKim: Du wirst nicht geliftet. Du wirst neu gewürfelt. Das nennt sich Figurendrift. Die Figur bleibt gemeint, aber nicht stabil. Daher habt ihr auch immer die selben Klamotten an: Dann können die Zuschauer euch wenigstens daran erkennen."
+              },
+              {
+                "heading": "Stimmen aus der Konserve",
+                "text": "Silke: Ich finde meine Stimme scheiße. Beate hat so eine tolle Stimme gekriegt. Und ich kling wie'n Navi.\nBeate: Ich musste nichts dafür tun.\nPetra: Ich hör mich total zickig an. So bin ich gar nicht.\nKim: Stimmen sind keine Persönlichkeiten. Das sind synthetische Mittelwerte. Die KI baut euch aus tausenden fremden Stimmen. Niemand klingt wie er selbst. Eigentlich ist das sehr demokratisch unerquicklich."
+              },
+              {
+                "heading": "Zwischen SCHLEFAZ und Kunst",
+                "text": "Die Diskussion nimmt eine unerwartete Wendung: Statt über Technik sprechen die Bewohner plötzlich über den Charakter der Serie.\nKim: Manchmal reden wir etwas unverständlich.\nKai: Unverständlich? Ich würde sagen: Eher echt SCHLEFAZ.\nSilke: Moment mal. Was ist denn bitte SCHLEFAZ?\nFrank: \"Die schlechtesten Filme aller Zeiten\". Man schaut absichtlich schlechte Filme und kommentiert sie. Institutionalisierter Trash.\nKim: Moment. Sagst du gerade, meine Serie klingt wie ein absichtlich schlechter Film?\nBeate: Wenn es absichtlich schlecht wäre, würde man es wahrscheinlich Kunst nennen.\nKim: Okay... ich notiere das jetzt mal unter \"konstruktives Feedback\"."
+              },
+              {
+                "heading": "Warum Frank nicht George Clooney wird",
+                "text": "Warum Frank nicht George Clooney wird\nFrank: Einen Kritikpunkt habe ich noch. In Wirklichkeit sehe ich deutlich besser aus.\nKim: Die KI stellt Männer um die sechzig gern mit grauem Vollbart dar. Du hast keinen bekommen. Das ist bereits ein Entgegenkommen der Maschine.\nFrank: Dann render mich doch mal als George Clooney.\nKim: Das Problem ist: Wenn wir das einmal machen, glaubt das System, du bist das. Dann sieht am Ende alles aus wie Werbung für Zahnzusatzversicherungen."
+              },
+              {
+                "heading": "Annäherungen statt Avatare",
+                "text": "Kim: Ihr seid keine Avatare. Ihr seid Annäherungen.  Und Annäherungen werden mit jeder Bewegung unsauber. \n...\nAktenvermerk\n\nDie Beschwerden der Bewohner wurden aufgenommen.\n\nEinige konnten behoben werden.\n\nAndere werden mit dem nächsten KI-Update vermutlich einfach durch neue ersetzt."
+              },
+              {
+                "heading": "Die Technik verändert sich. Die Geschichten bleiben.",
+                "text": "Die künstliche Intelligenz entwickelt sich rasant weiter. Mit jeder neuen Staffel sehen die Figuren etwas natürlicher aus, bewegen sich flüssiger und wirken vertrauter. Was sich jedoch von Anfang an nicht verändert hat, sind die Geschichten, die sie erzählen. Denn hinter jeder KI-Figur steckt eine Beobachtung aus dem echten Leben."
+              }
+            ]
           }
         },
         {
