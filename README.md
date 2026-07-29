@@ -29,6 +29,8 @@ professionelle Marke:
 - **Fortschritt merken** – „Weiterschauen“ + Fortschrittsbalken (lokal im Browser,
   kein Login, kein Tracking). Sinnvoll für eine fortlaufende Serie.
 - **Countdown** bis zur nächsten Folge (jeden Samstag) – treibt Wiederbesuche.
+- **Zeitschaltung:** Folgen mit Datum in der Zukunft bleiben verborgen und erscheinen an ihrem
+  Tag um 12 Uhr von selbst. `?vorschau=1` zeigt sie vorab, gekennzeichnet als „Geplant“.
 - **„Warum sehen die so seltsam aus?“** – ein eigener Abschnitt, der die KI-Eigenheiten
   vom Bug zum Stilmittel erklärt. (Das war die zentrale Verständnis-Hürde.)
 - **Smarte CTAs** zu Steady (Unterstützen) und zur Gästeliste (Newsletter), überall sinnvoll platziert.

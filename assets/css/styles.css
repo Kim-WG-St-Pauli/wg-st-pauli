@@ -346,6 +346,19 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 0.
 .ep__tag--new { background: var(--lime); color: #142000; }
 .ep__tag--pilot { background: var(--cyan); color: #032a26; }
 .ep__tag--finale { background: var(--amber); color: #2a1a00; }
+/* Feste Farben statt Theme-Variablen: das Badge sitzt in jedem Theme auf einem
+   anderen Poster-Verlauf, und --text ist in den hellen Themes selbst dunkel. */
+.ep__tag--geplant { background: #2b2118; color: #fff7ec; border: 1px solid rgba(255, 255, 255, 0.18); }
+
+/* Vorschau-Balken (?vorschau=1) – zeigt zusätzlich die geplanten Folgen */
+.vorschau-bar {
+  position: relative; z-index: 100;
+  background: #2b2118; color: #fff7ec;
+  border-bottom: 2px solid var(--pink);
+  font-family: var(--font-mono); font-size: 0.8rem;
+  padding: 10px 20px; text-align: center;
+}
+.vorschau-bar a { text-decoration: underline; margin-left: 10px; }
 
 /* season tabs */
 .tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 30px; }

@@ -160,7 +160,9 @@
   function toggleTheme() {
     const next = nextTheme();
     try { localStorage.setItem("wg:theme", next); } catch {}
-    location.href = location.pathname + (next === "astra" ? "" : "?theme=" + next);
+    const params = new URLSearchParams(location.search);
+    if (next === "astra") params.delete("theme"); else params.set("theme", next);
+    location.href = location.pathname + (params.toString() ? "?" + params : "");
   }
   function posterFor(ep, idx, mode) {
     const [a, b] = POSTER_THEMES[idx % POSTER_THEMES.length];
@@ -180,7 +182,8 @@
   }
 
   function epTag(ep) {
-    if (ep.id === WG.latest.id) return '<span class="ep__tag ep__tag--new">Neu</span>';
+    if (ep.scheduled) return '<span class="ep__tag ep__tag--geplant">⏳ Geplant</span>';
+    if (WG.latest && ep.id === WG.latest.id) return '<span class="ep__tag ep__tag--new">Neu</span>';
     if (ep.id === "pilot") return '<span class="ep__tag ep__tag--pilot">Hier starten</span>';
     if (ep.type === "finale") return '<span class="ep__tag ep__tag--finale">Finale</span>';
     return "";
@@ -369,13 +372,33 @@
     if (t) { e.preventDefault(); openModal(t.dataset.watch); }
   });
 
+  /* --------------------------------------------------- Vorschau-Hinweis (?vorschau=1) */
+  function initVorschauBanner() {
+    if (!WG.vorschau) return;
+    // Beim Klick auf „Folgen“, „Start“ … soll die Vorschau nicht verloren gehen.
+    // Vor dem Banner, damit dessen Ausstiegs-Link nicht selbst umgeschrieben wird.
+    $$('a[href$=".html"], a[href*=".html#"]').forEach((a) => {
+      const u = new URL(a.getAttribute("href"), location.href);
+      if (u.origin !== location.origin || u.searchParams.has("vorschau")) return;
+      u.searchParams.set("vorschau", "1");
+      a.setAttribute("href", u.pathname + u.search + u.hash);
+    });
+    const plain = new URLSearchParams(location.search);
+    plain.delete("vorschau");
+    const bar = document.createElement("div");
+    bar.className = "vorschau-bar";
+    bar.innerHTML = `⏳ <strong>Vorschau</strong> — hier sind auch die geplanten Folgen zu sehen, die auf der normalen Seite noch niemand sieht.
+      <a href="${location.pathname}${plain.toString() ? "?" + plain : ""}">Normale Ansicht öffnen</a>`;
+    document.body.prepend(bar);
+  }
+
   /* --------------------------------------------------- Countdown (nächster Samstag) */
   function nextSaturday() {
     const now = new Date();
     const d = new Date(now);
     const day = d.getDay();           // 0 So ... 6 Sa
     let add = (6 - day + 7) % 7;      // Tage bis Samstag
-    d.setHours(11, 0, 0, 0);          // Release ~ 11:00
+    d.setHours(WG.releaseHour, 0, 0, 0);
     if (add === 0 && now > d) add = 7;
     d.setDate(d.getDate() + add);
     return d;
@@ -400,7 +423,7 @@
   /* --------------------------------------------------- Renderers per page */
   function renderLatest() {
     const mount = $("[data-latest-player]");
-    if (mount) {
+    if (mount && WG.latest) {
       const ep = WG.latest;
       // Klick-zum-Abspielen-Poster statt Auto-Embed (vermeidet 403 beim Laden + schneller)
       const [a, b] = POSTER_THEMES[0];
@@ -473,8 +496,7 @@
       } else if (sel === "all") {
         eps = WG.allEpisodes.slice().sort(byDate);
       } else {
-        const s = WG.seasons.find((s) => s.id === sel);
-        eps = s.episodes.map((e) => ({ ...e, season: sel, seasonTitle: s.title })).sort(byDate);
+        eps = WG.allEpisodes.filter((e) => e.season === sel).sort(byDate);
       }
       mount.innerHTML = eps.length
         ? eps.map((e, i) => epCard(e, i, mode)).join("")
@@ -619,6 +641,7 @@
     renderFolgen();
     renderDossiers();
     renderTiers();
+    initVorschauBanner();
     initCountdown();
     initResume();
     initReset();
