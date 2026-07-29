@@ -287,6 +287,32 @@
           "talk": {
             "id": "1169547978",
             "h": "0619f2bbf6"
+          },
+          "talkContent": {
+            "headline": "Warum „WG St. Pauli“ nicht perfekt sein will",
+            "intro": "Nach den ersten Folgen haben viele Zuschauer ähnliche Fragen: Warum klingen manche Stimmen so künstlich? Weshalb verändern sich die Figuren ständig? Und wie entsteht eine komplette KI-Serie überhaupt? Im Kiez Talk beantwortet Autorin Kim Perator die häufigsten Fragen rund um die Produktion von „WG St. Pauli“.",
+            "sections": [
+              {
+                "heading": "Zwischen Stimme und Missverständnis",
+                "text": "Milo: Kim, nach den ersten Folgen stellen sich schon ein paar Fragen.\n\nKim: Wenn nach meiner Sprechstunde noch was offen ist, dann schieß los, Milo.\n\nMilo: Nochmal zu den Stimmen. Manche klingen besser, andere schlechter, okay. Aber die Betonung? Müsstest du das nicht besser hinbekommen?\n\nKim: Das ist die Stimm-Generierungssoftware. Und es ist Deutsch. Im Englischen ist das System viel weiter. Im Deutschen hinkt es noch hinterher. Da habe ich erstaunlich wenig Einfluss.\n\nMilo: Man versteht manchmal einfach nicht, was gesagt wird. „Harness“ zum Beispiel.\n\nKim: Wenn nicht jeder alles versteht, ist das kein Weltuntergang. Nicht jede Anspielung muss für jeden funktionieren."
+              },
+              {
+                "heading": "Das sind keine Schauspieler",
+                "text": "Milo: Ganz ehrlich? Manchmal spielen deine WG-Bewohner auch einfach schlecht.\n\nKim: Milo... Das sind doch keine Schauspieler. Das sind Datensätze mit Ehrgeiz.\n\nMilo: Du hast ja schon erklärt, dass du beim Figurendrift wenig machen kannst.\n\nKim: Momentan ist das eine Limitierung der Software. Die Figuren werden bei jeder Bewegung neu berechnet. Stabilität ist Glückssache. Und ich bin auch noch nicht so gut im Prompten. Da geht noch was."
+              },
+              {
+                "heading": "Wie entsteht eine KI-Serie?",
+                "text": "Milo: Womit arbeitest du eigentlich? Wie sieht dein Workflow aus?\n\nKim: Das könnte ich dir sagen, Milo. Aber dann müsste ich dich töten.\n\nMilo: Das ist also ein Betriebsgeheimnis.\n\nKim: Na klar. Ich habe wochenlang an den Charakteren und am Workflow herumgetüftelt. Das ist inzwischen mein Kapital."
+              },
+              {
+                "heading": "\"Perfektionisten werden nie fertig. Ich wollte fertig werden.\"",
+                "text": "Warum Perfektion keine Lösung ist\n\nMilo: Da ist schon noch Luft nach oben, oder?\n\nKim: Sehr viel. Du siehst es ja selbst: Drifts, Anschlussfehler, Renderunfälle. Das hier ist nichts für Perfektionisten. Die sehen nur noch die Fehler und verpassen das Wichtige: die Idee und die Geschichte.\n\nKim: Und Perfektionisten werden nie fertig. Ich wollte fertig werden.\nIch habe mich entschieden, mit den Fehlern zu leben. Sonst gäbe es diese Serie nicht.\n\nMilo: Wir erleben also live, wie du besser wirst?\n\nKim: Ja. Und wie sich meine technischen Möglichkeiten langsam verbessern."
+              },
+              {
+                "heading": "Die Reise hat gerade erst begonnen",
+                "text": "Milo: Nach der ersten Staffel geht's weiter?\n\nKim: Ich komme doch gerade erst in Fahrt.\nIch habe nicht das Geld für die beste Software. Und nicht die Energie, jeden Hype mitzumachen. Also optimiere ich innerhalb meiner aktuellen Beschränkungen.\nMomentan lebe ich mit dem, was ich habe.\n\nMilo: Noch etwas: Fünf Leute feiern und die Wohnung sieht aus wie nach hundert ...\n\nKim: Wer nicht übertreiben kann, kann nicht anschaulich schildern.\n\nMilo: Das vergesse ich manchmal.\n\nKim: Und vergiss bitte eines nicht: Das hier ist nicht die Realität. Hier habe ich als Autorin künstlerische Freiheit. Als Journalist hast du die natürlich nicht...\n(Kim grinst) \n\nMilo: Kim, vielen Dank für das Gespräch.\n\nKim: Bis bald, Milo."
+              }
+            ]
           }
         },
         {
