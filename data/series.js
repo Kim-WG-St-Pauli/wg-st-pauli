@@ -29,9 +29,15 @@ window.WG = (function () {
   const { characters, creator, reporter, seasons, links, urlMap } = data;
   const tiers = data.tiers || [];
 
+  // Zeitschaltung: Folgen mit Zukunftsdatum bleiben bis zu ihrem Tag um RELEASE_HOUR Uhr
+  // (Uhr des Besuchers) unsichtbar. "?vorschau=1" zeigt sie vorab, markiert als geplant.
+  const RELEASE_HOUR = 12;
+  const vorschau = new URLSearchParams(location.search).has("vorschau");
+  const releaseAt = (e) => new Date(e.date + "T" + String(RELEASE_HOUR).padStart(2, "0") + ":00:00");
+
   const allEpisodes = seasons.flatMap((s) =>
-    s.episodes.map((e) => ({ ...e, season: s.id, seasonTitle: s.title, url: urlMap[e.id] || links.original }))
-  );
+    s.episodes.map((e) => ({ ...e, season: s.id, seasonTitle: s.title, url: urlMap[e.id] || links.original, scheduled: releaseAt(e) > new Date() }))
+  ).filter((e) => vorschau || !e.scheduled);
 
   // chronologisch sortiert – letzte Folge zuerst
   const byDateDesc = [...allEpisodes].sort((a, b) => b.date.localeCompare(a.date));
@@ -51,5 +57,7 @@ window.WG = (function () {
     allEpisodes,
     latest,
     findEpisode,
+    releaseHour: RELEASE_HOUR,
+    vorschau,
   };
 })();

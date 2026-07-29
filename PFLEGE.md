@@ -26,7 +26,7 @@ Falls der Zugang irgendwann nicht mehr funktioniert (z. B. weil der Code abgelau
 
 Im Werkzeug gibt es oben **acht Reiter** — du wählst, was du gerade tun willst:
 
-- **＋ Neue Folge** — eine neue Folge anlegen (das machst du jeden Samstag)
+- **＋ Neue Folge** — eine neue Folge anlegen (auch vorab, siehe Abschnitt 3a)
 - **✎ Folge bearbeiten** — eine Folge, die es schon gibt, korrigieren
 - **◐ Bewohner** — Name, Rolle, Zitat, Bio, Schlagworte einer Figur ändern
 - **↗ Links** — Steady, Instagram, Facebook, Original-Website
@@ -52,6 +52,29 @@ Das ist deine Routine-Aufgabe.
 Fertig! Nach ein, zwei Minuten ist die neue Folge live auf der Seite.
 
 > **Kleiner Vimeo-Tipp:** Damit die Videos überall sauber laufen, muss bei jedem Vimeo-Video unter *Privatsphäre → Wo darf eingebettet werden* die Domain der Seite eingetragen sein. Das ist eine einmalige Sache pro Video.
+
+---
+
+## 3a. Eine Folge vorab einpflegen (Zeitschaltung)
+
+Du musst nicht am Samstag am Laptop sitzen. **Trägst du beim Datum einen Tag in der Zukunft ein, hält die Seite die Folge automatisch zurück** und stellt sie an diesem Tag um **12 Uhr mittags** von selbst online. Du kannst also am Donnerstag einpflegen und in Ruhe verreisen.
+
+Es ist genau der gleiche Ablauf wie oben — du änderst gar nichts an deinem Vorgehen:
+
+1. Neue Folge anlegen wie in Abschnitt 3, beim **Datum** den kommenden Samstag eintragen.
+2. Das Werkzeug sagt dir direkt unter der Vorschau: **„⏳ Geplant: erscheint automatisch am … um 12 Uhr.“** Sehen kannst du daran, dass es geklappt hat.
+3. Auf **„Veröffentlichen“** klicken.
+
+Ab jetzt passiert alles von allein. Bis Samstagmittag taucht die Folge nirgendwo auf der Seite auf — nicht auf der Startseite, nicht in der Mediathek. Dann erscheint sie ohne dein Zutun.
+
+**Woran erkennst du geplante Folgen später wieder?** Im Werkzeug unter **✎ Folge bearbeiten** stehen sie in der Auswahl-Liste ganz oben mit einem **⏳ geplant** davor. Du kannst sie bis zum Erscheinen beliebig weiter bearbeiten oder auch wieder löschen.
+
+**Vorher anschauen (Vorschau):** Willst du sehen, wie die geplante Folge auf der Seite aussehen wird, häng an die Adresse ein **`?vorschau=1`** an, also z. B. `…/folgen.html?vorschau=1`. Dann siehst du zusätzlich alle geplanten Folgen, gekennzeichnet mit **„⏳ Geplant“**, und ganz oben einen dunklen Hinweisbalken. Diese Ansicht ist nur für dich — wer die normale Adresse aufruft, sieht die geplanten Folgen nicht.
+
+**Zwei Dinge zum Mitdenken:**
+
+- **Das Video muss schon bei Vimeo liegen.** Die Zeitschaltung betrifft nur die Website. Lade die Folge also vorher bei Vimeo hoch (und trag dort die Domain frei, siehe Tipp oben).
+- **Es ist ein Erscheinungstermin, kein Geheimversteck.** Die Folge wird bis Samstag nicht angezeigt, ihre Angaben liegen aber technisch schon auf der Seite. Wer gezielt danach sucht, könnte Titel und Beschreibung vorab finden. Für einen normalen Besucher ist die Folge unsichtbar.
 
 ---
 

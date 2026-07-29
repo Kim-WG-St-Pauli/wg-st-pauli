@@ -118,7 +118,11 @@ if (Array.isArray(data.seasons)) {
       else seenEpisodeIds.add(ep.id);
       if (!isNonEmptyString(ep.no)) fail(`${where}: no fehlt`);
       if (!isNonEmptyString(ep.title)) fail(`${where}: title fehlt`);
+      // Die Zeitschaltung in data/series.js rechnet mit "JJJJ-MM-TT"; ein anderes
+      // Format würde eine geplante Folge sofort sichtbar machen.
       if (!isNonEmptyString(ep.date)) fail(`${where}: date fehlt`);
+      else if (!/^\d{4}-\d{2}-\d{2}$/.test(ep.date)) fail(`${where}: date muss JJJJ-MM-TT sein (gefunden: "${ep.date}")`);
+      else if (Number.isNaN(new Date(ep.date + "T12:00:00").getTime())) fail(`${where}: date "${ep.date}" ist kein gültiger Tag`);
       if (!isNonEmptyString(ep.logline)) fail(`${where}: logline fehlt`);
       if (!isNonEmptyString(ep.summary)) fail(`${where}: summary fehlt`);
       checkVideo(ep.video, where);

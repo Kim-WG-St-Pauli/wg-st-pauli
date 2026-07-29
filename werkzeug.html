@@ -144,6 +144,7 @@
             <div class="field">
               <label>Datum (Samstag)</label>
               <input id="epDate" type="date">
+              <div class="hint" id="epDateHint"></div>
             </div>
             <div class="field">
               <label>Typ</label>
@@ -197,6 +198,7 @@
             <p class="ep__log" id="pvLogline" style="color:var(--muted)"></p>
             <p class="muted" id="pvSummary" style="margin-top:8px"></p>
           </div>
+          <p class="hint" id="pvSchedule"></p>
           <button class="btn btn--lime" id="btnPublishEpisode" type="button" style="margin-top:18px;width:100%">Veröffentlichen</button>
           <button class="btn btn--ghost btn--danger" id="btnDeleteEpisode" type="button" hidden style="margin-top:10px;width:100%">Folge löschen</button>
           <p class="hint" id="epMsg"></p>
@@ -555,6 +557,12 @@
       const d = new Date(iso + "T12:00:00");
       return d.toLocaleDateString("de-DE", { day: "2-digit", month: "short", year: "numeric" });
     }
+    const RELEASE_HOUR = window.WG.releaseHour;
+    $("epDateHint").textContent = `Ein Datum in der Zukunft schaltet die Folge automatisch erst an diesem Tag um ${RELEASE_HOUR} Uhr mittags frei.`;
+    function isScheduled(iso) {
+      if (!iso) return false;
+      return new Date(iso + "T" + String(RELEASE_HOUR).padStart(2, "0") + ":00:00") > new Date();
+    }
     function findEpisode(id) {
       for (const s of state.data.seasons) { const e = s.episodes.find((x) => x.id === id); if (e) return { ep: e, season: s }; }
       return null;
@@ -567,7 +575,7 @@
       const pick = $("epPick");
       const all = state.data.seasons.flatMap((s) => s.episodes.map((e) => ({ ...e, seasonId: s.id, seasonTitle: s.title })));
       all.sort((a, b) => b.date.localeCompare(a.date));
-      pick.innerHTML = all.map((e) => `<option value="${e.id}">${e.seasonTitle} · ${e.id === "pilot" ? "Pilot" : e.type === "finale" ? "Finale" : "Folge " + e.no} — ${e.title}</option>`).join("");
+      pick.innerHTML = all.map((e) => `<option value="${e.id}">${isScheduled(e.date) ? "⏳ geplant · " : ""}${e.seasonTitle} · ${e.id === "pilot" ? "Pilot" : e.type === "finale" ? "Finale" : "Folge " + e.no} — ${e.title}</option>`).join("");
       if (!pick.dataset.bound) {
         pick.addEventListener("change", () => prefillEpisode(pick.value));
         pick.dataset.bound = "1";
@@ -609,6 +617,14 @@
       $("pvTitle").textContent = $("epTitle").value || "(Titel)";
       $("pvLogline").textContent = $("epLogline").value;
       $("pvSummary").textContent = $("epSummary").value;
+      const sched = $("pvSchedule");
+      if (isScheduled($("epDate").value)) {
+        sched.textContent = `⏳ Geplant: erscheint automatisch am ${fmtDate($("epDate").value)} um ${RELEASE_HOUR} Uhr. Bis dahin sieht sie niemand auf der Seite.`;
+        sched.className = "hint ok";
+      } else {
+        sched.textContent = "";
+        sched.className = "hint";
+      }
       const ok = $("epTitle").value.trim() && $("epDate").value && $("epLogline").value.trim() && $("epSummary").value.trim() && vid;
       $("btnPublishEpisode").disabled = !ok;
     }
@@ -703,7 +719,10 @@
       const message = mode === "new"
         ? `Neue Folge: ${season.title} – ${id} "${title}" (via Werkzeug)`
         : `Folge bearbeitet: ${id} "${title}" (via Werkzeug)`;
-      await runPublish(next, message, "epMsg", () => { if (mode === "new") resetEpisodeForm(); refreshRunStatus(); });
+      const successText = isScheduled(date)
+        ? `✓ Gespeichert! Die Folge erscheint automatisch am ${fmtDate(date)} um ${RELEASE_HOUR} Uhr — bis dahin sieht sie niemand.`
+        : undefined;
+      await runPublish(next, message, "epMsg", () => { if (mode === "new") resetEpisodeForm(); refreshRunStatus(); }, successText);
     }
     $("btnPublishEpisode").addEventListener("click", publishEpisode);
 
@@ -907,12 +926,12 @@
     $("btnPublishTier").addEventListener("click", publishTier);
 
     /* ---------------- shared publish flow ---------------- */
-    async function runPublish(next, message, msgElId, onSuccess) {
+    async function runPublish(next, message, msgElId, onSuccess, successText) {
       const msgEl = $(msgElId);
       msgEl.textContent = "Speichere …"; msgEl.className = "hint";
       try {
         await saveRemote(next, message);
-        msgEl.textContent = "✓ Veröffentlicht! In 1–2 Minuten live.";
+        msgEl.textContent = successText || "✓ Veröffentlicht! In 1–2 Minuten live.";
         msgEl.className = "hint ok";
         onSuccess();
       } catch (err) {
