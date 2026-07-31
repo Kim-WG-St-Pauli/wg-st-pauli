@@ -356,6 +356,48 @@
       "tagline": "Die WG geht weiter. Jeden Samstag eine neue Folge.",
       "episodes": [
         {
+          "id": "s2f8",
+          "no": "8",
+          "title": "Kiez-Talk-Time!",
+          "date": "2026-08-01",
+          "logline": "Was hinter zwei Staffeln „WG St. Pauli“ steckt",
+          "summary": "Endlich wieder Talk-Time für Kim und Milo: Ein Blick hinter die Kulissen von \"WG St. Pauli\" (Das Transkript gibt's  hinterm Button \"Kiez-Talk\"!)",
+          "video": {
+            "id": "1212061330",
+            "h": "3dc2d036bb"
+          },
+          "talk": {
+            "id": "1212061330",
+            "h": "3dc2d036bb"
+          },
+          "talkContent": {
+            "headline": "Was hinter zwei Staffeln „WG St. Pauli“ steckt",
+            "intro": "Nach Abschluss der zweiten Staffel zieht Journalist Milo Relotio gemeinsam mit Autorin Kim Perator eine erste Zwischenbilanz. Im Mittelpunkt stehen diesmal nicht die Figuren der WG, sondern die Entwicklung der Serie selbst: neue technische Möglichkeiten, die Grenzen künstlicher Intelligenz und die Frage, warum Kim trotz überschaubarer Reichweite weitermacht.",
+            "sections": [
+              {
+                "heading": "Zwischen Software-Update und Regiearbeit",
+                "text": "Milo: Schön, dich wiederzusehen, Kim.\nKim: Danke, dass du mal wieder hier bist.\nMilo: Jetzt ist die zweite Staffel fertig. Was hat sich denn seit unserem letzten Interview alles getan?\nKim: Eine Menge, Milo.\nKim: Meine Software hat inzwischen ein riesiges Update bekommen.\nKim: Ich kann inzwischen mit meinen Prompts richtig Regie führen.\nMilo: Was bedeutet das konkret?\nKim: Mein Hauptproblem war immer, dass viele Menschen KI-Filme ablehnen. Vor allem dann, wenn die Figuren nicht sauber lippensynchron sprechen. Das hat viele Zuschauer abgeschreckt.\nMilo: Und heute?\nKim: Die Verbesserungen sind enorm. Wer der Serie deshalb bisher keine Chance gegeben hat, sollte einfach einmal ab der Folge „Kochen“ einsteigen. Dort sieht man den technischen Sprung ziemlich deutlich."
+              },
+              {
+                "heading": "Wenn die KI ihren eigenen Kopf hat",
+                "text": "Milo: Und... tut die KI inzwischen genau das, was du promptest?\nKim: Natürlich nicht. Aber genau deshalb zeige ich die Outtakes auch so gern.\nKim: Beim Staffelfinale konnte ich den geplanten Sprung ins Wasserbett einfach nicht erzeugen. Also habe ich das Finale kurzerhand umgeschrieben.\nMilo: Ich fand ja besonders interessant, was passiert, wenn die KI zu viele Menschen gleichzeitig bewegen soll.\nKim: Dann entstehen manchmal völlig aberwitzige Figuren-Mischungen. Genau daran sieht man die Grenzen heutiger KI-Systeme noch sehr gut."
+              },
+              {
+                "heading": "Ideen aus dem echten Leben",
+                "text": "Milo: Welche Rückmeldungen freuen dich am meisten?\nKim: Ich liebe es, wenn Menschen mit eigenen Ideen auf mich zukommen.\nKim: Wenn jemand sagt: \"So etwas ist bei uns in der WG passiert. Mach doch mal eine Folge daraus.\" Das finde ich großartig.\nMilo: Und das baust du tatsächlich ein?\nKim: Klar. Alles ist möglich. Genau solche Ideen machen mir richtig Spaß."
+              },
+              {
+                "heading": "Warum ich trotzdem weitermache",
+                "text": "Milo: Du machst also weiter, obwohl die große Reichweite noch auf sich warten lässt?\nKim: Ich bin ziemlich zäh.\nKim: Natürlich brauche ich zwischendurch auch Motivation. Aber ich glaube an das Projekt. Und ich glaube an die WG.\nMilo: Und was ist mit Werbung?\nKim: Kann ich mir ehrlich gesagt nicht leisten. Stattdessen bewerbe ich mich gerade bei Filmfestivals.\nKim: Mal sehen, was passiert. Eigentlich passt so etwas wie meine Serie dort gar nicht richtig hinein. Dafür ist sie wahrscheinlich zu ungewöhnlich."
+              },
+              {
+                "heading": "Die Geschichten gehen weiter",
+                "text": "Milo: Dann wünsche ich dir dafür ganz viel Erfolg. Ich bin schon gespannt auf die nächste Staffel.\nKim: Kannst du auch sein.\nKim: Ich habe noch unendlich viele Ideen. Die wollen alle erzählt werden.\nMilo: Viel Glück, Kim.\nKim: Danke, Milo."
+              }
+            ]
+          }
+        },
+        {
           "id": "s2f7",
           "no": "7",
           "title": "Der Bettgeschichten letzter Teil",
