@@ -356,6 +356,19 @@
       "tagline": "Die WG geht weiter. Jeden Samstag eine neue Folge.",
       "episodes": [
         {
+          "id": "s2f9",
+          "no": "9",
+          "title": "3 Folgen für HAIC",
+          "date": "2026-08-08",
+          "logline": "Quickie: Wie sich die Serie entwickelt hat ",
+          "summary": "Kim stellt Milo die drei  Folgen vor, mit denen sie sich beim KI Filmfestival HAIC bewirbt.  ",
+          "video": {
+            "id": "1214699662",
+            "h": "4503afea16"
+          },
+          "talk": null
+        },
+        {
           "id": "s2f8",
           "no": "8",
           "title": "Kiez-Talk-Time!",
