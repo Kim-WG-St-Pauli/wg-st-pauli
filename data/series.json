@@ -356,6 +356,19 @@
       "tagline": "Die WG geht weiter. Jeden Samstag eine neue Folge.",
       "episodes": [
         {
+          "id": "s2f10",
+          "no": "10",
+          "title": "Neu hier? Dann guck das hier!",
+          "date": "2026-08-08",
+          "logline": "Mit diesen 3 Folgen kannst du gut folgen;-)",
+          "summary": "Kim hat drei Folgen WG St. Pauli ausgewählt, die die Entwicklung der Serie dokumentieren. Auch die, in der die WG Bewohner sich bei ihrer Autorin beschweren...",
+          "video": {
+            "id": "1214699662",
+            "h": "4503afea16"
+          },
+          "talk": null
+        },
+        {
           "id": "s2f9",
           "no": "9",
           "title": "3 Folgen für HAIC",
