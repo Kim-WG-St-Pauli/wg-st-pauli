@@ -356,6 +356,20 @@
       "tagline": "Die WG geht weiter. Jeden Samstag eine neue Folge.",
       "episodes": [
         {
+          "id": "s2f12",
+          "no": "12",
+          "title": "EPILOG",
+          "date": "2026-08-29",
+          "type": "finale",
+          "logline": "Und was wird jetzt aus dem Bett?",
+          "summary": "Zuletzt wurde das Wasserbett zum Opfer der Katzen-Krallen... Was nun? ",
+          "video": {
+            "id": "1215600381",
+            "h": "730f207893"
+          },
+          "talk": null
+        },
+        {
           "id": "s2f9",
           "no": "9",
           "title": "3 Folgen für HAIC",
