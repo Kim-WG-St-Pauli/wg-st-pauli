@@ -356,6 +356,36 @@
       "tagline": "Die WG geht weiter. Jeden Samstag eine neue Folge.",
       "episodes": [
         {
+          "id": "s2f10",
+          "no": "10",
+          "title": "KI-Talk statt Kiez Talk",
+          "date": "2026-08-15",
+          "logline": "Ohne KI keine WG",
+          "summary": "Kim über Vorurteile, Chancen und die Zukunft der Serie.",
+          "video": {
+            "id": "1215634644",
+            "h": "0e83b85d83"
+          },
+          "talk": {
+            "id": "1215634644",
+            "h": "0e83b85d83"
+          },
+          "talkContent": {
+            "headline": "„Meine Serie ersetzt niemanden. Sie gäbe es ohne KI überhaupt nicht.“",
+            "intro": "Künstliche Intelligenz wird kontrovers diskutiert. Viele Menschen befürchten, dass KI Schauspielerinnen und Schauspieler ersetzt. Im Kiez Talk erklärt Kim Perator, warum sie ihre Serie trotzdem mit KI produziert und weshalb „WG St. Pauli“ ohne diese Technik überhaupt nie entstanden wäre.",
+            "sections": [
+              {
+                "heading": "Ohne KI keine WG",
+                "text": "Milo: Viele sagen: „Ich schaue keine KI-Filme. Die nehmen Schauspielern die Arbeit weg.“ Was denkst du darüber?\nKim: Ich kann den Einwand verstehen.\nMilo: Warum machst du dann selbst eine KI-Serie?\nKim: Weil meine Serie niemanden ersetzt. Sie gäbe es ohne KI überhaupt nicht.\nMilo: Aber in China entstehen doch inzwischen ganze KI-Serien.\nKim: Ja. Dort gab es diese Kurzdramen schon lange vor der KI. Jetzt werden viele davon einfach mit KI produziert. Das ist etwas völlig anderes.\nMilo: Und bei dir?\nKim: Bei mir ist KI kein Ersatz. Sie ist der Grund, warum „WG St. Pauli“ überhaupt existiert.\nMilo: Du ersetzt also niemanden?\nKim: Nein. Ich erschaffe etwas, das es ohne KI gar nicht gäbe. Bei mir ist es Neu-Erschaffung, kein Ersatz.\nMilo: Tut dir diese Ablehnung weh?\nKim: Ein bisschen. Weil manche damit etwas ablehnen, das ich ohne KI niemals hätte erzählen können."
+              },
+              {
+                "heading": "Wie es mit der WG weitergeht",
+                "text": "Milo: Für alle, die jetzt neu dazu kommen: Du hast die beiden ersten Staffeln als langen Kurzfilm zusammengefasst.\nKim: Ja. Und den zeige ich hier in einer Woche.\nMilo: Und danach?\nKim: Dann geht es hier weiter: Die WG besucht wie früher die „Return of the Living Dead“-Party, es wird erotische Spannungen geben, Petra und Kai bekommen Besuch von ihrer spießigen Tochter und ihrem Freund, Petra schicke ich durchs Klimakterium und die WG gründet eine Band. Was eben so alles passiert, wenn Rebellen alt werden."
+              }
+            ]
+          }
+        },
+        {
           "id": "s2f12",
           "no": "12",
           "title": "EPILOG",
