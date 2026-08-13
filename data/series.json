@@ -356,6 +356,44 @@
       "tagline": "Die WG geht weiter. Jeden Samstag eine neue Folge.",
       "episodes": [
         {
+          "id": "s2f11",
+          "no": "11",
+          "title": "WG St. Pauli - Der Film",
+          "date": "2026-08-22",
+          "logline": "Was bisher geschah - MUST SEE!",
+          "summary": "Kim und die WG blicken zurück auf 2 komplette Staffeln: Der perfekte Einstieg für Neueinsteiger! Mit englischen Untertiteln (über CC oder ... einschalten) ",
+          "video": {
+            "id": "1217592851",
+            "h": "0d31a17612"
+          },
+          "talk": {
+            "id": "1217592851",
+            "h": "0d31a17612"
+          },
+          "talkContent": {
+            "headline": "Zwei Staffeln. Ein Film. Jede Menge Chaos.",
+            "intro": "WG St. Pauli – Alt, aber nicht artig  ist die filmische Verdichtung der ersten beiden bereits veröffentlichten Staffeln der KI-Serie WG St. Pauli sowie der begleitenden Social-Media-Clips. Die ursprünglich rund zweiminütigen Episoden wurden von Beginn an mit mehreren sich gegenseitig reflektierenden Erzählebenen konzipiert. Für den Film werden diese Ebenen durch eine neu geschaffene Rahmenhandlung miteinander verwoben und zu einer zusammenhängenden Geschichte.",
+            "sections": [
+              {
+                "heading": "Ü50, pleite, Platzmangel – willkommen in der WG",
+                "text": "Im Zentrum steht eine ungewöhnliche Ü50-Plus-WG in Hamburg: Vier alte Freunde leben bereits zusammen, als die fünfte nach Jahren der Abwesenheit zurückkehrt – frisch getrennt, pleite und mit hundert Umzugskartons. Die Freunde lassen sie nicht hängen, obwohl für sie nur ein neun Quadratmeter großes Zimmer bleibt. Zwischen Platzmangel, Geldsorgen, WG-Partys und Alltagschaos wird gemeinschaftliches Wohnen im Alter zum ebenso komischen wie solidarischen Gegenentwurf zu Wohnraummangel, steigenden Lebenshaltungskosten und Einsamkeit."
+              },
+              {
+                "heading": "Die Figuren spielen nicht immer mit",
+                "text": "Parallel erzählt der Film seine eigene Entstehung. Autorin Kim kämpft mit den Tücken der KI-Produktion: Figurendrifts, wechselnde Stimmen, Renderfehler und technische Grenzen werden nicht versteckt, sondern Teil der Geschichte. Die virtuellen Bewohner beginnen ihrerseits, ihre Autorin, ihre Darstellung und die Produktionsbedingungen zu kommentieren und entwickeln ein zunehmend rebellisches Eigenleben."
+              },
+              {
+                "heading": "Plötzlich war die Technik schneller als die Story",
+                "text": "Während Kim versucht, ihre Figuren und deren Welt unter Kontrolle zu halten, entwickelt sich die KI-Technologie schneller weiter, als die Serie produziert werden kann. Der technische Fortschritt überholt schließlich die Geschichte und verändert sichtbar Look, Stimmen und Möglichkeiten der Produktion."
+              },
+              {
+                "heading": "WG-Komödie trifft KI-Making-of",
+                "text": "So wird aus zwei Staffeln, kurzen Social-Media-Kommentaren und einer neuen Rahmenhandlung ein eigenständiger Film auf mehreren Ebenen: Ü50-WG-Komödie, gesellschaftliche Erzählung, Making-of und selbstreflexive Geschichte über das Filmemachen mit KI – über fünf Freunde, die gemeinsam älter werden, und eine Autorin, die feststellen muss, dass sich weder das Leben noch ihre künstlichen Darsteller vollständig kontrollieren lassen."
+              }
+            ]
+          }
+        },
+        {
           "id": "s2f10",
           "no": "10",
           "title": "KI-Talk statt Kiez Talk",
