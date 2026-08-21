@@ -594,15 +594,16 @@
 
   /* --------------------------------------------------- Newsletter */
   function initNewsletter() {
-    const form = $("[data-newsletter]");
-    if (!form) return;
-    form.action = WG.links.newsletterAction;
-    // versteckter Mailchimp-Bot-Schutz-Feldname
-    const bot = $("[data-bot]", form);
-    if (bot) bot.name = `b_${WG.links.newsletterU}_${WG.links.newsletterId}`;
-    form.addEventListener("submit", () => {
-      const ok = $("[data-nl-ok]", form);
-      if (ok) ok.classList.remove("hidden");
+    $$("[data-newsletter]").forEach((form) => {
+      form.action = WG.links.newsletterAction;
+      // versteckter Mailchimp-Bot-Schutz-Feldname
+      const bot = $("[data-bot]", form);
+      if (bot) bot.name = `b_${WG.links.newsletterU}_${WG.links.newsletterId}`;
+      // Bestätigung steht neben dem Formular, nicht darin
+      const ok = $("[data-nl-ok]", form.closest(".newsletter") || document);
+      form.addEventListener("submit", () => {
+        if (ok) ok.classList.remove("hidden");
+      });
     });
   }
 
