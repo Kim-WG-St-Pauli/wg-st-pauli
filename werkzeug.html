@@ -259,6 +259,7 @@
         <form id="fLinks" onsubmit="return false">
           <div class="field"><label>Steady-Seite</label><input id="lnSteady"></div>
           <div class="field"><label>Steady „Über uns“</label><input id="lnSteadyAbout"></div>
+          <div class="field"><label>Ko-fi (einmalige Unterstützung)</label><input id="lnKofi"></div>
           <div class="field"><label>Instagram</label><input id="lnInstagram"></div>
           <div class="field"><label>Facebook</label><input id="lnFacebook"></div>
           <div class="field"><label>Original-Website (Fallback-Domain)</label><input id="lnOriginal"></div>
@@ -839,6 +840,7 @@
     function fillLinksForm() {
       const l = state.data.links;
       $("lnSteady").value = l.steady || ""; $("lnSteadyAbout").value = l.steadyAbout || "";
+      $("lnKofi").value = l.kofi || "";
       $("lnInstagram").value = l.instagram || ""; $("lnFacebook").value = l.facebook || "";
       $("lnOriginal").value = l.original || "";
     }
@@ -846,6 +848,7 @@
       const next = JSON.parse(JSON.stringify(state.data));
       next.links.steady = $("lnSteady").value.trim();
       next.links.steadyAbout = $("lnSteadyAbout").value.trim();
+      next.links.kofi = $("lnKofi").value.trim();
       next.links.instagram = $("lnInstagram").value.trim();
       next.links.facebook = $("lnFacebook").value.trim();
       next.links.original = $("lnOriginal").value.trim();
