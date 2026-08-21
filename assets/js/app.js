@@ -97,6 +97,7 @@
               <h4>Mitmachen</h4>
               <div class="footer__links">
                 <a href="${WG.links.steady}" target="_blank" rel="noopener">WG unterstützen</a>
+                <a href="${WG.links.kofi}" target="_blank" rel="noopener">Einmalig einen ausgeben</a>
                 <a href="mitmachen.html#newsletter">Gästeliste / Newsletter</a>
                 <a href="${WG.links.instagram}" target="_blank" rel="noopener">Täglich auf Insta</a>
                 <a href="impressum.html">Impressum</a>
