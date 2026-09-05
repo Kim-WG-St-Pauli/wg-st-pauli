@@ -326,6 +326,7 @@
     <!-- ====================== MODE: NEUE STAFFEL ====================== -->
     <section class="section section--tight panel" id="panel-newseason" hidden>
       <div class="container tool">
+        <p class="hint" style="margin-top:0;margin-bottom:16px">Schritt 1 von 2: Hier entsteht nur der Rahmen der Staffel — Überschrift und Untertitel. Die erste Folge mit Vimeo-Link trägst du direkt danach ein, das Werkzeug bringt dich automatisch dorthin.</p>
         <form id="fNewSeason" onsubmit="return false">
           <div class="field"><label>Überschrift</label><input id="nsTitle" placeholder="z. B. Staffel 3"></div>
           <div class="field"><label>Untertitel</label><input id="nsTagline" placeholder="z. B. Der Sommer, der alles änderte"></div>
@@ -336,7 +337,7 @@
             <h3 class="ep__title" id="pvNsTitle"></h3>
             <p class="ep__log" id="pvNsTagline" style="color:var(--muted)"></p>
           </div>
-          <button class="btn btn--lime" id="btnPublishNewSeason" type="button" style="margin-top:18px;width:100%">Veröffentlichen</button>
+          <button class="btn btn--lime" id="btnPublishNewSeason" type="button" style="margin-top:18px;width:100%">Anlegen und weiter zur ersten Folge</button>
           <p class="hint" id="nsMsg"></p>
         </div>
       </div>
@@ -989,6 +990,7 @@
     /* ---------------- NEUE STAFFEL ---------------- */
     function resetNewSeasonForm() {
       $("nsTitle").value = ""; $("nsTagline").value = "";
+      $("nsMsg").textContent = ""; $("nsMsg").className = "hint";
       updateNewSeasonPreview();
     }
     function updateNewSeasonPreview() {
@@ -1006,7 +1008,16 @@
       const newId = "s" + (next.seasons.length + 1);
       const newSeason = { id: newId, title, tagline, episodes: [] };
       next.seasons.push(newSeason);
-      await runPublish(next, `Neue Staffel angelegt: ${title} (via Werkzeug)`, "nsMsg", () => { resetNewSeasonForm(); refreshRunStatus(); });
+      await runPublish(next, `Neue Staffel angelegt: ${title} (via Werkzeug)`, "nsMsg", () => {
+        resetNewSeasonForm();
+        refreshRunStatus();
+        setMode("new");
+        $("epSeason").value = newId;
+        updateEpisodePreview();
+        const msgEl = $("epMsg");
+        msgEl.textContent = `✓ „${title}“ ist angelegt. Schritt 2 von 2: hier die erste Folge eintragen — den Vimeo-Link nicht vergessen.`;
+        msgEl.className = "hint ok";
+      });
     }
     $("btnPublishNewSeason").addEventListener("click", publishNewSeason);
 
