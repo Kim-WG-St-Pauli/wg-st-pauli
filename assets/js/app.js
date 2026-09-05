@@ -373,6 +373,19 @@
     if (t) { e.preventDefault(); openModal(t.dataset.watch); }
   });
 
+  /* --------------------------------------------------- Deep-Link auf einer Seite ohne Folgen-Liste
+     Mailings und Social-Posts verlinken die kurze Form "wg-st-pauli.de/#s2f12".
+     Nur folgen.html kann so einen Hash auflösen – überall sonst dorthin weiterreichen. */
+  function initEpisodeHashRedirect() {
+    if ($("[data-folgen]")) return;
+    const raw = decodeURIComponent(location.hash.slice(1));
+    if (!raw) return;
+    const id = raw.split(":")[0];
+    if (id !== "talks" && !WG.findEpisode(id)) return;
+    location.replace("folgen.html" + location.search + location.hash);
+    return true;
+  }
+
   /* --------------------------------------------------- Vorschau-Hinweis (?vorschau=1) */
   function initVorschauBanner() {
     if (!WG.vorschau) return;
@@ -633,6 +646,7 @@
   }
 
   function init() {
+    if (initEpisodeHashRedirect()) return;
     applyTheme();
     setFavicon();
     renderNav();
