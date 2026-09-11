@@ -591,6 +591,19 @@
       "tagline": "War früher alles besser - oder nur früher? ",
       "episodes": [
         {
+          "id": "s3f2",
+          "no": "2",
+          "title": "Die Suche",
+          "date": "2026-09-11",
+          "logline": "Geiler Scheiss aus Silkes Kartons!",
+          "summary": "Gothic-Outfit für die nächste \"Return of the living dead\" Party in Hamburg gesucht! Wird Silke ihre alten Klamotten finden? Die WG hilft bei der Suche...",
+          "video": {
+            "id": "1226046974",
+            "h": "3c07018769"
+          },
+          "talk": null
+        },
+        {
           "id": "s3f1",
           "no": "1",
           "title": "Früher",
