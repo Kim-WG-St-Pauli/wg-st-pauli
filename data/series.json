@@ -591,6 +591,19 @@
       "tagline": "War früher alles besser - oder nur früher? ",
       "episodes": [
         {
+          "id": "s3f3",
+          "no": "3",
+          "title": "Schatzsuche",
+          "date": "2026-09-19",
+          "logline": "Silkes Kartons sind für einige Überraschungen gut.",
+          "summary": "Die Schatzsuche in Silkes Vergangenheit beginnt – und nimmt eine unerwartete Wendung...",
+          "video": {
+            "id": "1226769403",
+            "h": "fe0af8b497"
+          },
+          "talk": null
+        },
+        {
           "id": "s3f2",
           "no": "2",
           "title": "Die Suche",
