@@ -555,6 +555,19 @@
     btn.addEventListener("click", () => openModal(seenIds.length ? next.id : "pilot"));
   }
 
+  // Wer über einen Social-Link kommt, landet auf der Seite und nicht in der
+  // Folge – der Weg zur neuesten Folge muss deshalb ohne Scrollen sichtbar sein.
+  function initLatestCta() {
+    const btns = $$("[data-latest-cta]");
+    if (!btns.length) return;
+    const ep = WG.latest;
+    if (!ep) { btns.forEach((b) => b.remove()); return; }
+    btns.forEach((btn) => {
+      btn.innerHTML = `${I.play} Neueste Folge: „${escHtml(ep.title)}“`;
+      btn.addEventListener("click", () => openModal(ep.id));
+    });
+  }
+
   function initReset() {
     const btn = $("[data-reset-progress]");
     if (!btn) return;
@@ -659,6 +672,7 @@
     renderTiers();
     initVorschauBanner();
     initCountdown();
+    initLatestCta();
     initResume();
     initReset();
     initNewsletter();
