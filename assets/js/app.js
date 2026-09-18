@@ -171,14 +171,14 @@
       ? "KIEZ-TALK"
       : ep.type === "finale" ? "FINALE" : ep.id === "pilot" ? "PILOT" : "FOLGE " + ep.no;
     return `
-      <div class="ep__poster" style="background:
+      <div class="ep__poster" data-poster-label="${label}" style="background:
         radial-gradient(130% 100% at 15% 0%, ${a}33, transparent 60%),
         linear-gradient(150deg, ${b}, var(--ink) 75%);">
-        <div style="position:absolute;inset:0;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;">
+        <div data-poster-text style="position:absolute;inset:0;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;">
           <div style="font-family:var(--font-mono);font-size:.66rem;letter-spacing:.2em;color:${a};text-transform:uppercase;">${label}</div>
           <div style="font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.3rem);line-height:.95;text-transform:uppercase;">${ep.title}</div>
         </div>
-        <div style="position:absolute;top:-10px;right:6px;font-family:var(--font-display);font-size:5.5rem;line-height:1;color:${a};opacity:.16;">${ep.id === "pilot" ? "0" : ep.no.replace(/\D/g, "") || "★"}</div>
+        <div data-poster-no style="position:absolute;top:-10px;right:6px;font-family:var(--font-display);font-size:5.5rem;line-height:1;color:${a};opacity:.16;">${ep.id === "pilot" ? "0" : ep.no.replace(/\D/g, "") || "★"}</div>
       </div>`;
   }
 
@@ -198,7 +198,7 @@
   function epCard(ep, idx, mode) {
     const talkMode = mode === "talk";
     return `
-      <article class="ep reveal" data-ep="${ep.id}" data-watched="${watched.has(ep.id) ? 1 : 0}">
+      <article class="ep reveal" data-ep="${ep.id}" data-mode="${talkMode ? "talk" : "video"}" data-watched="${watched.has(ep.id) ? 1 : 0}">
         ${posterFor(ep, idx, mode)}
         <div class="ep__no">${ep.seasonTitle || ""}</div>
         ${epTag(ep)}
@@ -480,6 +480,52 @@
     });
   }
 
+  // Startbilder der Kacheln erst holen, wenn die Kachel in Sichtweite kommt: die
+  // Folgen-Seite zeigt über 20 Kacheln, und jede kostet eine eigene oEmbed-Anfrage.
+  let thumbIo;
+  function paintCardThumbs(scope) {
+    // Der Staffel-Wechsel tauscht die Kacheln komplett aus – die alten sonst
+    // weiter zu beobachten, hält sie nur im Speicher fest.
+    if (thumbIo) thumbIo.disconnect();
+    const cards = $$(".ep[data-ep]", scope).filter((c) => !c.dataset.thumb);
+    if (!cards.length) return;
+    if (!("IntersectionObserver" in window)) { cards.forEach(paintCardThumb); return; }
+    if (!thumbIo) thumbIo = new IntersectionObserver((ents) => {
+      ents.forEach((en) => { if (en.isIntersecting) { thumbIo.unobserve(en.target); paintCardThumb(en.target); } });
+    }, { rootMargin: "300px" });
+    cards.forEach((c) => thumbIo.observe(c));
+  }
+
+  function paintCardThumb(card) {
+    if (card.dataset.thumb) return;
+    card.dataset.thumb = "1";
+    const ep = WG.findEpisode(card.dataset.ep);
+    const poster = $(".ep__poster", card);
+    if (!ep || !poster) return;
+    vimeoThumb(card.dataset.mode === "talk" ? ep.talk : ep.video).then((src) => {
+      if (!src) return;                       // ohne Freigabe bleibt das Farbposter stehen
+      const img = new Image();
+      img.className = "ep__thumb";
+      img.alt = "";
+      img.addEventListener("load", () => {
+        poster.prepend(img);
+        // Schrift über dem Standbild wäre doppelt gemoppelt: der Titel steht
+        // direkt darunter in der Kachel, und die Startbilder tragen meist schon
+        // eine eigene Bauchbinde. Folge und Staffel wandern in das Schildchen oben.
+        ["[data-poster-text]", "[data-poster-no]"].forEach((sel) => { const n = $(sel, card); if (n) n.remove(); });
+        const chip = $(".ep__no", card);
+        // Bei den Kiez-Talks nur das Label: "Staffel 1 · Kiez-Talk" wird so breit,
+        // dass es unter dem Eck-Tag ("Neu", "Hier starten") hervorschaut.
+        const label = poster.dataset.posterLabel || "";
+        if (chip) chip.textContent = card.dataset.mode === "talk"
+          ? label
+          : [chip.textContent.trim(), label].filter(Boolean).join(" · ");
+        requestAnimationFrame(() => img.classList.add("is-in"));
+      });
+      img.src = src;
+    });
+  }
+
   function renderLatest() {
     const mount = $("[data-latest-player]");
     if (mount && WG.latest) {
@@ -509,6 +555,7 @@
     if (!mount) return;
     const eps = WG.allEpisodes.slice().sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
     mount.innerHTML = eps.map((e, i) => epCard(e, i)).join("");
+    paintCardThumbs(mount);
   }
 
   function renderCastStrip() {
@@ -562,6 +609,7 @@
         ? eps.map((e, i) => epCard(e, i, mode)).join("")
         : `<p class="muted" style="grid-column:1/-1">Für diese Ansicht gibt es aktuell noch keine Einträge.</p>`;
       observeReveal();
+      paintCardThumbs(mount);
       updateProgress();
     }
     $$(".tab", tabs).forEach((t) => t.addEventListener("click", () => paint(t.dataset.tab)));
