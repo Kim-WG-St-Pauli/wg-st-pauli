@@ -257,6 +257,26 @@
     return `<iframe src="https://player.vimeo.com/video/${v.id}?${h}dnt=1&autoplay=1&title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`;
   }
 
+  // Das Startbild gibt es nur über oEmbed, und nur wenn die Domain in den
+  // Privatsphäre-Einstellungen des Videos freigegeben ist. Sonst kommt 200 ohne
+  // thumbnail_url – der Aufrufer muss also mit leerem Ergebnis umgehen können.
+  function vimeoThumb(v) {
+    if (!v || !v.id) return Promise.resolve("");
+    const key = "wg:thumb:" + v.id;
+    let cached = null;
+    try { cached = sessionStorage.getItem(key); } catch (e) {}
+    if (cached !== null) return Promise.resolve(cached);
+    const page = `https://vimeo.com/${v.id}${v.h ? "/" + v.h : ""}`;
+    return fetch(`https://vimeo.com/api/oembed.json?width=1280&url=${encodeURIComponent(page)}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => (d && d.thumbnail_url) || "")
+      .catch(() => "")
+      .then((src) => {
+        try { sessionStorage.setItem(key, src); } catch (e) {}
+        return src;
+      });
+  }
+
   // Die Vimeo-Videos sind domaingebunden. Freigegebene Domains (Vimeo-Privatsphäre-Einstellungen
   // je Video pflegen!): wg-st-pauli.de und die GitHub-Pages-Domain zum Testen. Auf jeder anderen
   // Domain würde Vimeo „Sorry, privacy settings“ zeigen – dort lieber sauberen Hinweis + Link.
@@ -435,6 +455,31 @@
   }
 
   /* --------------------------------------------------- Renderers per page */
+  function paintLatestThumb(btn, video) {
+    if (!btn) return;
+    vimeoThumb(video).then((src) => {
+      if (!src) return;
+      const img = new Image();
+      img.alt = "";
+      img.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s ease";
+      img.addEventListener("load", () => {
+        const scrim = document.createElement("span");
+        scrim.style.cssText = "position:absolute;inset:0;background:linear-gradient(to bottom, rgba(10,8,12,.75), rgba(10,8,12,.1) 45%, rgba(10,8,12,.35))";
+        btn.prepend(scrim);
+        btn.prepend(img);
+        // Das Startbild trägt den Folgentitel meist schon als Bauchbinde, und
+        // rechts neben dem Player steht er ohnehin – die Schrift überlagern
+        // hieße, ihn zweimal übereinander zu legen.
+        const title = $("[data-latest-title]", btn);
+        if (title) title.remove();
+        const kicker = $("[data-latest-kicker]", btn);
+        if (kicker) kicker.style.textShadow = "0 2px 12px rgba(0,0,0,.95)";
+        requestAnimationFrame(() => { img.style.opacity = "1"; });
+      });
+      img.src = src;
+    });
+  }
+
   function renderLatest() {
     const mount = $("[data-latest-player]");
     if (mount && WG.latest) {
@@ -446,10 +491,11 @@
           style="position:absolute;inset:0;border:0;cursor:pointer;background:
           radial-gradient(130% 100% at 20% 0%, ${a}33, transparent 60%),
           linear-gradient(150deg, ${b}, var(--ink) 80%);">
-          <span style="position:absolute;top:18px;left:18px;font-family:var(--font-mono);font-size:.66rem;letter-spacing:.2em;color:${a};text-transform:uppercase">${ep.seasonTitle} · ${ep.id === "pilot" ? "Pilot" : "Folge " + ep.no}</span>
-          <span style="position:absolute;left:18px;bottom:18px;right:18px;text-align:left;font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);line-height:.95;text-transform:uppercase;color:var(--text)">${ep.title}</span>
+          <span data-latest-kicker style="position:absolute;top:18px;left:18px;font-family:var(--font-mono);font-size:.66rem;letter-spacing:.2em;color:${a};text-transform:uppercase">${ep.seasonTitle} · ${ep.id === "pilot" ? "Pilot" : "Folge " + ep.no}</span>
+          <span data-latest-title style="position:absolute;left:18px;bottom:18px;right:18px;text-align:left;font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);line-height:.95;text-transform:uppercase;color:var(--text)">${ep.title}</span>
           <span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:72px;border-radius:50%;background:var(--pink);color:#15030c;display:grid;place-items:center;box-shadow:var(--glow-pink)">${I.play}</span>
         </button>`;
+      paintLatestThumb($("[data-watch]", mount), ep.video);
       const meta = $("[data-latest-meta]");
       if (meta) meta.innerHTML =
         `<div class="kicker">Neueste Folge · ${ep.seasonTitle}</div>
@@ -544,7 +590,7 @@
     if (!btn) return;
     const seenIds = watched.list;
     // Ohne Fortschritt wäre das Label „Beim Pilotfilm starten“ – auf der Startseite
-    // steht der feste Pilot-Button direkt daneben, der Text stünde doppelt.
+    // steht direkt daneben schon ein fester Einstiegs-Button, der Sinn stünde doppelt.
     // Dort (data-resume-optional) den Button dann ganz weglassen.
     if (!seenIds.length && btn.hasAttribute("data-resume-optional")) { btn.remove(); return; }
     // erste ungesehene Folge in chronologischer Reihenfolge
