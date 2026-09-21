@@ -591,6 +591,19 @@
       "tagline": "War früher alles besser - oder nur früher? ",
       "episodes": [
         {
+          "id": "s3f4",
+          "no": "4",
+          "title": "Punkrock",
+          "date": "2026-09-26",
+          "logline": "Ist \"Vintage\" altersgerechte Kleidung?...",
+          "summary": "Ist das noch Punkrock - oder schon zerfallender Zombie? ",
+          "video": {
+            "id": "1228528448",
+            "h": "2191d63694"
+          },
+          "talk": null
+        },
+        {
           "id": "s3f3",
           "no": "3",
           "title": "Schatzsuche",
