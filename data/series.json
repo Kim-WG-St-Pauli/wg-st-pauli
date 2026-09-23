@@ -614,7 +614,20 @@
             "id": "1226769403",
             "h": "fe0af8b497"
           },
-          "talk": null
+          "talk": {
+            "id": "1229695842",
+            "h": "a2604f6f04"
+          },
+          "talkContent": {
+            "headline": "Masken-Talk",
+            "intro": "Ein Treffen mit dem Hamburger AI-Creator Patrick Vogel bringt Kim auf eine Idee: Könnte eine Maske das leidige Problem mit Figur- und Gesichtsdrift lösen? Technisch klingt das ziemlich genial. Milo hat Zweifel.",
+            "sections": [
+              {
+                "heading": "FÜNF CHARAKTERE, FÜNF MASKEN",
+                "text": "Der Praxistest in der WG zeigt schnell: Eine technische Lösung bleibt nur so lange eine technische Lösung, bis Silke, Petra, Kai, Frank und Beate ihre ganz eigenen Vorstellungen davon entwickeln.\n\nKim muss feststellen, dass konsistente Gesichter vielleicht gar nicht ihr größtes Problem sind. Denn gegen eigenwillige Charaktere hilft bislang auch keine KI. Und eine pinke Skimaske schon gar nicht."
+              }
+            ]
+          }
         },
         {
           "id": "s3f2",
