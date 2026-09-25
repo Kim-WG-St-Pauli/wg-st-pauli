@@ -345,11 +345,15 @@
       ? `<button class="btn btn--sm ${seg === "video" ? "btn--primary" : "btn--ghost"}" data-seg="video">▶ Die Folge</button>
          <button class="btn btn--sm ${seg === "talk" ? "btn--primary" : "btn--ghost"}" data-seg="talk">🎙 Kiez-Talk</button>`
       : "";
+    segMount.insertAdjacentHTML("beforeend",
+      `<button class="btn btn--sm btn--ghost modal__share" data-m-share>🔗 Link kopieren</button>`);
     const v = seg === "talk" ? ep.talk : ep.video;
     $("[data-m-frame]", modal).innerHTML = videoBlock(ep, v, seg);
     renderTalkBody($("[data-m-talk]", modal), seg === "talk" ? ep.talkContent : null);
     $$("[data-seg]", segMount).forEach((b) =>
       b.addEventListener("click", () => openModal(epId, b.dataset.seg)));
+    const hash = "#" + ep.id + (seg === "talk" ? ":talk" : "");
+    $("[data-m-share]", segMount).onclick = (e) => copyLink(e.currentTarget, hash);
 
     // Blättern: chronologisch (Pilot → aktuellste Folge). onclick, damit sich
     // bei wiederholtem Öffnen keine Handler stapeln.
@@ -375,7 +379,21 @@
     // reflect on card immediately
     const card = $(`.ep[data-ep="${ep.id}"]`);
     if (card) card.dataset.watched = "1";
-    history.replaceState(null, "", "#" + ep.id);
+    history.replaceState(null, "", hash);
+  }
+
+  // Kurze Form auf der Startseite (wg-st-pauli.de/#s3f3:talk) – die leitet selbst zur Folge weiter.
+  function copyLink(btn, hash) {
+    const url = new URL(".", location.href).href + hash;
+    const done = () => {
+      btn.textContent = "✓ Link kopiert";
+      setTimeout(() => { btn.textContent = "🔗 Link kopieren"; }, 2500);
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(url).then(done, () => window.prompt("Link zum Kopieren:", url));
+    } else {
+      window.prompt("Link zum Kopieren:", url);
+    }
   }
   function closeModal() {
     if (!modal) return;
