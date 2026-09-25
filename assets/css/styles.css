@@ -508,7 +508,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 0.
 .modal__frame > div { position: absolute; inset: 0; }
 .modal__frame iframe { width: 100%; height: 100%; border: 0; }
 .modal__seg { display: flex; gap: 10px; margin-top: 14px; }
-.modal__seg:empty { margin-top: 0; }
+.modal__seg { flex-wrap: wrap; }
+.modal__share { margin-left: auto; }
 .modal__nav { display: flex; justify-content: space-between; gap: 10px; margin-top: 14px; }
 .modal__nav .btn { flex: 1; justify-content: center; }
 .modal__nav .btn:disabled { opacity: 0.35; cursor: default; pointer-events: none; }
