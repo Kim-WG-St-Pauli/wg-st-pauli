@@ -249,6 +249,7 @@
     document.body.appendChild(modal);
     modal.addEventListener("click", (e) => { if (e.target.dataset.close !== undefined) closeModal(); });
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+    window.addEventListener("message", onPlayerMessage);
   }
 
   function vimeoFrame(v) {
@@ -331,8 +332,63 @@
     mount.hidden = false;
   }
 
+  /* --------------------------------------------------- Autoplay: nach dem Ende direkt die nächste Folge
+     Nur für Folgen, nie für Kiez-Talks (Wunsch aus dem Publikum). Der Vimeo-Player
+     meldet sich per postMessage mit "ready"; erst danach nimmt er das Abo an. Über postMessage
+     heißt das Ende "finish" – "ended" gibt es nur in der player.js-Bibliothek. */
+  const VIMEO_ORIGIN = "https://player.vimeo.com";
+  const NEXT_DELAY_S = 5;
+  let autoNext = null, nextTimer = null;
+
+  function onPlayerMessage(e) {
+    if (e.origin !== VIMEO_ORIGIN || !modal) return;
+    const frame = $("[data-m-frame] iframe", modal);
+    if (!frame || e.source !== frame.contentWindow) return;
+    let d;
+    try { d = typeof e.data === "string" ? JSON.parse(e.data) : e.data; } catch (err) { return; }
+    if (!d) return;
+    if (d.event === "ready" && autoNext) {
+      frame.contentWindow.postMessage(JSON.stringify({ method: "addEventListener", value: "finish" }), VIMEO_ORIGIN);
+    } else if (d.event === "finish" && autoNext) {
+      showNextCountdown(autoNext);
+    }
+  }
+
+  function stopNextCountdown() {
+    clearInterval(nextTimer);
+    nextTimer = null;
+  }
+
+  function showNextCountdown(next) {
+    const mount = $("[data-m-frame]", modal);
+    let left = NEXT_DELAY_S;
+    mount.insertAdjacentHTML("beforeend", `
+      <div class="modal__next" role="status">
+        <div class="modal__next-kicker">Gleich geht’s weiter</div>
+        <div class="modal__next-title">${escHtml(next.title)}</div>
+        <div class="modal__next-count" data-next-count></div>
+        <div class="modal__next-actions">
+          <button class="btn btn--sm btn--primary" data-next-go>▶ Jetzt ansehen</button>
+          <button class="btn btn--sm btn--ghost" data-next-stop>Abbrechen</button>
+        </div>
+      </div>`);
+    const box = $(".modal__next", mount);
+    const paintCount = () => { $("[data-next-count]", box).textContent = `in ${left} ${left === 1 ? "Sekunde" : "Sekunden"}`; };
+    paintCount();
+    $("[data-next-go]", box).onclick = () => { stopNextCountdown(); openModal(next.id); };
+    $("[data-next-stop]", box).onclick = () => { stopNextCountdown(); box.remove(); };
+    stopNextCountdown();
+    nextTimer = setInterval(() => {
+      left -= 1;
+      if (left > 0) { paintCount(); return; }
+      stopNextCountdown();
+      openModal(next.id);
+    }, 1000);
+  }
+
   function openModal(epId, seg = "video") {
     if (!modal) buildModal();
+    stopNextCountdown();
     const ep = WG.findEpisode(epId);
     if (!ep) return;
     if (seg === "talk" && !ep.talk) seg = "video";   // Folge hat keinen Kiez-Talk → normale Folge
@@ -372,6 +428,7 @@
       nextBtn.textContent = nextEp ? `${nextEp.title} →` : "Nächste Folge →";
       nextBtn.onclick = nextEp ? () => openModal(nextEp.id) : null;
     }
+    autoNext = seg === "video" && canEmbed ? nextEp : null;
 
     modal.classList.add("open");
     document.body.style.overflow = "hidden";
@@ -397,6 +454,8 @@
   }
   function closeModal() {
     if (!modal) return;
+    stopNextCountdown();
+    autoNext = null;
     modal.classList.remove("open");
     $("[data-m-frame]", modal).innerHTML = "";
     document.body.style.overflow = "";
