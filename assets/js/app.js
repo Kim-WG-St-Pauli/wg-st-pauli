@@ -176,7 +176,7 @@
         linear-gradient(150deg, ${b}, var(--ink) 75%);">
         <div data-poster-text style="position:absolute;inset:0;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;">
           <div style="font-family:var(--font-mono);font-size:.66rem;letter-spacing:.2em;color:${a};text-transform:uppercase;">${label}</div>
-          <div style="font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.3rem);line-height:.95;text-transform:uppercase;">${ep.title}</div>
+          <div style="font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.3rem);line-height:.95;text-transform:uppercase;">${mode === "talk" ? escHtml(talkTitle(ep)) : ep.title}</div>
         </div>
         <div data-poster-no style="position:absolute;top:-10px;right:6px;font-family:var(--font-display);font-size:5.5rem;line-height:1;color:${a};opacity:.16;">${ep.id === "pilot" ? "0" : ep.no.replace(/\D/g, "") || "★"}</div>
       </div>`;
@@ -188,6 +188,19 @@
     if (ep.id === "pilot") return '<span class="ep__tag ep__tag--pilot">Hier starten</span>';
     if (ep.type === "finale") return '<span class="ep__tag ep__tag--finale">Finale</span>';
     return "";
+  }
+
+  function epLabel(ep) {
+    return ep.id === "pilot" ? "Pilotfilm" : ep.type === "finale" ? "Staffelfinale" : "Folge " + ep.no;
+  }
+  // Ein Kiez-Talk hat seine eigene Überschrift; ohne gepflegten Text fällt er auf den Folgentitel zurück.
+  function talkTitle(ep) {
+    const h = ep.talkContent && ep.talkContent.headline;
+    return hasText(h) ? h.trim() : "Kiez-Talk: " + ep.title;
+  }
+  function talkSub(ep) {
+    const zu = ep.id === "pilot" ? "zum Pilotfilm" : ep.type === "finale" ? "zum Staffelfinale" : "zu Folge " + ep.no;
+    return `${ep.seasonTitle} · Kiez-Talk ${zu} „${ep.title}“`;
   }
 
   function fmtDate(iso) {
@@ -205,7 +218,7 @@
         <button class="ep__play" data-${talkMode ? "talk" : "watch"}="${ep.id}" aria-label="${talkMode ? "Kiez-Talk abspielen" : "Folge abspielen"}"><span>${I.play}</span></button>
         <div class="ep__body">
           <div class="ep__meta"><span>${fmtDate(ep.date)}</span></div>
-          <h3 class="ep__title">${ep.title}</h3>
+          <h3 class="ep__title">${talkMode ? escHtml(talkTitle(ep)) : ep.title}</h3>
           <p class="ep__log">${ep.logline}</p>
           <div class="ep__foot">
             <div class="ep__actions">
@@ -319,10 +332,9 @@
   function renderTalkBody(mount, tc) {
     if (!mount) return;
     const sections = (tc && Array.isArray(tc.sections)) ? tc.sections.filter(sectionHasContent) : [];
-    const show = tc && (hasText(tc.headline) || hasText(tc.intro) || sections.length);
+    const show = tc && (hasText(tc.intro) || sections.length);
     if (!show) { mount.hidden = true; mount.innerHTML = ""; return; }
     let html = "";
-    if (hasText(tc.headline)) html += `<h3 class="talk-body__headline">${escHtml(tc.headline)}</h3>`;
     if (hasText(tc.intro)) html += `<div class="talk-body__intro">${toParagraphs(tc.intro)}</div>`;
     sections.forEach((s) => {
       if (hasText(s.heading)) html += `<h4 class="talk-body__heading">${escHtml(s.heading)}</h4>`;
@@ -392,8 +404,8 @@
     const ep = WG.findEpisode(epId);
     if (!ep) return;
     if (seg === "talk" && !ep.talk) seg = "video";   // Folge hat keinen Kiez-Talk → normale Folge
-    $("[data-m-sub]", modal).textContent = `${ep.seasonTitle} · ${ep.id === "pilot" ? "Pilotfilm" : ep.type === "finale" ? "Staffelfinale" : "Folge " + ep.no}`;
-    $("[data-m-title]", modal).textContent = ep.title;
+    $("[data-m-sub]", modal).textContent = seg === "talk" ? talkSub(ep) : `${ep.seasonTitle} · ${epLabel(ep)}`;
+    $("[data-m-title]", modal).textContent = seg === "talk" ? talkTitle(ep) : ep.title;
     $("[data-m-desc]", modal).textContent = ep.summary || ep.logline;
     const fb = $("[data-m-fallback]", modal); if (fb) fb.href = ep.url;
     const segMount = $("[data-m-seg]", modal);
