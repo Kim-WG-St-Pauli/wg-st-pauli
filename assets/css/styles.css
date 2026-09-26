@@ -556,7 +556,6 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 0.
   border-radius: var(--radius);
   padding: 22px 24px 24px;
 }
-.talk-body__headline { font-family: var(--font-display); font-size: clamp(1.4rem, 2.8vw, 2rem); color: #c2105e; line-height: 1.12; }
 .talk-body__intro { color: #2c2832; font-size: 1.12rem; line-height: 1.6; margin-top: 12px; }
 .talk-body__intro p { margin: 0 0 0.7em; }
 .talk-body__heading { font-family: var(--font-display); font-size: 1.3rem; color: #c2105e; margin-top: 24px; line-height: 1.2; }
