@@ -591,6 +591,19 @@
       "tagline": "War früher alles besser - oder nur früher? ",
       "episodes": [
         {
+          "id": "s3f6",
+          "no": "6",
+          "title": "Unverändert",
+          "date": "2026-10-10",
+          "logline": "Die WG ist zurück in der Gothic-Szene! ",
+          "summary": "In der Markthalle sorgt Silkes Männergeschmack für Gesprächsstoff – und hinterm Tresen wartet eine alte Bekannte. Manche Dinge ändern sich halt nie... ",
+          "video": {
+            "id": "1234487107",
+            "h": "eda4699b7f"
+          },
+          "talk": null
+        },
+        {
           "id": "s3f5",
           "no": "5",
           "title": "Die Fahrt",
