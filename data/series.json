@@ -591,6 +591,19 @@
       "tagline": "War früher alles besser - oder nur früher? ",
       "episodes": [
         {
+          "id": "s3f7",
+          "no": "7",
+          "title": "Altbekannte",
+          "date": "2026-10-17",
+          "logline": "Kai pogt, Silke flirtet – und Beate trifft ihren Ex. Ärger vorprogrammiert!",
+          "summary": "Kai zeigt dem Punk-Nachwuchs auf der Tanzfläche, dass er noch lange nicht zum alten Eisen gehört. Während Silke beim Tanzen interessante Bekanntschaften macht, steht Beate plötzlich ihrer Vergangenheit gegenüber: Alex ist wieder da. Und das sorgt für reichlich Zündstoff.",
+          "video": {
+            "id": "1235521049",
+            "h": "ffdcc9f516"
+          },
+          "talk": null
+        },
+        {
           "id": "s3f6",
           "no": "6",
           "title": "Unverändert",
