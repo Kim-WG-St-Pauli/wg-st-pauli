@@ -591,6 +591,19 @@
       "tagline": "War früher alles besser - oder nur früher? ",
       "episodes": [
         {
+          "id": "s3f8",
+          "no": "8",
+          "title": "Doppelmoral",
+          "date": "2026-10-24",
+          "logline": "Wenn zwei das Gleiche tun, ist es noch lange nicht dasselbe.",
+          "summary": "Silke flirtet mit einem jüngeren Goth, Alex versucht vergeblich, bei Beate zu punkten. Als er Silkes Altersunterschied kritisiert, nimmt Petra seine eigenen Maßstäbe genüsslich auseinander.",
+          "video": {
+            "id": "1236790468",
+            "h": "59d65900e2"
+          },
+          "talk": null
+        },
+        {
           "id": "s3f7",
           "no": "7",
           "title": "Altbekannte",
