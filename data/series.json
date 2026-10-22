@@ -591,6 +591,19 @@
       "tagline": "War früher alles besser - oder nur früher? ",
       "episodes": [
         {
+          "id": "s3f9",
+          "no": "9",
+          "title": "Altersgerecht",
+          "date": "2026-10-31",
+          "logline": "Altersgerecht ist Ansichtssache. Wer bestimmt, was sich gehört?",
+          "summary": "Während Silke einfach Spaß hat, diskutieren die anderen, was sich in ihrem Alter gehört. Dumm nur, dass Alex' Maßstäbe vor allem für andere gelten.",
+          "video": {
+            "id": "1238342768",
+            "h": "bb6395f070"
+          },
+          "talk": null
+        },
+        {
           "id": "s3f8",
           "no": "8",
           "title": "Doppelmoral",
