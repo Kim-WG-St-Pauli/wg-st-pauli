@@ -591,6 +591,19 @@
       "tagline": "War früher alles besser - oder nur früher? ",
       "episodes": [
         {
+          "id": "s3f10",
+          "no": "10",
+          "title": "Betriebstemperatur",
+          "date": "2026-11-07",
+          "logline": "In der Hitze der Nacht wird eskaliert... legt die Ohren an!",
+          "summary": "Woran liegen die heftigen Wortgefechte: An der allgemein überhitzten Betriebstemperatur oder kommt jetzt doch noch ein wenig Menopause mit ins Spiel? ",
+          "video": {
+            "id": "1242887920",
+            "h": "78b97176dc"
+          },
+          "talk": null
+        },
+        {
           "id": "s3f9",
           "no": "9",
           "title": "Altersgerecht",
