@@ -591,6 +591,19 @@
       "tagline": "War früher alles besser - oder nur früher? ",
       "episodes": [
         {
+          "id": "s3f11",
+          "no": "11",
+          "title": "Gesiezt",
+          "date": "2026-11-14",
+          "logline": "Wo verläuft eigentlich die Grenze zwischen cool und berufsjugendlich?  ",
+          "summary": "Die WG eckt bei den „Living Deads“ an. Offenbar nimmt man dort das Leben ziemlich ernst. Auch das untote.",
+          "video": {
+            "id": "1245744767",
+            "h": "a1234ad7c1"
+          },
+          "talk": null
+        },
+        {
           "id": "s3f10",
           "no": "10",
           "title": "Betriebstemperatur",
