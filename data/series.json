@@ -591,6 +591,49 @@
       "tagline": "War früher alles besser - oder nur früher? ",
       "episodes": [
         {
+          "id": "s3fin",
+          "no": "Finale",
+          "title": "Weitermachen...!? Fortsetzung des letzten Kiez-Talk ",
+          "date": "2026-11-28",
+          "type": "finale",
+          "logline": "Während Milo mit dem Interview weiter macht, überlegt Kim, wie sie mit der WG weitermacht…",
+          "summary": "Im zweiten Teil des Interviews spricht Kim über Silke und Lenni, das überraschende Eigenleben ihrer künstlichen Schauspieler und die kreativen Möglichkeiten der KI.  ",
+          "video": {
+            "id": "1248351144",
+            "h": "55d9b12da0"
+          },
+          "talk": {
+            "id": "1248351144",
+            "h": "55d9b12da0"
+          },
+          "talkContent": {
+            "headline": "Weitermachen...!? Fortsetzung des letzten Kiez-Talk",
+            "intro": "Im zweiten Teil des Interviews spricht Kim über Silke und Lenni, das überraschende Eigenleben ihrer künstlichen Schauspieler und die kreativen Möglichkeiten der KI.",
+            "sections": [
+              {
+                "heading": "Silke und Lenni – Liebe kennt kein Alter?",
+                "text": "Milo: Ich wollte dich gerade nach Silke und Lenni fragen.\nKim: War ja klar, dass das kommt.\nMilo: Silke ist achtundfünfzig. Lenni ist dreißig. Das ist schon ein Altersunterschied.\nKim: Ich wusste gar nicht, dass du rechnen kannst.\nMilo: Du weichst meiner eigentlichen Frage aus.\nKim: Du hast ja noch gar keine gestellt.\nMilo: Na gut, ist Silke in Lenni verliebt?\nKim: Nein. Er gefällt ihr. Und zwar ausgesprochen gut.\nMilo: Na ja, der Kuss war schon ziemlich eindeutig.\nKim: Ein Kuss ist doch noch kein Vertrag.\nKim: Die beiden hatten einen schönen Abend. Sie haben getanzt und sich geküsst. Warum muss man eigentlich immer gleich eine Beziehung daraus machen?"
+              },
+              {
+                "heading": "Künstliche Intelligenz – wenn Romanfiguren lebendig werden",
+                "text": "Milo: Nun sind deine Figuren ja mit künstlicher Intelligenz entstanden. Hast du manchmal trotzdem das Gefühl, dass du mit echten Menschen arbeitest?\nKim: Na ja, Romanfiguren waren schon immer erfunden.\nMilo: Aber normalerweise stellt man sich vor, wie sie aussehen.\nKim: Ja. Und jetzt kann ich anderen zeigen, wie ich sie mir vorstelle.\nMilo: Sehen sie denn immer so aus, wie du sie dir vorstellst?\nKim: Um Gottes willen, nein. Manchmal macht die KI etwas, auf das ich selber nie gekommen wäre."
+              },
+              {
+                "heading": "Wenn künstliche Schauspieler ihre Regisseurin überraschen",
+                "text": "Milo: Hat die künstliche Intelligenz denn auch schon mal eine deiner Geschichten verbessert?\nKim: Ja. Gerade beim Schauspiel entstehen manchmal kleine Gesten oder Blicke, die ich so gar nicht vorgesehen hatte.\nMilo: Und die übernimmst du dann?\nKim: Natürlich. Ein guter Regisseur lässt sich ja auch von seinen Schauspielern überraschen.\nMilo: Würdest du denn lieber mit echten Schauspielern drehen?\nKim: Mit meinem Budget? Da wäre die WG nie eingezogen."
+              },
+              {
+                "heading": "Ältere Gruftis – zwischen Jugendrebellion und Lebensabend",
+                "text": "Milo: Was reizt dich eigentlich daran, ausgerechnet über ältere Gruftis eine Serie zu machen?\nKim: Der Widerspruch zwischen dem Älterwerden und einer Lebenseinstellung, die eigentlich mal als Jugendrebellion angefangen hat.\nMilo: Deine Figuren haben jedenfalls noch einiges vor.\nKim: Natürlich. Die sind ja nicht am Ende ihres Lebens, sondern erst am Ende der dritten Staffel."
+              },
+              {
+                "heading": "Staffel vier – wie geht es mit der WG St. Pauli weiter?",
+                "text": "Milo: Und wie geht's in der vierten Staffel weiter?\nKim: Du glaubst doch nicht ernsthaft, dass ich dir das jetzt erzähle.\nMilo: Einen kleinen Hinweis vielleicht?\nKim: Die WG hat bisher noch jede Lösung in ein neues Problem verwandelt. Ich bin da sehr zuversichtlich.\nMilo: Was wünschst du dir denn für die vierte Staffel?\nKim: Dass die fünf neugierig bleiben. Und dass wenigstens einer von ihnen mal freiwillig den Müll runterbringt.\nMilo: Kim, ich danke dir für das Gespräch.\nKim: Sehr gerne, Milo."
+              }
+            ]
+          }
+        },
+        {
           "id": "s3f12",
           "no": "12",
           "title": "Kiez Talk: Berufsjugendlich!?",
