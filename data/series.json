@@ -591,6 +591,56 @@
       "tagline": "War früher alles besser - oder nur früher? ",
       "episodes": [
         {
+          "id": "s3f12",
+          "no": "12",
+          "title": "Kiez Talk: Berufsjugendlich!?",
+          "date": "2026-11-21",
+          "logline": "„Kim - wir müssen reden…“ - ja, Milo redet endlich mal wieder mit der Autorin der WG",
+          "summary": "Zum Abschluss der dritten Staffel trifft Milo Relozio die Serienschöpferin Kim zum Interview. Es geht um das Älterwerden in einer Jugendkultur, Wechseljahre und gesellschaftliche Erwartungen…Teil1 des Kiez Talks!",
+          "video": {
+            "id": "1248235417",
+            "h": "01a59a9eeb"
+          },
+          "talk": {
+            "id": "1248235417",
+            "h": "01a59a9eeb"
+          },
+          "talkContent": {
+            "headline": "Eine WG außer Kontrolle: Berufsjugendlich?!",
+            "intro": "Milo im Gespräch mit Serienschöpferin Kim über das Älterwerden, die Gothic-Szene und gesellschaftliche Erwartungen.",
+            "sections": [
+              {
+                "heading": "Gothic – eine Jugendkultur wird älter",
+                "text": "Milo: Deine Figuren sind ja nun auch nicht mehr die Jüngsten.\nKim: Das ist dir nach drei Staffeln schon aufgefallen?\nMilo: Na ja, zwischen jung geblieben und berufsjugendlich gibt's ja durchaus einen Unterschied.\nKim: Kai trägt seit vierzig Jahren einen Irokesenschnitt. Was soll er machen? Sich altersgerecht umfrisieren?\nMilo: Es geht mir eher um die Haltung.\nKim: Mir auch."
+              },
+              {
+                "heading": "Wenn die Rebellion eine Hausordnung bekommt",
+                "text": "Milo: Du verteidigst deine Figuren ziemlich vehement.\nKim: Ich muss mit denen noch eine vierte Staffel drehen.\nMilo: Was fasziniert dich eigentlich an alternden Subkulturen? Was bedeutet es eigentlich, in einer Jugendkultur alt zu werden?\nKim: Na ja, irgendwann ist man älter als die Leute, gegen die man früher rebelliert hat.\nMilo: Und plötzlich gibt es sogar für die Rebellion eine Hausordnung.\nKim: Meine WG hält sich ja nicht mal an die eigene."
+              },
+              {
+                "heading": "Gesiezt – wenn das Selbstbild ins Wanken gerät",
+                "text": "Milo: Petra hat es allerdings ziemlich getroffen, als sie auf der Party gesiezt wurde.\nKim: Ja, in ihrem eigenen Kopf ist sie ja nicht plötzlich 20 Jahre älter geworden.\nMilo: Aber für den jungen Mann war sie vermutlich einfach eine ältere Dame.\nKim: Sag das bloß nicht Petra.\nMilo: Dabei war er doch eigentlich nur höflich.\nKim: Natürlich. Das Tragische ist ja gerade, dass er überhaupt nichts falsch gemacht hat.\nMilo: Es geht also gar nicht ums Siezen?\nKim: Es geht um diesen Moment, in dem du plötzlich begreifst, wie andere dich sehen."
+              },
+              {
+                "heading": "Wechseljahre – darf man darüber lachen?",
+                "text": "Milo: Du hast ja auch Petras Wechseljahre ziemlich deutlich thematisiert.\nKim: Die waren ja auch schlecht zu übersehen.\nMilo: Aber sind Wechseljahre nicht ein ziemlich heikles Thema für eine Komödie?\nKim: Die Wechseljahre selbst sind doch gar nicht der Witz.\nMilo: Sondern?\nKim: Wie die anderen damit umgehen. Und natürlich, wie Petra damit umgeht.\nMilo: Petra hat ja generell ganz gerne alles unter Kontrolle.\nKim: Und plötzlich beansprucht ihr eigener Körper ein Mitspracherecht."
+              },
+              {
+                "heading": "Frauen altern, Männer reifen",
+                "text": "Milo: Na ja, deine Männer werden schließlich auch nicht jünger.\nKim: Frauen altern. Männer doch nicht. Die reifen.\nMilo: Das ist jetzt aber ein bisschen gemein.\nKim: Graue Haare beim Mann gelten als attraktiv. Bei Frauen empfiehlt man eine Tönung."
+              },
+              {
+                "heading": "Alternative Schönheitsideale – wie frei sind Gruftis wirklich?",
+                "text": "Erwartungen zu entziehen. Gilt das nicht auch fürs Älterwerden?\nKim: Na ja, zwischen Anspruch und Wirklichkeit liegt manchmal ein halbes Leben.\nKim: Nur weil du dich für ein anderes Schönheitsideal entschieden hast, heißt das ja noch lange nicht, dass du plötzlich frei von Schönheitsidealen bist."
+              },
+              {
+                "heading": "Fortsetzung folgt",
+                "text": "Regie aus dem Off: Leute, wir sind schon über der Sendezeit!\nKim: Na gut. Dann nächste Woche mehr. Fortsetzung folgt!"
+              }
+            ]
+          }
+        },
+        {
           "id": "s3f11",
           "no": "11",
           "title": "Gesiezt",
